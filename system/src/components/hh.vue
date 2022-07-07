@@ -93,22 +93,6 @@
           帮助
 
         </el-menu-item>
-        <el-submenu index="5" v-if="loginState==1" style="float: right;">
-          <template #title>
-            <!--显示头像-->
-            <el-avatar :size="30" href='https://www.baidu.com/s?wd=%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E7%95%8C%E9%9D%A2' :src="userAvatar" @error="errorHandler">
-              <!--这里是失败时候展示的图片-->
-              <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"/>
-            </el-avatar>
-            {{userName}}
-          </template>
-          <el-menu-item index="5-1" @click="routerToUserPage">
-            <i class="el-icon-info" ></i>
-            个人信息</el-menu-item>
-          <el-menu-item index="5-2"  @click="Logout">
-            <i class="el-icon-remove"></i>
-            退出登录</el-menu-item>
-        </el-submenu>
         <el-menu-item  v-if="loginState==0" style="float: right;" >
           <el-link :underline="false"  @click="dialogVisible = true" >登录</el-link>
           <el-dialog  
@@ -123,11 +107,12 @@
           <div slot="title" class="header-title">
           </div>
             <Login
+            @logins="changeLoginState"
             ref="loginComponent"
             />
           <div slot="footer">
             <el-button type="primary"  class="loginButton" @click="changeLoginState">登录</el-button>
-            <el-button  class="registerButton" @click="clear">注册</el-button>
+            <el-button  class="registerButton">注册</el-button>
           </div>
           </el-dialog>
         </el-menu-item>
@@ -155,45 +140,13 @@ export default {
       hasNewMessage:true,//是否有新消息
       getMessage:'',
       userName:'',//用户名
+      userAvatar:'',//用户头像信息
       userIdentity:'',//用户身份信息
-      userAvatar:'',//用户头像
       imgUrl:require('../assets/study.png'),
       dialogVisible: false,
-      password:'',
-      account:'',
-    }
-  },
-  mounted(){
-    window['startLogin']=()=>{
-      this.login();
-    };
-  },
-  created(){
-    /*
-    初始化，判断是否有token
-    */
-    let token = localStorage.getItem('Authorization');
- 
-    if (token === null || token === '') {
-      //无token，需要登录
-      console.log('本次访问网页无token信息')
-      return;
-    }
-    else{
-      //有token，则读取token
-      console.log('本次访问网页有token信息，已自动读取')
-      this.userName=localStorage.getItem('userName');
-      this.userIdentity=localStorage.getItem('userIdentity');
-      console.log(this.userIdentity,this.userIdentity==='Teacher')
-      this.loginState=this.userIdentity==='Teacher'?2:1;
-      if(this.loginState==1)
-      {
-        this.userAvatar=require('../assets/S_avatar.png');
-      }
-      else
-      {
-        this.userAvatar=require('../assets/T_avatar.png');
-      }
+      password,
+      account,
+
     }
   },
   methods:{
@@ -204,47 +157,19 @@ export default {
           })
           .catch(_ => {});
       },
-      login(){
-        this.dialogVisible=true;
-      },
+
       isLeagalID(){
-        // var myreg = /[0-9]{2}[5|3]{1}[0-9]{4}$/;
-        // if (!myreg.test(this.$refs.loginComponent.account)) {
-        //     console.log("账号格式不正确")
-        //     return false;
-        // } 
-        // else {
-        //     console.log('账号格式正确')
-        //     return true;
-        // }
-        return true;
+        var myreg = /[0-9]{2}[5|3]{1}[0-9]{4}$/;
+        if (!myreg.test(this.$refs.loginComponent.account)) {
+            console.log("账号格式不正确")
+            return false;
+        } 
+        else {
+            console.log('账号格式正确')
+            return true;
+        }
       },
 
-      routerToUserPage()
-      {
-        this.$parent.openStudentInfo();
-        //this.$router.replace('/StudentInfoPage');
-      },
-
-      errorHandler(){
-        return true
-      },
-
-      ...mapMutations(['delLogin']),
-      Logout(){
-        console.log('正在退出登录')
-          //清除token信息
-          this.delLogin();
-          this.loginState=0;
-
-          //前往主页
-          this.$router.push({path:'/'});
-
-          this.$message({
-              message: '注销成功',
-              type: 'success'
-          });
-      },
       ...mapMutations(['changeLogin']),
 
       changeLoginState(){
@@ -253,7 +178,7 @@ export default {
           password:this.$refs.loginComponent.password
         };
 
-        if(!this.isLeagalID()){
+        if(!this.isLegalPhone()){
           this.$message({
             message: '请输入正确的账号',
             type: 'warning'
@@ -266,13 +191,13 @@ export default {
           studentLogin(param).then(response=>{
              //判断是否登录成功
             if (response.data.loginState){
-              this.userName=response.data.UserName;
+              this.userName=response.data.userName;
               //获取token
               this.userToken = response.data.token;
               // 将用户token保存到vuex中
               this.changeLogin({ 
                 Authorization: this.userToken,
-                userName:this.userName,
+                userName:response.data.userName,
                 userIdentity:'Student'
               });
 
@@ -288,7 +213,6 @@ export default {
               //跳转路由
               this.$router.replace('/StudentScorePage');
               this.$emit('func',true);
-              this.userAvatar=require('../assets/S_avatar.png');
             }
             else{
               this.$message({
@@ -306,10 +230,6 @@ export default {
           return;
           })
         }
-      },
-      clear()
-      {
-        localStorage.clear();
       }
   }    
 }
