@@ -31,7 +31,7 @@
         <el-form style="margin-top: 20px;margin-left: 40px; margin-right: 40px;height: 100%;">
             <el-row style="height: 100%;">
                 <el-form-item>
-                    <el-input v-model="phonenumber" placeholder="手机号"></el-input>
+                    <el-input v-model="account" placeholder="账号"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-input 
@@ -85,12 +85,12 @@ export default {
     name: 'LoginName',//这个LoginName最好和引入的vue的LoginName相同
     data(){
         return{
-            phonenumber:'',
+            account:'',
             password:'',
             verifycode:'',
             codeimg:'',
             trueVerifycode:'',//正确的验证码
-            customerLogin:true,//标记当前是顾客登录还是房东登录
+            studentLogin:true,//标记当前是学生登录还是老师登录
             studentIcon:require('../assets/student (1).png'),
             teacherIcon:require('../assets/teacher.png'),
             rememberMe:false,
@@ -129,15 +129,7 @@ export default {
             this.$emit("logins")
         },
         updateVerifyCode(){
-            /*
-            更新验证码
-            */
-            console.log('正在尝试更新验证码');
-            getVerifyCode().then(response=>{
-                console.log('verifycode:',response);
-                this.codeimg=response.data.codeimg;
-                this.trueVerifycode=response.data.verifycode;
-            })
+
         },
         changeToCustomer(index){
             if(index==1){

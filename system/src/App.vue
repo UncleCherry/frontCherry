@@ -5,6 +5,7 @@
     <el-container style="width:100%;height:100%">
 
          <StudentPageSide v-if="LoginState" style="padding-top: 55px;"/>
+        <StudentInfo ref="studentInfo"/>
           <el-main>
             <router-view
       style="padding-top: 55px;"
@@ -18,6 +19,7 @@
 <script>
 import Header from './components/Header.vue'
 import StudentPageSide from './views/StudentPageSide.vue'
+import StudentInfo from './components/StudentInfo.vue'
 export default {
   name: 'app',
   data() {
@@ -29,10 +31,27 @@ export default {
       getLoginState(data){
         this.LoginState=data;      
       },
+      openStudentInfo(){
+        this.$refs.studentInfo.drawer=true;
+      }
   },    
+  created(){
+    let router_path = this.$route.path;
+    console.log(router_path);
+    console.log(router_path=='/');
+    let token = localStorage.getItem('Authorization');
+    if(!(token === null || token === ''))
+    {
+      this.LoginState=true;
+       console.log("222");
+    }
+    // let token = localStorage.getItem('Authorization');
+    // this.LoginState=true;
+  },
   components: {
     Header,
-    StudentPageSide
+    StudentPageSide,
+    StudentInfo
   }
 }
 </script>
