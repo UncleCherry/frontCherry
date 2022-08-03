@@ -7,25 +7,11 @@
 <template>
     <el-container style="height: 100%;">
         <el-header style="height: auto;">
-            <!--顾客身份-->
-            <el-image 
-                :src="imgUrl[0]"
-                style="width: 10%;position:absolute;top:20%;cursor: pointer;"
-                @mouseover="changeToCustomer(2)" 
-                @mouseout="changeToCustomer(3)"
-            ></el-image>
             <p 
             style="font-size: xx-large;
             margin-top: 10px;
             text-align: center;">
             登录</p>
-            <!--房东身份-->
-            <el-image 
-                :src="teacherIcon"
-                style="width: 10%;position:absolute;top:20%;right: 10%;cursor: pointer;"
-                @mouseover="changeToHost(2)" 
-                @mouseout="changeToHost(3)"
-            ></el-image>
             <p></p>
         </el-header>
         <el-form style="margin-top: 20px;margin-left: 40px; margin-right: 40px;height: 100%;">
@@ -90,15 +76,7 @@ export default {
             verifycode:'',
             codeimg:'',
             trueVerifycode:'',//正确的验证码
-            studentLogin:true,//标记当前是学生登录还是老师登录
-            studentIcon:require('../assets/student (1).png'),
-            teacherIcon:require('../assets/teacher.png'),
             rememberMe:false,
-            imgUrl:[require('../assets/student.png'),
-                    require('../assets/student (1).png'),
-                    require('../assets/teacher.png'),
-                    require('../assets/teacher (1).png'),
-            ]
         }
     },
     created(){
@@ -131,64 +109,7 @@ export default {
         updateVerifyCode(){
 
         },
-        changeToCustomer(index){
-            if(index==1){
-                if(this.customerLogin){
-                    return;
-                }
-                this.$message({
-                    message: '已切换为学生登录',
-                    type: 'success'
-                });
-                console.log('切换为学生登录');
-                this.customerLogin=true;
-                this.studentIcon=require('../assets/student (1).png');
-                this.teacherIcon=require('../assets/teacher.png');
-            }
-            else if (index==2&&!this.customerLogin){
-                //鼠标移动上来
-                this.studentIcon=require('../assets/student (1).png');
-            }
-            else if (index==3){
-                //鼠标移动出去
-                if(this.customerLogin){
-                    this.studentIcon=require('../assets/student (1).png');
-                }
-                else{
-                    this.studentIcon=require('../assets/student.png');
-                }
-            }
-            
-        },
-        changeToHost(index){
-            if(index==1){
-                if(!this.customerLogin){
-                    return;
-                }
-                this.$message({
-                    message: '已切换为房东登录',
-                    type: 'success'
-                });
-                console.log('切换为房东登录');
-                this.customerLogin=false;
-                this.studentIcon=require('../assets/student.png');
-                this.teacherIcon=require('../assets/teacher (1).png');
-            }
-            else if (index==2&&this.customerLogin){
-                //鼠标移动上来
-                this.teacherIcon=require('../assets/teacher (1).png');
-            }
-            else if (index==3){
-                //鼠标移动出去
-                if(!this.customerLogin){
-                    this.teacherIcon=require('../assets/teacher (1).png');
-                }
-                else{
-                    this.teacherIcon=require('../assets/teacher.png');
-                }
-            }
-
-        },
+        
         forgetPassword(){
             /*
             忘记密码

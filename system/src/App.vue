@@ -32,6 +32,7 @@ export default {
         this.LoginState=data;      
       },
       openStudentInfo(){
+        this.$refs.studentInfo.getMessage();
         this.$refs.studentInfo.drawer=true;
       }
   },    
@@ -43,7 +44,6 @@ export default {
     if(!(token === null || token === ''))
     {
       this.LoginState=true;
-       console.log("222");
     }
     // let token = localStorage.getItem('Authorization');
     // this.LoginState=true;

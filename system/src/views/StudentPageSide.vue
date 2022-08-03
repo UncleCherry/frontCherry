@@ -91,7 +91,7 @@
       OpenScheduleTable()
       {
         this.$router.replace('/ClassSchedulePage');
-      }
+      },
     }
   }
 </script>
