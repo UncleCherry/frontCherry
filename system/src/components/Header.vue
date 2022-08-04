@@ -104,7 +104,7 @@
             />
           <div slot="footer">
             <el-button type="primary"  class="loginButton" @click="changeLoginState">登录</el-button>
-            <el-button  class="registerButton" @click="clear">注册</el-button>
+            <el-button  class="registerButton" @click="register">注册</el-button>
           </div>
           </el-dialog>
         </el-menu-item>
@@ -115,7 +115,6 @@
 
 <script >
 import Login from '@/components/Login.vue'
-import { studentLogin } from '@/api/student'
 import { login } from '@/api/login'
 import { mapMutations } from 'vuex';
 export default {
@@ -133,7 +132,6 @@ export default {
       hasNewMessage:true,//是否有新消息
       getMessage:'',
       userName:'',//用户名
-      userIdentity:'',//用户身份信息
       userAvatar:'',//用户头像
       userType:0, //用户身份类型
       imgUrl:require('../assets/study.png'),
@@ -162,9 +160,7 @@ export default {
       //有token，则读取token
       console.log('本次访问网页有token信息，已自动读取')
       this.userName=localStorage.getItem('userName');
-      this.userIdentity=localStorage.getItem('userIdentity');
-      console.log(this.userIdentity,this.userIdentity==='Teacher')
-      this.loginState=this.userIdentity==='Teacher'?2:1;
+      this.loginState=localStorage.getItem('userType');
       if(this.loginState==1)
       {
         this.userAvatar=require('../assets/S_avatar.png');
@@ -246,13 +242,14 @@ export default {
             this.userToken = response.data.token;
             //获取用户身份类别
             this.userType = response.data.userType
-            // 将用户token保存到vuex中
+            //将用户token保存到vuex中
+            //返回类型为学生登录
             if(this.userType==0)
             {
               this.changeLogin({ 
-                Authorization: this.userToken,
+                Authorization:this.userToken,
                 userName:this.userName,
-                userIdentity:'Student'
+                userType:0
               });             
               this.dialogTableVisible=false;
               this.loginState=1;
@@ -282,53 +279,12 @@ export default {
         });
         console.log('error',error)
         return;
-        }) 
-        // studentLogin(param).then(response=>{
-        //     //判断是否登录成功
-        //   if (response.data.loginState){
-        //     this.userName=response.data.userName;
-        //     //获取token
-        //     this.userToken = response.data.token;
-        //     // 将用户token保存到vuex中
-        //     this.changeLogin({ 
-        //       Authorization: this.userToken,
-        //       userName:this.userName,
-        //       userIdentity:'Student'
-        //     });
-
-        //     this.dialogTableVisible=false;
-        //     this.loginState=1;
-        //     console.log('顾客成功登录')
-
-        //     this.$message({
-        //       message: '登录成功！',
-        //       type: 'success'
-        //     });
-
-        //     //跳转路由
-        //     this.$router.replace('/StudentScorePage');
-        //     this.$emit('func',true);
-        //     this.userAvatar=require('../assets/S_avatar.png');
-        //   }
-        //   else{
-        //     this.$message({
-        //       message: '账号不存在或密码错误！',
-        //       type: 'warning'
-        //     });
-        //     return;
-        //   }
-        // }).catch((error)=>{
-        // this.$message({
-        //   message: '登录失败，请稍后重试',
-        //   type: 'warning'
-        // });
-        // console.log('error',error)
-        // return;
-        // })       
+        })     
       },
-      clear()
-      {
-        localStorage.clear();
+
+      register(){
+        this.dialogTableVisible=false;
+        this.$router.replace('/Register');
       }
   }    
 }
