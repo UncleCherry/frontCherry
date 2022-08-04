@@ -9,7 +9,7 @@ export default new Vuex.Store({
     Authorization:localStorage.getItem('Authorization')?localStorage.getItem('Authorization') : '',
     userName:localStorage.getItem('userName')?localStorage.getItem('userName'):'',
     userAvatar:localStorage.getItem('userAvatar')?localStorage.getItem('userAvatar'):'',
-    userIdentity:localStorage.getItem('userIdentity')?localStorage.getItem('userIdentity'):'',
+    userType:localStorage.getItem('userType')?localStorage.getItem('userType'):'',
     rememberPhone:localStorage.getItem('rememberPhone')?localStorage.getItem('rememberPhone'):'',
     rememberPassword:localStorage.getItem('rememberPassword')?localStorage.getItem('rememberPassword'):'',
   },
@@ -20,11 +20,11 @@ export default new Vuex.Store({
     changeLogin(state,user){
       state.Authorization=user.Authorization
       state.userName=user.userName
-      state.userIdentity=user.userIdentity //登录身份
+      state.userType=user.userType //登录身份
       localStorage.setItem('Authorization',user.Authorization)
       localStorage.setItem('userName',user.userName)
       localStorage.setItem('userAvatar',user.userAvatar)
-      localStorage.setItem('userIdentity',user.userIdentity)
+      localStorage.setItem('userType',user.userType)
     },
     //删除token
     delLogin(state){

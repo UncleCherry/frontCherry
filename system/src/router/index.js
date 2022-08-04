@@ -53,6 +53,11 @@ const routes = [
     name: 'ApplyExemptionPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/ApplyExemptionPage.vue')
   },
+  {
+    path: '/Register',
+    name: 'Register',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -63,14 +68,13 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.path === '/login' 
   || to.path==='/' 
-  || to.path==='/register'
+  || to.path==='/Register'
   || to.path==='/license'
   || to.path==='/forgetPassword'
   ) {
     next();
   } else {
     let token = localStorage.getItem('Authorization');
-
     if (token === null || token === '') {
       //打开登录界面
       startLogin();

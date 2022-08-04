@@ -6,7 +6,7 @@
 
          <StudentPageSide v-if="LoginState" style="padding-top: 55px;"/>
         <StudentInfo ref="studentInfo"/>
-          <el-main>
+          <el-main style="margin:0%;padding:0%;">
             <router-view
       style="padding-top: 55px;"
       />
