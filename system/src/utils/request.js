@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 import { MessageBox, Message } from 'element-ui'
 
 const service = axios.create({
@@ -65,7 +66,6 @@ service.interceptors.response.use(
           return Promise.reject(new Error('您尚未登录'||'Error'))
         }
         else if(res.errorCode==401){
-          console.log("1111")
           Message({
             message: '注册学号已存在',
             type: 'error',

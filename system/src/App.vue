@@ -4,9 +4,9 @@
         <Header @func="getLoginState"/>  
     <el-container style="width:100%;height:100%">
 
-         <StudentPageSide v-if="LoginState" style="padding-top: 55px;"/>
+         <StudentPageSide v-if="LoginState" style="padding-top: 50px;"/>
         <StudentInfo ref="studentInfo"/>
-          <el-main style="margin:0%;padding:0%;">
+          <el-main style="padding:0%; margin-left:200px;">
             <router-view
       style="padding-top: 55px;"
       />
