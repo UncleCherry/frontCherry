@@ -1,6 +1,6 @@
 <template>
-        <el-container style="height: 100%; border: 1px solid #eee; width:201px">
-  <el-aside width="201px">
+        <el-container style="height: 100%; border: 1px solid #eee; width:201px; position:fixed">
+  <el-aside width="201px" style="overflow-x: hidden; overflow-y: auto;">
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo side"
@@ -32,7 +32,7 @@
           <span>课程管理</span>
         </template>
           <el-menu-item index="3-1" @click="OpenScorePage">查看专业培养计划</el-menu-item>
-          <el-menu-item index="3-2">个人选课</el-menu-item>
+          <el-menu-item index="3-2" @click="OpenCourseSelect">个人选课</el-menu-item>
           <el-menu-item index="3-3">期中退课</el-menu-item>
           <el-menu-item index="3-4" @click="OpenScheduleTable">查看课表</el-menu-item>
       </el-submenu>
@@ -91,6 +91,10 @@
       OpenScheduleTable()
       {
         this.$router.replace('/ClassSchedulePage');
+      },
+      OpenCourseSelect()
+      {
+        this.$router.replace('/CourseSelect');
       },
     }
   }

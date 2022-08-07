@@ -1,5 +1,5 @@
 <template>
-    <el-container style="height: 100%; margin-top:-19px; margin-left:-12px">
+    <el-container style="height: 100%; margin-top:0px; margin-left:0px">
     <el-header style=" background-color: #545c64;">
       <span style="color:white;  font-size: 15px;">{{semester[curSemester]}}成绩查询</span>
       <el-dropdown style=" font-size : 12px; float:right;">
@@ -15,7 +15,7 @@
     </el-header>
     
     <el-main>
-      <el-table :data="tableData" height="100%" style="width: 100%">
+      <el-table :data="tableData" height="600px" style="width: 100%">
         <el-table-column prop="number" label="序号" sortable min-width="7%">
         </el-table-column>
         <el-table-column prop="code" label="课程代码" sortable min-width="10%">
@@ -79,4 +79,6 @@
     width: 200px;
     min-height: 400px;
   }
+
+
 </style>
