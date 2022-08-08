@@ -22,12 +22,14 @@
             </el-transfer>
         </div>
         <ClassTable :msgAppend="selectMsg" :classMsg="existMsg"/>
+        <ClassList :listMsg="listMsg"/>
       </el-main>
     </el-container>
 </template>
 
 <script>
 import ClassTable from '@/components/ClassTable.vue'
+import ClassList from '@/components/ClassList.vue'
 export default {
   name: 'CourseSelect',
   data() {
@@ -56,7 +58,9 @@ export default {
           return <span>{ option.key } - { option.label }</span>;
         },
         selectMsg:[],
-        existMsg:["计算机网络 - 2 - 周一1-2节"]
+        /*下面两个数据都将从数据库取出*/
+        existMsg:["计算机网络 - 2 - 周一1-2节"],
+        listMsg:["123123 - 计算机网络 - 2 - 周一1-2节"]
       };
     },
    methods:{
@@ -70,37 +74,38 @@ export default {
   },    
   components: {
       ClassTable,
+      ClassList,
   }
 }
 </script>
 
-<style>
-.el-transfer__buttons {
+<style lang="scss" scoped>
+ ::v-deep .el-transfer__buttons {
     display: inline-block;
     vertical-align: middle;
     padding: 0 30px;
 }
-.el-button {
+ ::v-deep .el-button {
     display:table-cell;
 }
 
 
-.el-transfer-panel {
+ ::v-deep .el-transfer-panel {
   width:40%;
 }
 
 
-.el-button--primary:nth-child(1){
+ ::v-deep .el-button--primary:nth-child(1){
   color: #FFF;
     background-color: #ff1e00;
     border-color: #ff1e00;
 }
-.el-button--primary:nth-child(1):focus, .el-button--primary:nth-child(1):hover{
+ ::v-deep .el-button--primary:nth-child(1):focus, .el-button--primary:nth-child(1):hover{
   color: #FFF;
     background-color: #fb492a;
     border-color: #fb492a;
 }
-.el-button--primary:nth-child(1):disabled{
+ ::v-deep .el-button--primary:nth-child(1):disabled{
   color: #FFF;
     background-color: #ffc3bb;
     border-color: #ffc3bb;

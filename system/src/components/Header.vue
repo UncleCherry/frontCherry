@@ -197,6 +197,7 @@ export default {
 
       openUserInfo()
       {
+        console.log(this.$parent)
         this.$parent.openStudentInfo();
       },
 
@@ -215,7 +216,7 @@ export default {
           this.$router.push({path:'/'});
           this.$parent.getLoginState(false);
           this.$message({
-              message: '注销成功',
+              message: '退出成功',
               type: 'success'
           });
       },

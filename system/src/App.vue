@@ -1,12 +1,12 @@
 <template>
 
     <div id="app">
-        <Header @func="getLoginState"/>  
+        <Header @func="getLoginState" ref="header"/>  
     <el-container style="width:100%;height:100%">
 
          <StudentPageSide v-if="LoginState" style="padding-top: 50px;"/>
         <StudentInfo ref="studentInfo"/>
-          <el-main style="padding:0%; margin-left:200px;">
+          <el-main style="padding:0%; margin-left:201px;">
             <router-view
       style="padding-top: 55px;"
       />
@@ -34,6 +34,10 @@ export default {
       openStudentInfo(){
         this.$refs.studentInfo.getMessage();
         this.$refs.studentInfo.drawer=true;
+      },
+      logout(){
+        console.log("logout")
+        this.$refs.header.Logout();
       }
   },    
   created(){

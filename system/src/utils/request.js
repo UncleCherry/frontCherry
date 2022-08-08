@@ -47,7 +47,6 @@ service.interceptors.response.use(
       console.log('真实的回复为：',response)
       // if the custom code is not 200, it is judged as an error.
       if (res.errorCode != 200) {
-        console.log("2222")
         //判断token是否失效
         if(res.errorCode==400){
           //清除当前token信息
