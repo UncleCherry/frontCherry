@@ -3,7 +3,7 @@
 -->
 <template>
     <div
-    class="background"
+    class="background" style="margin-left:-205px"
     >
       <div class="register">
         <br/>
@@ -199,10 +199,10 @@ export default {
             message: '注册成功',
             type: 'success'
           });
+          this.$router.replace('/')
         }).catch((error)=>{
             return;
         })
-        this.$router.replace('/')
       }
       else if(this.userType===1)
       {
@@ -211,10 +211,10 @@ export default {
             message: '注册成功',
             type: 'success'
           });
+          this.$router.replace('/')
         }).catch((error)=>{
             return;
         })
-        this.$router.replace('/')
       }
       else if(this.userType===2)
       {
@@ -223,10 +223,10 @@ export default {
             message: '注册成功',
             type: 'success'
           });
+          this.$router.replace('/')
         }).catch((error)=>{
             return;
         })
-        this.$router.replace('/')
       }
       
       

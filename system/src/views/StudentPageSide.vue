@@ -45,9 +45,9 @@
           <el-menu-item index="4-2">请假</el-menu-item>
           <el-menu-item index="4-3">缺勤申述</el-menu-item>
       </el-submenu>
-      <el-menu-item index="5" style="text-align: left;">
+      <el-menu-item index="5" style="text-align: left;" @click="OpenSetting">
         <i class="el-icon-setting"></i>
-        <span slot="title">设置</span>
+        <span slot="title" >设置</span>
       </el-menu-item>
     </el-menu>
    </el-aside>
@@ -96,6 +96,10 @@
       {
         this.$router.replace('/CourseSelect');
       },
+      OpenSetting()
+      {
+        this.$router.replace('/Setting');
+      }
     }
   }
 </script>

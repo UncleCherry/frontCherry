@@ -10,8 +10,6 @@ export default new Vuex.Store({
     userName:localStorage.getItem('userName')?localStorage.getItem('userName'):'',
     userAvatar:localStorage.getItem('userAvatar')?localStorage.getItem('userAvatar'):'',
     userType:localStorage.getItem('userType')?localStorage.getItem('userType'):'',
-    rememberPhone:localStorage.getItem('rememberPhone')?localStorage.getItem('rememberPhone'):'',
-    rememberPassword:localStorage.getItem('rememberPassword')?localStorage.getItem('rememberPassword'):'',
   },
   getters: {
   },

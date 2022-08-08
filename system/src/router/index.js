@@ -63,6 +63,11 @@ const routes = [
     name: 'CourseSelect',
     component: () => import(/* webpackChunkName: "about" */ '../views/CourseSelect.vue')
   },
+  {
+    path: '/Setting',
+    name: 'Setting',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Setting.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -84,7 +89,7 @@ router.beforeEach((to, from, next) => {
       //打开登录界面
       startLogin();
       //前往首页
-      //this.$router.replace('/');
+      this.$router.replace('/');
 
       
     } else {
