@@ -70,7 +70,7 @@
           帮助
 
         </el-menu-item>
-        <el-submenu index="2" v-if="loginState==1" style="float: right;">
+        <el-submenu index="2" v-if="loginState==0" style="float: right;">
           <template #title>
             <!--显示头像-->
             <el-avatar :size="30" href='https://www.baidu.com/s?wd=%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E7%95%8C%E9%9D%A2' :src="userAvatar" @error="errorHandler">
@@ -86,7 +86,7 @@
             <i class="el-icon-remove"></i>
             退出登录</el-menu-item>
         </el-submenu>
-        <el-menu-item  v-if="loginState==0" style="float: right;" >
+        <el-menu-item  v-if="loginState==-1" style="float: right;" >
           <el-link :underline="false"  @click="dialogVisible = true" >登录</el-link>
           <el-dialog  
           :visible.sync="dialogVisible" 
@@ -161,7 +161,7 @@ export default {
       console.log('本次访问网页有token信息，已自动读取')
       this.userName=localStorage.getItem('userName');
       this.loginState=localStorage.getItem('userType');
-      if(this.loginState==1)
+      if(this.loginState==0)
       {
         this.userAvatar=require('../assets/S_avatar.png');
       }
@@ -210,7 +210,7 @@ export default {
         console.log('正在退出登录')
           //清除token信息
           this.delLogin();
-          this.loginState=0;
+          this.loginState=-1;
 
           //前往主页
           this.$router.push({path:'/'});
@@ -253,7 +253,7 @@ export default {
                 userType:0
               });             
               this.dialogTableVisible=false;
-              this.loginState=1;
+              this.loginState=0;
               console.log('学生成功登录')
             }
             this.$message({

@@ -24,6 +24,16 @@
       width="200px">
     </el-table-column>
     <el-table-column
+      prop="isRequired"
+      label="必修/选修"
+      width="200px">
+    </el-table-column>
+    <el-table-column
+      prop="meetingId"
+      label="会议号"
+      width="200px">
+    </el-table-column>
+    <el-table-column
       fixed="right"
       label="操作"
       width="200px">
@@ -43,6 +53,7 @@
   export default {
     methods: {
       deleteRow(index, rows) {
+        this.$emit('func',this.tableData[index].id);
         rows.splice(index, 1);
       }
     },
@@ -58,12 +69,14 @@
           for(var i=0;i<this.listMsg.length;++i)
           {
             var temp = this.listMsg[i];
-            var inct=this.listMsg[i].split(" - "); //id - name - credit - time
+            var inctrm=this.listMsg[i].split(" - "); //id - name - credit - time - isRequired - meetingId
             this.tableData.push({
-              id:parseInt(inct[0]),
-              name:inct[1],
-              credit:parseInt(inct[2]),
-              time:inct[3]
+              id:parseInt(inctrm[0]),
+              name:inctrm[1],
+              credit:parseInt(inctrm[2]),
+              time:inctrm[3],
+              isRequired:inctrm[4],
+              meetingId:inctrm[5]
             });
           }
         },

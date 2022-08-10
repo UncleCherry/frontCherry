@@ -12,47 +12,54 @@
         <el-table-column
           prop="type"
           label="节次"
-          align="center"/>
+          align="center"
+          min-width="12.5%"/>
         <el-table-column
           prop="Mon"
           label="周一"
           align="center"
-          width="175"/>
+          min-width="12.5%" />
         <el-table-column
           prop="Tue"
           label="周二"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Wed"
           label="周三"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Thur"
           label="周四"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Fri"
           label="周五"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Sat"
           label="周六"
           align="center"
           width="175"
+          min-width="12.5%"
           />
          <el-table-column
           prop="Sun"
           label="周日"
           align="center"
           width="175"
+          min-width="12.5%"
           />
 
       </el-table>
@@ -60,7 +67,7 @@
 </template>
 <script>
 export default {
-  name: 'myNeedDeal',
+  name: 'ClassTable',
   data() {
     return {
       rowList: [],
@@ -236,8 +243,7 @@ export default {
           else
             start=end=parseInt(section[0]);
           for(var k=start;k<=end;++k)
-          {
-            console.log(k)             
+          {            
             if(times[j][1]==="一")
             {
               this.listData[k-1].Mon=nct[0];
@@ -434,7 +440,6 @@ export default {
     		}
     	}
     },
-
   },
 
   mounted() {
@@ -442,6 +447,11 @@ export default {
   },
 
   watch:{
+    classMsg:{
+      handler(val){
+        this.initData();
+      }
+    },
     msgAppend:{
       handler(val) {
         this.initData();
