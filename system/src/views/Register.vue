@@ -247,14 +247,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.router-link-active{
-  background-color: green;
-  font-size: larger;
-  color: aliceblue
-
-}
-
+<style lang="scss" scoped>
 .background{
     width:100%;  
     height:100%;
@@ -271,6 +264,7 @@ export default {
     position: absolute;
 }
 
+
 .register{
   width: 35%;
 	height: 85%;
@@ -286,25 +280,25 @@ export default {
   z-index:1;
 }
 
-.el-textarea__inner,.el-input__inner {
-    background: transparent !important;
-    color:white
+/deep/ .el-input__inner {
+  background-color: rgba(0, 0, 0, 0) !important;
+  color:white
 }
 
-.item .el-form-item__label{
+ ::v-deep .item .el-form-item__label{
     color: white;
 }
 
-.el-radio__label {
+ ::v-deep .el-radio__label {
     padding-left: 20px;
     color: white;
 }
 
-.el-radio__input.is-checked + .el-radio__label {
+ ::v-deep .el-radio__input.is-checked + .el-radio__label {
     color: #05fdfd !important;
 }
 
-.el-radio__input.is-checked .el-radio__inner {
+ ::v-deep .el-radio__input.is-checked .el-radio__inner {
     background: #38c3e6 !important;
     border-color: #38c3e6 !important;
 }
