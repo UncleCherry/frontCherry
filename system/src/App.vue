@@ -8,7 +8,7 @@
         <StudentInfo ref="studentInfo"/>
           <el-main style="padding:0%; margin-left:201px;">
             <router-view
-      style="padding-top: 55px;"
+      style="padding-top: 55px;" v-if="isRouterAlive"
       />
           </el-main>
     </el-container >
@@ -23,10 +23,16 @@ import StudentInfo from './components/StudentInfo.vue'
 export default {
   name: 'app',
   data() {
-      return{
-        LoginState:false,
-      }
-    },
+    return{
+      LoginState:false,
+      isRouterAlive:true
+    }
+  },
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
    methods:{
       getLoginState(data){
         this.LoginState=data;      
@@ -38,6 +44,12 @@ export default {
       logout(){
         console.log("logout")
         this.$refs.header.Logout();
+      },
+      reload () {
+        this.isRouterAlive = false
+        this.$nextTick(function () {
+          this.isRouterAlive = true
+        })
       }
   },    
   created(){
