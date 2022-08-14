@@ -12,20 +12,20 @@
 <script>
 import ClassTable from '@/components/ClassTable.vue'
 import ClassTableHead from '@/components/ClassTableHead.vue'
-import { getStudentCourse } from '@/api/course'
+import { getInstructorCourse } from '@/api/course'
 export default {
-  name: 'ClassSchedulePage',
+  name: 'InstructSchedulePage',
   created(){
-    getStudentCourse().then(response=>{
+    getInstructorCourse().then(response=>{
       this.$message({
-        message: '获取课程信息成功',
+        message: '获取授课信息成功',
         type: 'success'
       });
       this.courseMsg=response.data.CoursesList
       this.updateTable()
     }).catch((error)=>{
       this.$message({
-        message: '获取课程信息失败',
+        message: '获取授课信息失败',
         type: 'warning'
       });
     })
