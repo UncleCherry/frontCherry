@@ -51,10 +51,8 @@ service.interceptors.response.use(
         if(res.errorCode==400){
           //清除当前token信息
           store.commit('delLogin');
-          //打开登录界面
-          startLogin()
-          //前往首页
-          //this.$router.replace('/');
+          //前往登录页
+          this.$router.replace('/Login');
 
           Message({
             message: '您尚未登录，请先登录',
