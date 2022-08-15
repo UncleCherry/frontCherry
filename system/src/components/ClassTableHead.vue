@@ -18,30 +18,24 @@
   export default {
       name: 'Score',
     data() {
-      const item = {
-
-      };
       return {
-        tableData: Array(20).fill(item),
         semester:[
-          '2021-2022第二学期',
-          '2021-2022第一学期',
-          '2020-2021第二学期',
-          '2020-2021第一学期',
+          '2022第二学期',
+          '2022第一学期',
+          '2021第二学期',
+          '2021第一学期',
         ],
         curSemester:0,
 
       }
     },
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      },
+    methods: {   
       changeSemester(chooseTerm){
-        this.curSemester=chooseTerm;
+        if(this.curSemester!=chooseTerm)
+        {
+          this.curSemester=chooseTerm;
+          this.$emit('func');
+        }
       },
     }
   }
