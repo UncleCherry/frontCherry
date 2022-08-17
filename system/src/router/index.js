@@ -64,6 +64,21 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/CourseSelect.vue')
   },
   {
+    path: '/AttendanceInfo',
+    name: 'AttendanceInfo',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfo.vue')
+  },
+  {
+    path: '/ApplyLeavePage',
+    name: 'ApplyLeavePage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ApplyLeavePage.vue')
+  },
+  {
+    path: '/AttendanceScore',
+    name: 'AttendanceScore',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceScore.vue')
+  },
+  {
     path: '/Setting',
     name: 'Setting',
     component: () => import(/* webpackChunkName: "about" */ '../views/Setting.vue')
