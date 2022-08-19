@@ -53,6 +53,16 @@ const routes = [
     name: 'ApplyExemptionPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/ApplyExemptionPage.vue')
   },
+  {
+    path: '/ExamSchedulePage',
+    name: 'ExamSchedulePage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ExamSchedulePage.vue')
+  },
+  {
+    path: '/RetakeExamPage',
+    name: 'RetakeExamPage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/RetakeExamPage.vue')
+  },
 ]
 
 const router = new VueRouter({
