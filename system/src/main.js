@@ -10,6 +10,8 @@ Vue.use(ElementUI) //使用elementUI
 
 Vue.config.productionTip = false
 
+export const eventBus = new Vue()
+
 new Vue({
   store,
   router,

@@ -1,5 +1,6 @@
 import axios from 'axios'
-
+import store from '@/store'
+import { MessageBox, Message } from 'element-ui'
 
 const service = axios.create({
     //baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -46,24 +47,34 @@ service.interceptors.response.use(
       console.log('真实的回复为：',response)
       // if the custom code is not 200, it is judged as an error.
       if (res.errorCode != 200) {
-
         //判断token是否失效
         if(res.errorCode==400){
           //清除当前token信息
           store.commit('delLogin');
-          //打开登录界面
-          startLogin()
-          //前往首页
-          //this.$router.replace('/');
+          //前往登录页
+          this.$router.replace('/Login');
 
           Message({
             message: '您尚未登录，请先登录',
             type: 'error',
             duration: 5 * 1000
           })
-
-
+          
           return Promise.reject(new Error('您尚未登录'||'Error'))
+        }
+        else if(res.errorCode==401){
+          Message({
+            message: '注册学号已存在',
+            type: 'error',
+            duration: 5 * 1000
+          })
+        }
+        else if(res.errorCode==402){
+          Message({
+            message: '注册用户名已存在',
+            type: 'error',
+            duration: 5 * 1000
+          })
         }
 
         return Promise.reject(new Error(res.msg || 'Error'))

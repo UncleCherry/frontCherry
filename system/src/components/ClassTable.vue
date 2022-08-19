@@ -5,52 +5,61 @@
         :data="listData"
         :span-method="objectSpanMethod"
         class="tableArea"
-        style="width: 100%"
+        border
+        style="width: 100%; border: solid 1px"
+        :header-cell-style="{borderColor:'black'}"
         :cell-style='cellStyle'>
         <el-table-column
           prop="type"
           label="节次"
-          align="center"/>
+          align="center"
+          min-width="12.5%"/>
         <el-table-column
           prop="Mon"
           label="周一"
           align="center"
-          width="175"/>
+          min-width="12.5%" />
         <el-table-column
           prop="Tue"
           label="周二"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Wed"
           label="周三"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Thur"
           label="周四"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Fri"
           label="周五"
           align="center"
           width="175"
+          min-width="12.5%"
           />
         <el-table-column
           prop="Sat"
           label="周六"
           align="center"
           width="175"
+          min-width="12.5%"
           />
          <el-table-column
           prop="Sun"
           label="周日"
           align="center"
           width="175"
+          min-width="12.5%"
           />
 
       </el-table>
@@ -58,7 +67,7 @@
 </template>
 <script>
 export default {
-  name: 'myNeedDeal',
+  name: 'ClassTable',
   data() {
     return {
       rowList: [],
@@ -77,19 +86,19 @@ export default {
       position6: 0,
       position7: 0,
       listData: [],
-      cellColor:'#9C959B'
+      cellColor:'#9C959B',
     }
   },
- 
+  props:['classMsg','msgAppend'],
   methods: {
-  	queryData(){//查询操作
+  	initData(){
   		this.listData = [
   			{
         	id:1,
           type:"第一节课",
-          Mon:"计算机网络",
+          Mon:"",
           Tue:"",
-          Wed:"软件工程",
+          Wed:"",
           Thur:"",
           Fri:"",
           Sat:"",
@@ -98,9 +107,9 @@ export default {
         {
         	id:2,
           type:"第二节课",
-          Mon:"计算机网络",
+          Mon:"",
           Tue:"",
-          Wed:"软件工程",
+          Wed:"",
           Thur:"",
           Fri:"",
           Sat:"",
@@ -111,7 +120,7 @@ export default {
           type:"第三节课",
           Mon:"",
           Tue:"",
-          Wed:"软件工程",
+          Wed:"",
           Thur:"",
           Fri:"",
           Sat:"",
@@ -155,7 +164,7 @@ export default {
           type:"第七节课",
           Mon:"",
           Tue:"",
-          Wed:"计算机网络",
+          Wed:"",
           Thur:"",
           Fri:"",
           Sat:"",
@@ -166,7 +175,7 @@ export default {
           type:"第八节课",
           Mon:"",
           Tue:"",
-          Wed:"计算机网络",
+          Wed:"",
           Thur:"",
           Fri:"",
           Sat:"",
@@ -218,8 +227,66 @@ export default {
         },
 
   		];
-		  this.rowspan()
+      for(var i=0;i<this.classMsg.length;++i)
+      {
+        var nct = this.classMsg[i].split(" - "); //课程名 - 学分 - 时间
+        var times=nct[2].split("/");
+        for(var j=0;j<times.length;++j)
+        {            
+          var section=times[j].split("-")
+          var start,end;
+          if(section.length==2)
+          {
+            start = parseInt(section[0].substring(1).substring(1));
+            end = parseInt(section[1]);
+          }
+          else
+            start=end=parseInt(section[0]);
+          for(var k=start;k<=end;++k)
+          {            
+            if(times[j][1]==="一")
+            {
+              this.listData[k-1].Mon=nct[0];
+            }
+            else if(times[j][1]==="二")
+            {
+              this.listData[k-1].Tue=nct[0];
+            }
+            else if(times[j][1]==="三")
+            {
+              this.listData[k-1].Wed=nct[0];
+            }
+            else if(times[j][1]==="四")
+            {
+              this.listData[k-1].Thur=nct[0];
+            }
+            else if(times[j][1]==="五")
+            {
+              this.listData[k-1].Fri=nct[0];
+            }
+            else if(times[j][1]==="六")
+            {
+              this.listData[k-1].Sat=nct[0];
+            }
+            else if(times[j][1]==="日")
+            {
+              this.listData[k-1].Sun=nct[0];
+            }
+          }
+        }
+      };
+      this.clear();
+		  this.rowspan();
   	},
+    clear(){
+      this.spanArr1=[];
+      this.spanArr2=[];
+      this.spanArr3=[];
+      this.spanArr4=[];
+      this.spanArr5=[];
+      this.spanArr6=[];
+      this.spanArr7=[];
+    },
   	rowspan() {
   		this.listData.forEach((item,index) => {
 	    	if( index === 0){
@@ -292,26 +359,27 @@ export default {
   	},
     cellStyle({row, column, rowIndex, columnIndex}){
       if(columnIndex === 1&& row.Mon!=''){
-           return 'background:'+this.cellColor
+           return 'background:'+this.cellColor+";border-color:black!important;"
       }
       if(columnIndex === 2&& row.Tue!=''){
-           return 'background:'+this.cellColor
+           return 'background:'+this.cellColor+";border-color:black!important;"
       }
       if(columnIndex === 3&& row.Wed!=''){
-           return 'background:'+this.cellColor
+           return 'background:'+this.cellColor+";border-color:black!important;"
       }
       if(columnIndex === 4&& row.Thur!=''){
-           return 'background:'+this.cellColor
+           return 'background:'+this.cellColor+";border-color:black!important;"
       }
       if(columnIndex === 5&& row.Fri!=''){
-           return 'background:'+this.cellColor
+           return 'background:'+this.cellColor+";border-color:black!important;"
       }
       if(columnIndex === 6&& row.Sat!=''){
-           return 'background:'+this.cellColor
+           return 'background:'+this.cellColor+";border-color:black!important;"
       }
       if(columnIndex === 7&& row.Sun!=''){
-           return 'background:'+this.cellColor
+           return 'background:'+this.cellColor+";border-color:black!important;"
       }
+      return "border-color:black!important;"
     },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {  //表格合并行
     	if(columnIndex === 1){
@@ -371,12 +439,76 @@ export default {
     			colspan: _col7
     		}
     	}
-    }
+    },
   },
 
   mounted() {
-    this.queryData();
+    this.initData();
   },
+
+  watch:{
+    classMsg:{
+      handler(val){
+        this.initData();
+      }
+    },
+    msgAppend:{
+      handler(val) {
+        this.initData();
+        for(var i=0;i<this.msgAppend.length;++i)
+        {
+          var nct = this.msgAppend[i].split(" - "); //课程名 - 学分 - 时间
+          var times=nct[2].split("/");
+          for(var j=0;j<times.length;++j)
+          {            
+            var section=times[j].split("-")
+            var start,end;
+            if(section.length==2)
+            {
+              start = parseInt(section[0].substring(1).substring(1));
+              end = parseInt(section[1]);
+            }
+            else
+              start=end=parseInt(section[0]);
+            for(var k=start;k<=end;++k)
+            {             
+              if(times[j][1]==="一")
+              {
+                this.listData[k-1].Mon=nct[0];
+              }
+              else if(times[j][1]==="二")
+              {
+                this.listData[k-1].Tue=nct[0];
+              }
+              else if(times[j][1]==="三")
+              {
+                this.listData[k-1].Wed=nct[0];
+              }
+              else if(times[j][1]==="四")
+              {
+                this.listData[k-1].Thur=nct[0];
+              }
+              else if(times[j][1]==="五")
+              {
+                this.listData[k-1].Fri=nct[0];
+              }
+              else if(times[j][1]==="六")
+              {
+                this.listData[k-1].Sat=nct[0];
+              }
+              else if(times[j][1]==="日")
+              {
+                this.listData[k-1].Sun=nct[0];
+              }
+            }
+          }
+        }
+        this.clear();
+        this.rowspan();
+      },
+      immediate: true,
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
