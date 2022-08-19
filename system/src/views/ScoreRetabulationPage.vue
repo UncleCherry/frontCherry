@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/valid-template-root -->
 <template>
 </template>
 
@@ -9,7 +10,7 @@ export default {
       }
     },
    methods:{
-  },    
+  },
   components: {
   }
 }

@@ -2,7 +2,7 @@
     <el-card class="box-card" style="margin-left:0px">
     <div slot="header" class="clearfix">
         <span style="float:left;">申请课程名称</span>
-        <el-select v-model="value" placeholder="请选择" style="margin-left:10px;width:500px">
+        <el-select v-model="value" placeholder="请选择" style="margin-left:10px;width:400px">
             <el-option
             v-for="item in options"
             :key="item.value"
@@ -10,7 +10,7 @@
             :value="item.label">
             </el-option>
         </el-select>
-        
+
           <div style="margin: 30px 0;"></div>
           <div>
             <span style="float:left;">申请理由</span>
@@ -23,10 +23,23 @@
               style="width:700px;"
             >
             </el-input>
+            <el-upload
+  class="upload-demo"
+  action=""
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :before-remove="beforeRemove"
+  multiple
+  :limit="3"
+  :on-exceed="handleExceed"
+  :file-list="fileList">
+  <el-button size="small" style="margin-left:10px" type="primary">点击上传附件(可选)</el-button>
+  <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+</el-upload>
           </div>
           <div>
             <el-button type="text" style="font-size:20px" @click="exemption">申请免修</el-button>
-            <el-button type="text" style="margin-left:100px;font-size:20px;" @click="freeAttendance">申请免听</el-button>  
+            <el-button type="text" style="margin-left:100px;font-size:20px;" @click="freeAttendance">申请免听</el-button>
           </div>
 
     </div>
@@ -116,30 +129,30 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
-            }).then(() => {                   
+            }).then(() => {
               this.$message({
                 type: 'success',
                 message: '申请成功!'
-              });         
+              });
             }).catch(() => {
               this.$message({
                 type: 'info',
                 message: '已取消申请'
-              });          
+              });
             });
           }
           else{
             this.$message({
                 type: 'info',
                 message: '理由不能为空'
-              });          
+              });
           }
         }
         else{
           this.$message({
                 type: 'info',
                 message: '未选择申请课程'
-              });   
+              });
         }
       },
       freeAttendance(){
@@ -151,39 +164,51 @@
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
-            }).then(() => {                   
+            }).then(() => {
               this.$message({
                 type: 'success',
                 message: '申请成功!'
-              });         
+              });
             }).catch(() => {
               this.$message({
                 type: 'info',
                 message: '已取消申请'
-              });          
+              });
             });
           }
           else{
             this.$message({
                 type: 'info',
                 message: '理由不能为空'
-              });          
+              });
           }
         }
         else{
           this.$message({
                 type: 'info',
                 message: '未选择申请课程'
-              });   
+              });
         }
-      },   
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}?`);
+      },
       handleClick(row) {
         console.log(row);
-      } 
+      }
   }
   }
 </script>
-    
+
 <style>
   .text {
     font-size: 20px;
