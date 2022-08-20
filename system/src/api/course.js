@@ -35,3 +35,37 @@ export function dropCourse(data) {
         data:param
     })
 }
+
+export function createCourse(data) {
+    let param = new URLSearchParams(data);
+    return request({
+        url: '/Course/create',
+        method: 'post',
+        data:param
+    })
+}
+
+export function getInstructorCourse() {
+    return request({
+        url: '/Course/instructor',
+        method: 'get',
+    })
+}
+
+export function instructCourse(data) {
+    let param = new URLSearchParams(data);
+    return request({
+        url: '/Course/instruct',
+        method: 'post',
+        data:param
+    })
+}
+
+export function unInstructCourse(data) {
+    let param = new URLSearchParams(data);
+    return request({
+        url: '/Course/uninstruct',
+        method: 'delete',
+        data:param
+    })
+}

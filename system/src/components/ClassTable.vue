@@ -23,42 +23,36 @@
           prop="Tue"
           label="周二"
           align="center"
-          width="175"
           min-width="12.5%"
           />
         <el-table-column
           prop="Wed"
           label="周三"
           align="center"
-          width="175"
           min-width="12.5%"
           />
         <el-table-column
           prop="Thur"
           label="周四"
           align="center"
-          width="175"
           min-width="12.5%"
           />
         <el-table-column
           prop="Fri"
           label="周五"
           align="center"
-          width="175"
           min-width="12.5%"
           />
         <el-table-column
           prop="Sat"
           label="周六"
           align="center"
-          width="175"
           min-width="12.5%"
           />
          <el-table-column
           prop="Sun"
           label="周日"
           align="center"
-          width="175"
           min-width="12.5%"
           />
 
