@@ -1,6 +1,6 @@
 <template>
     <div style="width:100%;display: flex;justify-content: center; margin-top:50px;">
-      <el-card style="width:50%;border-style:solid;border-width:2px;border-color:#7494f3;">
+      <el-card style="width:50%;border-style:solid;border-width:2px;border-color:#7494f3;box-shadow: 5px 5px 5px 5px #2D485C;">
         <div slot="header" class="clearfix" style="height:50px;background:#DCDFE6;overflow:hidden;">
           <span style="font-size:20px; font-weight:bold;  line-height: 50px">创建课程</span>
         </div>

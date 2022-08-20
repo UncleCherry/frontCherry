@@ -16,8 +16,12 @@
         <i class="el-icon-menu"></i>
         <span slot="title">选择授课</span>
       </el-menu-item>
+      <el-menu-item index="3" @click="OpenGradeEdit">
+        <i class="el-icon-menu"></i>
+        <span slot="title">编辑成绩</span>
+      </el-menu-item>
       <!-- 有新功能加这里 -->
-      <el-menu-item index="3" @click="OpenSetting">
+      <el-menu-item index="4" @click="OpenSetting">
         <i class="el-icon-setting"></i>
         <span slot="title">设置</span>
       </el-menu-item>
@@ -50,6 +54,10 @@
       OpenInstructSelect()
       {
         this.$router.replace('/InstructSelect')
+      },
+      OpenGradeEdit()
+      {
+        this.$router.replace('/GradeEdit')
       }
     }
   }

@@ -78,6 +78,11 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
+  {
+    path: '/GradeEdit',
+    name: 'GradeEdit',
+    component: () => import('../views/GradeEdit.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -97,9 +102,7 @@ router.beforeEach((to, from, next) => {
     let token = localStorage.getItem('Authorization');
     if (token === null || token === '') {
       //前往登录页
-      this.$router.replace('/Login');
-
-      
+      this.$router.replace('/Login');     
     } else {
       next();
     }
