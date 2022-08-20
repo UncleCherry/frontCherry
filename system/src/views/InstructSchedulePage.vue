@@ -3,7 +3,7 @@
       <el-header style=" background-color: #545c64;">
         <ClassTableHead ref="head" @func="updateTable"/>
       </el-header>
-      <el-main style="margin-top:-20px">
+      <el-main>
         <ClassTable :classMsg="msg" ref="table"/>
         </el-main>
       </el-container>
