@@ -44,7 +44,8 @@
     "rules": {
       "no-unused-vars":"off",
       "no-extra-semi":"off",
-      "vue/multi-word-component-names": "off"
+      "vue/multi-word-component-names": "off",
+      "no-mixed-spaces-and-tabs":"off"
     }
   },
   "browserslist": [

@@ -49,7 +49,7 @@
         </el-input>
       </div>
       <div>
-        <el-upload
+        <!-- <el-upload
           style="clear: both; float: left; margin-top: 30px"
           action=""
           :on-preview="handlePreview"
@@ -63,6 +63,20 @@
           <el-button size="small" style="float: right" type="primary"
             >点击上传申请表</el-button
           >
+        </el-upload> -->
+        <el-upload
+          style="clear: both; float: left; margin-top: 30px"
+          class="upload-demo"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :before-remove="beforeRemove"
+          multiple
+          :limit="3"
+          :on-exceed="handleExceed"
+          :file-list="fileList"
+        >
+          <el-button size="small" type="primary">点击上传申请表</el-button>
         </el-upload>
       </div>
       <el-button
@@ -73,44 +87,60 @@
         >申请</el-button
       >
     </div>
+    <div style="width: 100%">
+      <el-table
+        :data="
+          tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+        "
+        border
+        @selection-change="handleSelectionChange"
+        ref="multipleTable"
+      >
+        <el-table-column type="selection" width="55"> </el-table-column>
 
-    <el-table
-      :data="tableData"
-      height="250"
-      highlight-current-row="true"
-      border
-      style="width: 100%"
-    >
-      <el-table-column prop="Snum" label="序号" width="100"> </el-table-column>
-      <el-table-column prop="CourseID" label="课程ID" width="120">
-      </el-table-column>
-      <el-table-column prop="courseName" label="课程名称" width="180">
-      </el-table-column>
-      <el-table-column prop="applyDate" label="申请日期" width="120">
-      </el-table-column>
-      <el-table-column prop="applyType" label="申请类型" width="120">
-      </el-table-column>
-      <el-table-column prop="State" label="审核状态" width="180">
-      </el-table-column>
-      <el-table-column fixed="right" label="操作" width="100">
-        <template slot-scope="scope">
-          <el-button
-            @click="handleClick(scope.row)"
-            type="text"
-            size="small"
-            style="color: red"
-            >撤销申请</el-button
-          >
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-pagination
-      background
-      style="bottom: 0%"
-      layout="prev, pager, next"
-      :total="1000"
-    >
-    </el-pagination>
+        <el-table-column prop="Snum" label="序号" width="120">
+        </el-table-column>
+        <el-table-column prop="CourseID" label="课程ID" width="160">
+        </el-table-column>
+        <el-table-column prop="courseName" label="课程名称" width="230">
+        </el-table-column>
+        <el-table-column prop="applyDate" label="申请日期" width="240">
+        </el-table-column>
+        <el-table-column prop="applyType" label="申请类型" width="155">
+        </el-table-column>
+        <el-table-column prop="State" label="审核状态" width="160">
+        </el-table-column>
+        <el-table-column label="操作" width="170">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+              >编辑</el-button
+            >
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <div style="clear: both; float: left; margin-top: 15px">
+        <el-button @click="toggleSelection(tableData)">全选</el-button>
+        <el-button @click="toggleSelection()">取消选择</el-button>
+      </div>
+
+      <el-pagination
+        style="clear: both; margin-top: 30px"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[2, 5, 10]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="10"
+      >
+      </el-pagination>
+    </div>
   </el-card>
 </template>
 
@@ -121,39 +151,42 @@ export default {
     return {
       courseNameOptions: [
         {
-          value: "选项1",
           label: "数据库原理和应用",
+          value: "数据库原理和应用",
         },
         {
-          value: "选项2",
           label: "计算机系统结构",
+          value: "计算机系统结构",
         },
         {
-          value: "选项3",
           label: "操作系统",
+          value: "操作系统",
         },
         {
-          value: "选项4",
           label: "系统分析与设计",
+          value: "系统分析与设计",
         },
         {
-          value: "选项5",
           label: "毛泽东思想概述",
+          value: "毛泽东思想概述",
         },
       ],
       applyTypeOptions: [
         {
-          value: "选项1",
           label: "申请免听",
+          value: "申请免听",
         },
         {
-          value: "选项2",
           label: "申请免修",
+          value: "申请免修",
         },
       ],
       courseName: "",
       applyType: "",
       applyReason: "",
+      search: "",
+      fileList: [],
+      multipleSelection: [],
       tableData: [
         {
           Snum: 1,
@@ -172,110 +205,41 @@ export default {
           State: "申请通过",
         },
       ],
+      currentPage: 1,
+      pageSize: 2,
     };
   },
   methods: {
     Apply() {
       var str = "";
+      console.log(this.applyTypeOptions.value);
       if (this.courseName != "") {
         if (this.applyReason != "") {
-          if (this.applyTypeOptions.label == "申请免修") {
-            str = "是否确定申请免修课程";
-            console.log(str);
-          } else if (this.applyTypeOptions.label == "申请免听") {
-            str = "是否确定申请免听课程";
-            console.log(str);
-          }
-          this.$confirm(this.courseName + "", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning",
-          })
-            .then(() => {
-              this.$message({ type: "success", message: "申请成功!" });
+          if (this.applyType != "") {
+            if (this.applyType === "申请免修") {
+              str = "是否确定申请免修课程";
+            } else if (this.applyType === "申请免听") {
+              str = "是否确定申请免听课程";
+            }
+            this.$confirm(str + ":《" + this.courseName + "》", "提示", {
+              confirmButtonText: "确定",
+              cancelButtonText: "取消",
+              type: "warning",
             })
-            .catch(() => {
-              this.$message({ type: "info", message: "已取消申请" });
-            });
+              .then(() => {
+                this.$message({ type: "success", message: "申请成功!" });
+              })
+              .catch(() => {
+                this.$message({ type: "info", message: "已取消申请" });
+              });
+          } else {
+            this.$message({ type: "info", message: "未选择申请类型" });
+          }
         } else {
           this.$message({ type: "info", message: "申请理由不能为空" });
         }
       } else {
         this.$message({ type: "info", message: "未选择申请课程" });
-      }
-    },
-    exemption() {
-      if (this.value != "") {
-        if (this.textarea != "") {
-          this.$confirm(
-            "是否确定申请《" + this.value + "》这门课程免修",
-            "提示",
-            {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning",
-            }
-          )
-            .then(() => {
-              this.$message({
-                type: "success",
-                message: "申请成功!",
-              });
-            })
-            .catch(() => {
-              this.$message({
-                type: "info",
-                message: "已取消申请",
-              });
-            });
-        } else {
-          this.$message({
-            type: "info",
-            message: "理由不能为空",
-          });
-        }
-      } else {
-        this.$message({
-          type: "info",
-          message: "未选择申请课程",
-        });
-      }
-    },
-    freeAttendance() {
-      if (this.value != "") {
-        if (this.textarea != "") {
-          this.$confirm(
-            "是否确定申请《" + this.value + "》这门课程免听",
-            "提示",
-            {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning",
-            }
-          )
-            .then(() => {
-              this.$message({
-                type: "success",
-                message: "申请成功!",
-              });
-            })
-            .catch(() => {
-              this.$message({
-                type: "info",
-                message: "已取消申请",
-              });
-            });
-        } else {
-          this.$message({
-            type: "info",
-            message: "理由不能为空",
-          });
-        }
-      } else {
-        this.$message({
-          type: "info",
-          message: "未选择申请课程",
-        });
       }
     },
     handleRemove(file, fileList) {
@@ -294,8 +258,31 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}?`);
     },
-    handleClick(row) {
-      console.log(row);
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach((row) => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
     },
   },
 };
