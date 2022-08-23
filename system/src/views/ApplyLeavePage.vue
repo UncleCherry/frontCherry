@@ -60,7 +60,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .el-input {
   margin-top: 30px;
   margin-right: 30px;
