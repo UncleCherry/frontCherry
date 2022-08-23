@@ -30,14 +30,14 @@
 <script>
 import ClassTable from '@/components/ClassTable.vue'
 import ClassList from '@/components/ClassList.vue'
-import { getAllCourse,getStudentCourse,takeCourse,dropCourse } from '@/api/course'
+import { getAllCourse,getInstructorCourse,instructCourse,unInstructCourse } from '@/api/course'
 import axios from 'axios'
 export default {
   inject: ['reload'],
   name: 'CourseSelect',
   created(){
     /*axios.all等待两个请求结束再执行数据处理函数*/
-    axios.all([getStudentCourse().then(response=>{
+    axios.all([getInstructorCourse().then(response=>{
       this.choosedCourse=response.data.CoursesList
     }).catch((error)=>{
       this.$message({
@@ -130,7 +130,7 @@ export default {
       var param={
         courseid:CourseId
       }
-      dropCourse(param).then(response=>{
+      unInstructCourse(param).then(response=>{
         this.$message({
           message: '退课成功',
           type: 'success'
@@ -151,7 +151,7 @@ export default {
         var param={
           courseid:this.value[i]
         };
-        takeCourse(param).then(response=>{
+        instructCourse(param).then(response=>{
           this.$message({
             message: '选课成功',
             type: 'success'

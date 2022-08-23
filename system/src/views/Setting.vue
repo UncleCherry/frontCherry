@@ -48,6 +48,7 @@
 import {changePassword} from "../api/user";
 import {unsubscribe} from "../api/user";
 import { mapMutations } from 'vuex';
+import { eventBus } from "../main.js";
 export default {
   name: 'Setting',
   data() {
@@ -107,7 +108,7 @@ export default {
                 type: 'success'
             });
             this.dialogFormVisible = false;
-            this.$parent.$parent.$parent.logout();
+            eventBus.$emit("logout","logout");
           }).catch((error)=>{
             this.$message({
                 message: '注销失败请稍后再试',

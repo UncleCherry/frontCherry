@@ -1,7 +1,5 @@
  <!--
-  顾客登录输入框组件
-  王晨
-  2020/5/8
+  登录输入框组件
 -->
  
  <template>
@@ -70,7 +68,7 @@
           帮助
 
         </el-menu-item>
-        <el-submenu index="2" v-if="loginState==0" style="float: right;">
+        <el-submenu index="2" v-if="loginState!=-1" style="float: right;">
           <template #title>
             <!--显示头像-->
             <el-avatar :size="30" href='https://www.baidu.com/s?wd=%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF%E7%95%8C%E9%9D%A2' :src="userAvatar" @error="errorHandler">
@@ -87,26 +85,7 @@
             退出登录</el-menu-item>
         </el-submenu>
         <el-menu-item  v-if="loginState==-1" style="float: right;" >
-          <el-link :underline="false"  @click="dialogVisible = true" >登录</el-link>
-          <el-dialog  
-          :visible.sync="dialogVisible" 
-          center 
-          :append-to-body='true' 
-          :lock-scroll="false" 
-          width="500px"
-          :show-close="false"
-          class="login-dialog-box"
-          >
-          <div slot="title" class="header-title">
-          </div>
-            <Login
-            ref="loginComponent"
-            />
-          <div slot="footer">
-            <el-button type="primary"  class="loginButton" @click="changeLoginState">登录</el-button>
-            <el-button  class="registerButton" @click="register">注册</el-button>
-          </div>
-          </el-dialog>
+          <el-link :underline="false"  @click="openLogin" >登录</el-link>
         </el-menu-item>
       </el-menu>
 
@@ -114,38 +93,39 @@
 </template>
 
 <script >
-import Login from '@/components/Login.vue'
 import { login } from '@/api/login'
 import { mapMutations } from 'vuex';
+import { eventBus } from '../main'
 export default {
   name: 'header',
-  components:{
-    Login,
-  },
   data(){
     return {
       selectSearch:'2',
       searchText:'',
       activeIndex:'1',
-      loginState:0, //登录状态，先用这个
+      loginState:-1, //登录状态，先用这个
       dialogTableVisible: false,
       hasNewMessage:true,//是否有新消息
       getMessage:'',
       userName:'',//用户名
       userAvatar:'',//用户头像
-      userType:0, //用户身份类型
       imgUrl:require('../assets/study.png'),
       dialogVisible: false,
       password:'',
       account:'',
+      
     }
   },
-  mounted(){
-    window['startLogin']=()=>{
-      this.login();
-    };
-  },
   created(){
+ 
+    eventBus.$on('loginMsg', message => {
+        this.changeLoginState(message);
+        eventBus.$off('loginMsg', {})
+    });
+    eventBus.$on('logout', message => {
+        this.Logout();
+        eventBus.$off('logout', {})
+    });
     /*
     初始化，判断是否有token
     */
@@ -169,7 +149,8 @@ export default {
       {
         this.userAvatar=require('../assets/T_avatar.png');
       }
-    }
+    };
+
   },
   methods:{
       handleClose(done) {
@@ -178,9 +159,6 @@ export default {
             done();
           })
           .catch(_ => {});
-      },
-      login(){
-        this.dialogVisible=true;
       },
       isLeagalID(){
         // var myreg = /[0-9]{2}[5|3]{1}[0-9]{4}$/;
@@ -213,8 +191,8 @@ export default {
           this.loginState=-1;
 
           //前往主页
+          this.$emit('func',-1);
           this.$router.push({path:'/'});
-          this.$parent.getLoginState(false);
           this.$message({
               message: '退出成功',
               type: 'success'
@@ -222,19 +200,7 @@ export default {
       },
       ...mapMutations(['changeLogin']),
 
-      changeLoginState(){
-        let param={
-          account:this.$refs.loginComponent.account,
-          password:this.$refs.loginComponent.password
-        };
-
-        if(!this.isLeagalID()){
-          this.$message({
-            message: '请输入正确的账号',
-            type: 'warning'
-          });
-          return false;
-        }
+      changeLoginState(param){
         login(param).then(response=>{
             //判断是否登录成功
           if (response.data.loginState){
@@ -242,19 +208,38 @@ export default {
             //获取token
             this.userToken = response.data.token;
             //获取用户身份类别
-            this.userType = response.data.userType
+            this.loginState = response.data.userType
+
+            this.changeLogin({ 
+              Authorization:this.userToken,
+              userName:this.userName,
+              userType:this.loginState
+            });     
+            this.dialogTableVisible=false;
             //将用户token保存到vuex中
             //返回类型为学生登录
-            if(this.userType==0)
+            // if(this.userType==0)
+            // {
+            //   this.changeLogin({ 
+            //     Authorization:this.userToken,
+            //     userName:this.userName,
+            //     userType:0
+            //   });             
+            //   this.dialogTableVisible=false;
+            //   this.loginState=0;
+            //   console.log('学生成功登录')
+            // }
+            if(this.loginState==0)
             {
-              this.changeLogin({ 
-                Authorization:this.userToken,
-                userName:this.userName,
-                userType:0
-              });             
-              this.dialogTableVisible=false;
-              this.loginState=0;
-              console.log('学生成功登录')
+              this.$router.replace('/StudentScorePage');
+            }
+            else if(this.loginState==1)
+            {
+              this.$router.replace('/InstructSchedule');
+            }
+            else
+            {
+              this.$router.replace('/CreateCourse');
             }
             this.$message({
               message: '登录成功！',
@@ -262,8 +247,8 @@ export default {
             });
 
             //跳转路由
-            this.$router.replace('/StudentScorePage');
-            this.$emit('func',true);
+
+            this.$emit('func',this.loginState);
             this.userAvatar=require('../assets/S_avatar.png');
           }
           else{
@@ -286,6 +271,9 @@ export default {
       register(){
         this.dialogTableVisible=false;
         this.$router.replace('/Register');
+      },
+      openLogin(){
+        this.$router.replace('/Login');
       }
   }    
 }
