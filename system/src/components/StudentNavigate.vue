@@ -8,7 +8,8 @@
       @close="handleClose"
       background-color="#545c64"
       text-color="#fff"
-      active-text-color="#ffd04b">
+      active-text-color="#ffd04b"
+      style="height:100%">
       <el-submenu index="1" style="text-align: left;">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -63,11 +64,6 @@
 <script>
   export default {
     data() {
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      };
       return {
         tableData: Array(20).fill(item),
         isCollapse: true

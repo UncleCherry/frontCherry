@@ -16,23 +16,23 @@
     
     <el-main>
       <el-table :data="tableData" height="100%" style="width: 100%">
-        <el-table-column prop="number" label="序号" sortable min-width="7%">
+        <el-table-column prop="number" label="序号" sortable width="auto" min-width="7%">
         </el-table-column>
-        <el-table-column prop="code" label="课程代码" sortable min-width="10%">
+        <el-table-column prop="code" label="课程代码" sortable width="auto" min-width="10%">
         </el-table-column>
-        <el-table-column prop="name" label="课程名称" sortable min-width="18%">
+        <el-table-column prop="name" label="课程名称" sortable width="auto" min-width="18%">
         </el-table-column>
-        <el-table-column prop="type" label="课程类别" sortable  min-width="18%">
+        <el-table-column prop="type" label="课程类别" sortable width="auto"  min-width="18%">
         </el-table-column>
-        <el-table-column prop="credit" label="学分" sortable min-width="7%">
+        <el-table-column prop="credit" label="学分" sortable width="auto" min-width="7%">
         </el-table-column>
-        <el-table-column prop="gpa" label="绩点" sortable min-width="7%">
+        <el-table-column prop="gpa" label="绩点" sortable width="auto" min-width="7%">
         </el-table-column>
-        <el-table-column prop="grade" label="成绩" sortable min-width="7%">
+        <el-table-column prop="grade" label="成绩" sortable width="auto" min-width="7%">
         </el-table-column>
-        <el-table-column prop="pass" label="是否通过" sortable min-width="8%">
+        <el-table-column prop="pass" label="是否通过" sortable width="auto" min-width="8%">
         </el-table-column>
-        <el-table-column prop="updateDate" sortable label="更新时间" min-width="12%">
+        <el-table-column prop="updateDate" sortable label="更新时间" width="auto" min-width="12%">
         </el-table-column>
       </el-table>
     </el-main>

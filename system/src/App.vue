@@ -4,7 +4,9 @@
         <Header @func="getLoginState" ref="header"/>  
     <el-container style="width:100%;height:100%">
 
-         <StudentPageSide v-if="LoginState" style="padding-top: 50px;"/>
+        <StudentNavigate v-if="LoginState==0" style="padding-top: 50px;margin-left:0px"/>
+        <InstructorNavigate v-if="LoginState==1" style="padding-top: 50px;margin-left:0px"/>
+        <AdminNavigate v-if="LoginState==2" style="padding-top: 50px;"/>
         <StudentInfo ref="studentInfo"/>
           <el-main style="padding:0%; margin-left:201px;">
             <router-view
@@ -18,13 +20,16 @@
 
 <script>
 import Header from './components/Header.vue'
-import StudentPageSide from './views/StudentPageSide.vue'
+import StudentNavigate from './components/StudentNavigate.vue'
+import InstructorNavigate from './components/InstructorNavigate.vue'
+import AdminNavigate from './components/AdminNavigate.vue'
 import StudentInfo from './components/StudentInfo.vue'
+import './css/global.scss'
 export default {
   name: 'app',
   data() {
     return{
-      LoginState:false,
+      LoginState:-1,
       isRouterAlive:true
     }
   },
@@ -41,10 +46,6 @@ export default {
         this.$refs.studentInfo.getMessage();
         this.$refs.studentInfo.drawer=true;
       },
-      logout(){
-        console.log("logout")
-        this.$refs.header.Logout();
-      },
       reload () {
         this.isRouterAlive = false
         this.$nextTick(function () {
@@ -53,26 +54,25 @@ export default {
       }
   },    
   created(){
-    let router_path = this.$route.path;
-    console.log(router_path);
-    console.log(router_path=='/');
     let token = localStorage.getItem('Authorization');
     if(!(token === null || token === ''))
     {
-      this.LoginState=true;
+      this.LoginState=localStorage.getItem('userType');
     }
-    // let token = localStorage.getItem('Authorization');
-    // this.LoginState=true;
   },
   components: {
     Header,
-    StudentPageSide,
-    StudentInfo
+    StudentNavigate,
+    StudentInfo,
+    InstructorNavigate,
+    AdminNavigate
   }
 }
 </script>
 
 <style>
+
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -80,4 +80,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 </style>

@@ -16,23 +16,21 @@
     
     <el-main>
       <el-table :data="tableData" height="600px" style="width: 100%">
-        <el-table-column prop="number" label="序号" sortable min-width="7%">
+        <el-table-column type="index" label="序号" min-width="12%">
         </el-table-column>
-        <el-table-column prop="code" label="课程代码" sortable min-width="10%">
+        <el-table-column prop="code" label="课程代码" sortable min-width="12%">
         </el-table-column>
-        <el-table-column prop="name" label="课程名称" sortable min-width="18%">
+        <el-table-column prop="name" label="课程名称" sortable min-width="14%">
         </el-table-column>
-        <el-table-column prop="type" label="课程类别" sortable  min-width="18%">
+        <el-table-column prop="examId" label="考试号" sortable  min-width="14%">
         </el-table-column>
-        <el-table-column prop="credit" label="学分" sortable min-width="7%">
+        <el-table-column prop="credit" label="学分" sortable min-width="12%">
         </el-table-column>
-        <el-table-column prop="gpa" label="绩点" sortable min-width="7%">
+        <el-table-column prop="gpa" label="绩点" sortable min-width="12%">
         </el-table-column>
-        <el-table-column prop="grade" label="成绩" sortable min-width="7%">
+        <el-table-column prop="grade" label="成绩" sortable min-width="12%">
         </el-table-column>
-        <el-table-column prop="pass" label="是否通过" sortable min-width="8%">
-        </el-table-column>
-        <el-table-column prop="updateDate" sortable label="更新时间" min-width="12%">
+        <el-table-column prop="pass" label="是否通过" sortable min-width="12%">
         </el-table-column>
       </el-table>
     </el-main>
@@ -40,36 +38,78 @@
 </template>
 
 <script>
+import {getGrades} from "../api/grade";
   export default {
-      name: 'Score',
+    name: 'Score',
+    created(){
+      getGrades().then(response=>{
+          this.$message({
+            message: '获取成绩成功',
+            type: 'success'
+          });
+          this.allGrades=response.data;
+          }).catch((error)=>{
+            this.$message({
+              message: '获取成绩失败',
+              type: 'warning'
+            });
+          return;
+        })
+    },
     data() {
-      const item = {
-        number:1,
-        code:'10000',
-        name:"数据库原理和应用",
-        type:"工程能力与创新思维",
-        credit:4,
-        gpa:5,
-        grade:"优",
-        pass:'是',
-        updateDate: '2022-7-13',
-      };
       return {
-        tableData: Array(20).fill(item),
+        tableData:[],
         semester:[
-          '2021-2022第二学期',
-          '2021-2022第一学期',
-          '2020-2021第二学期',
-          '2020-2021第一学期',
+          '2022第二学期',
+          '2022第一学期',
+          '2021第二学期',
+          '2021第一学期',
         ],
         curSemester:0,
-
+        allGrades:[]
       }
     },
     methods: {
       changeSemester(chooseTerm){
         this.curSemester=chooseTerm;
       },
+      changeTableData(){
+        var year=this.semester[this.curSemester].substring(0,4);
+        var semester=this.semester[this.curSemester].substring(4);
+        this.tableData=[];
+        for(var i=0;i<this.allGrades.length();++i)
+        {
+          if(this.allGrades[i].Year==year&&this.allGrades[i].Semester==semester)
+          {
+            var grade=this.allGrades[i].Grade;
+            var pass="是",gpa;
+            if(parseInt(grade)<60)
+            {
+              pass="否";
+              gpa=0;
+            }
+            else if(parseInt(grade)>=60&&parseInt(grade)<70)
+            {
+              gpa=2;
+            }
+            else if(parseInt(grade)>=70&&parseInt(grade)<80)
+            {
+              gpa=3;
+            }
+            else if(parseInt(grade)>=80&&parseInt(grade)<90)
+            {
+              gpa=4;
+            }
+            else
+            {
+              gpa=5;
+            }
+            var temp={
+
+            }
+          }
+        }
+      }
     }
   }
 </script>

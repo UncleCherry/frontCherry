@@ -3,11 +3,16 @@
 -->
 <template>
     <div
-    class="background" style="margin-left:-205px"
+    class="background" style="margin-left:-201px;"
     >
       <div class="register">
-        <br/>
-        <strong style="font-family:仿宋;font-size:30px;color:white;">欢迎注册</strong>
+        <div style="text-align: left; margin:0px;padding:0px;" >
+            <el-button plain type="success" size="small" style="background-color: rgba(0, 0, 0, 0.3);" @click="openLogin">
+                <i class="el-icon-back"></i>
+                    返回登录
+            </el-button>
+        </div>  
+        <strong style="font-family:仿宋;font-size:25px;color:white;">欢迎注册</strong>
         <el-divider></el-divider>
         <el-form label-width="80px" class="item" style="font-color:white">
           <el-form-item label="用户名" prop="Username">
@@ -27,7 +32,6 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="入学年份" v-if="userType==0" prop="grade">
-            <!-- <el-input type="grade"  v-model="grade" style="width:85%"></el-input> -->
             <el-date-picker type="year" placeholder="选择年份" v-model="grade" :picker-options="optionsDisable" value-format="yyyy-MM-dd" ></el-date-picker>
           </el-form-item>
           <el-form-item label="专业" v-if="userType==0" prop="major">
@@ -42,7 +46,6 @@
             </el-select>
           </el-form-item>
           <el-form-item label="院系" v-if="userType==1||userType==2" prop="department">
-            <!-- <el-input type="department"  v-model="department" style="width:85%"></el-input> -->
             <el-select v-model="department" placeholder="请选择院系">
               <el-option label="软件工程" value="软件工程"></el-option>
               <el-option label="计算机科学与技术" value="计算机科学与技术"></el-option>
@@ -98,7 +101,6 @@ export default {
     }
   },
   methods: {
-
     register(){
       //检验是否填写了用户名
       if(this.userName===''){
@@ -199,7 +201,7 @@ export default {
             message: '注册成功',
             type: 'success'
           });
-          this.$router.replace('/')
+          this.$router.replace('/Login')
         }).catch((error)=>{
             return;
         })
@@ -211,7 +213,7 @@ export default {
             message: '注册成功',
             type: 'success'
           });
-          this.$router.replace('/')
+          this.$router.replace('/Login')
         }).catch((error)=>{
             return;
         })
@@ -223,7 +225,7 @@ export default {
             message: '注册成功',
             type: 'success'
           });
-          this.$router.replace('/')
+          this.$router.replace('/Login')
         }).catch((error)=>{
             return;
         })
@@ -242,6 +244,9 @@ export default {
       this.grade='';
       this.major='';
       this.department='';
+    },
+    openLogin(){
+      this.$router.replace('/Login')
     }
   }
 }
@@ -250,24 +255,23 @@ export default {
 <style lang="scss" scoped>
 .background{
     width:100%;  
-    height:100%;
-    z-index:-1;
+    height:calc(100vh - 55px);   
+    background-position: center;
     position: absolute;
-    background-image: url('../assets/test.jpg');
+    background-image: url('../assets/registerBg.jpg');
     background-size:cover;
 }
 
 
 
 .front{
-    z-index:1;
     position: absolute;
 }
 
 
 .register{
   width: 35%;
-	height: 85%;
+	height: auto;
 	border: 1px solid black;
 	border-radius: 3px;
 	box-shadow: 0px 0px 7px #cdcdcd;
@@ -277,7 +281,6 @@ export default {
 	transform: translate(-50%,-50%);
   background-color: rgb(52, 42, 85);
   background-color: rgba(0, 0, 0, 0.3);
-  z-index:1;
 }
 
 /deep/ .el-input__inner {

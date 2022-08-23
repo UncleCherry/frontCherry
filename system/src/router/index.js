@@ -16,52 +16,42 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
-    path: '/StudentPageSide',
-    name: 'StudentPageSide',
-    component: () => import(/* webpackChunkName: "about" */ '../views/StudentPageSide.vue')
+    component: () => import('../views/AboutView.vue')
   },
   {
     path: '/StudentScorePage',
     name: 'StudentScorePage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/StudentScorePage.vue')
-  },
-  {
-    path: '/StudentInfoPage',
-    name: 'StudentInfoPage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/StudentInfoPage.vue')
+    component: () => import('../views/StudentScorePage.vue')
   },
   {
     path: '/StudentWelcomePage',
     name: 'StudentWelcomePage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/StudentWelcomePage.vue')
+    component: () => import('../views/StudentWelcomePage.vue')
   },
   {
     path: '/ScoreRetabulationPage',
     name: 'ScoreRetabulationPage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ScoreRetabulationPage.vue')
+    component: () => import('../views/ScoreRetabulationPage.vue')
   },
   {
     path: '/ClassSchedulePage',
     name: 'ClassSchedulePage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ClassSchedulePage.vue')
+    component: () => import('../views/ClassSchedulePage.vue')
   },
   {
     path: '/ApplyExemptionPage',
     name: 'ApplyExemptionPage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ApplyExemptionPage.vue')
+    component: () => import('../views/ApplyExemptionPage.vue')
   },
   {
     path: '/Register',
     name: 'Register',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
+    component: () => import('../views/Register.vue')
   },
   {
     path: '/CourseSelect',
     name: 'CourseSelect',
-    component: () => import(/* webpackChunkName: "about" */ '../views/CourseSelect.vue')
+    component: () => import('../views/CourseSelect.vue')
   },
   {
     path: '/AttendanceInfo',
@@ -81,7 +71,32 @@ const routes = [
   {
     path: '/Setting',
     name: 'Setting',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Setting.vue')
+    component: () => import('../views/Setting.vue')
+  },
+  {
+    path: '/CreateCourse',
+    name: 'CreateCourse',
+    component: () => import('../views/CreateCourse.vue')
+  },
+  {
+    path: '/InstructSchedule',
+    name: 'InstructSchedule',
+    component: () => import('../views/InstructSchedulePage.vue')
+  },
+  {
+    path: '/InstructSelect',
+    name: 'InstructSelect',
+    component: () => import('../views/InstructSelect.vue')
+  },
+  {
+    path: '/Login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/GradeEdit',
+    name: 'GradeEdit',
+    component: () => import('../views/GradeEdit.vue')
   },
 ]
 
@@ -91,7 +106,7 @@ const router = new VueRouter({
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login' 
+  if (to.path === '/Login' 
   || to.path==='/' 
   || to.path==='/Register'
   || to.path==='/license'
@@ -101,12 +116,8 @@ router.beforeEach((to, from, next) => {
   } else {
     let token = localStorage.getItem('Authorization');
     if (token === null || token === '') {
-      //打开登录界面
-      startLogin();
-      //前往首页
-      this.$router.replace('/');
-
-      
+      //前往登录页
+      this.$router.replace('/Login');     
     } else {
       next();
     }
