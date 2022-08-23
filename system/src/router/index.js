@@ -68,11 +68,22 @@ const routes = [
     name: 'Setting',
     component: () => import(/* webpackChunkName: "about" */ '../views/Setting.vue')
   },
+  {
+    path: '/AttendanceInfoStudent',
+    name: 'AttendanceInfoStudent',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfoStudent.vue')
+  },
+  {
+    path: '/UploadAttendance',
+    name: 'UploadAttendance',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UploadAttendance.vue')
+  },
 ]
 
 const router = new VueRouter({
   routes
 })
+
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {

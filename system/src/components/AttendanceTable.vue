@@ -1,0 +1,102 @@
+<template>
+  <el-table
+    :data="tableData"
+    border
+    height="550px"
+    style="width: 100%;  margin-top: 20px; box-shadow: 0 0 8px 0 #aaa;"
+    :row-style="{height: '30px'}">
+    <el-table-column
+      fixed
+      prop="courseid"
+      label="课程ID"
+      min-width="10%">
+    </el-table-column>
+    <el-table-column
+      fixed
+      prop="course"
+      label="课程"
+      min-width="15%">
+    </el-table-column>
+    <el-table-column
+      fixed
+      prop="number"
+      label="课次"
+      min-width="5%">
+    </el-table-column>
+    <el-table-column
+      prop="id"
+      label="学号"
+      min-width="10%">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="姓名"
+      min-width="10%">
+    </el-table-column>
+    <el-table-column
+      prop="date"
+      label="日期"
+      min-width="20%">
+    </el-table-column>
+    <el-table-column
+      prop="starttime"
+      label="开始时间"
+      min-width="10%">
+    </el-table-column>
+    <el-table-column
+      prop="endtime"
+      label="结束时间"
+      min-width="10%">
+    </el-table-column>
+    <el-table-column
+      prop="effective"
+      label="考勤成功"
+      min-width="10%">
+    </el-table-column>
+  </el-table>
+
+</template>
+
+<script>
+  export default {
+    methods: {
+        show(val){
+            this.tableData=[];
+            for(var i=0;i<val.length;++i){
+                var attendinfo = val[i].split(" - "); 
+                var tmp = {};
+                tmp['courseid']=attendinfo[0];
+                tmp['course']=attendinfo[1];
+                tmp['number']=attendinfo[2];
+                tmp['name']=attendinfo[3];
+                tmp['id']=attendinfo[4];
+                tmp['date']=attendinfo[5];
+                tmp['starttime']=attendinfo[6];
+                tmp['endtime']=attendinfo[7];
+                if(attendinfo[8]='1')
+                    tmp['effective']='是';
+                else if(attendinfo[8]='0')
+                    tmp['effective']='否';
+                else if(attendinfo[8]='2')
+                    tmp['effective']='请假';
+                this.tableData.push(tmp);
+            }
+        }
+    },
+
+    props:['AttendanceMsg'],
+
+    watch:{
+        AttendanceMsg:function(val){
+            this.show(val);
+        }
+    },
+
+//1002019 - 数据库 - 1 - 张三 - 200001 - 2.1 - 10:00 - 11.35 - 1
+    data() {
+      return {
+        tableData: [],
+      }
+    },
+  }
+</script>
