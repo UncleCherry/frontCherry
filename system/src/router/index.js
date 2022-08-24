@@ -98,6 +98,11 @@ const routes = [
     name: 'GradeEdit',
     component: () => import('../views/GradeEdit.vue')
   },
+  {
+    path: '/OnlineCourseManagement',
+    name: 'OnlineCourseManagement',
+    component: () => import('../views/OnlineCourseManagement.vue')
+  },
 ]
 
 const router = new VueRouter({
