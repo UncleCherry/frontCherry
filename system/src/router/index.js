@@ -54,21 +54,6 @@ const routes = [
     component: () => import('../views/CourseSelect.vue')
   },
   {
-    path: '/AttendanceInfo',
-    name: 'AttendanceInfo',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfo.vue')
-  },
-  {
-    path: '/ApplyLeavePage',
-    name: 'ApplyLeavePage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ApplyLeavePage.vue')
-  },
-  {
-    path: '/AttendanceScore',
-    name: 'AttendanceScore',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceScore.vue')
-  },
-  {
     path: '/Setting',
     name: 'Setting',
     component: () => import('../views/Setting.vue')
@@ -99,15 +84,26 @@ const routes = [
     component: () => import('../views/GradeEdit.vue')
   },
   {
-    path: '/OnlineCourseManagement',
-    name: 'OnlineCourseManagement',
-    component: () => import('../views/OnlineCourseManagement.vue')
+    path: '/AttendanceInfoStudent',
+    name: 'AttendanceInfoStudent',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfoStudent.vue')
+  },
+  {
+    path: '/UploadAttendance',
+    name: 'UploadAttendance',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UploadAttendance.vue')
+  },
+  {
+    path: '/AttendanceInfoTeacher',
+    name: 'AttendanceInfoTeacher',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfoTeacher.vue')
   },
 ]
 
 const router = new VueRouter({
   routes
 })
+
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
