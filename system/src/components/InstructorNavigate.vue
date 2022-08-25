@@ -28,9 +28,8 @@
           <span>考勤管理</span>
         </template>
           <el-menu-item index="4-1" @click="OpenAttendanceInfoTeacher">考勤信息管理</el-menu-item>
-          <el-menu-item index="4-4" @click="OpenUploadAttendance">考勤信息上传</el-menu-item>
-          <el-menu-item index="4-2">请假</el-menu-item>
-          <el-menu-item index="4-3">缺勤申述</el-menu-item>
+          <el-menu-item index="4-2" @click="OpenUploadAttendance">考勤信息上传</el-menu-item>
+          <el-menu-item index="4-3" @click="OpenAttendanceScore">考勤成绩</el-menu-item>
       </el-submenu>
       <el-menu-item index="5" @click="OpenSetting">
         <i class="el-icon-setting"></i>
@@ -77,6 +76,10 @@
       OpenUploadAttendance()
       {
         this.$router.replace('/UploadAttendance');
+      },
+      OpenAttendanceScore()
+      {
+        this.$router.replace('/AttendanceScore');
       },
     }
   }
