@@ -45,13 +45,3 @@ export function deleteAttendance(data) {
         data:param,
     })
 }
-
-export function getAttendanceScore(data) {
-    return request({
-        url: '/Attendance/getGrade',
-        method: 'get',
-        params:{
-            "courseid":data["courseid"]
-        }
-    })
-}
