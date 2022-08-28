@@ -21,7 +21,18 @@
         <span slot="title">编辑成绩</span>
       </el-menu-item>
       <!-- 有新功能加这里 -->
-      <el-menu-item index="4" @click="OpenSetting">
+
+      <el-submenu index="4" style="text-align: left;">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>考勤管理</span>
+        </template>
+          <el-menu-item index="4-1" @click="OpenAttendanceInfoTeacher">考勤信息管理</el-menu-item>
+          <el-menu-item index="4-4" @click="OpenUploadAttendance">考勤信息上传</el-menu-item>
+          <el-menu-item index="4-2">请假</el-menu-item>
+          <el-menu-item index="4-3">缺勤申述</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="5" @click="OpenSetting">
         <i class="el-icon-setting"></i>
         <span slot="title">设置</span>
       </el-menu-item>
@@ -58,7 +69,15 @@
       OpenGradeEdit()
       {
         this.$router.replace('/GradeEdit')
-      }
+      },
+      OpenAttendanceInfoTeacher()
+      {
+        this.$router.replace('/AttendanceInfoTeacher');
+      },
+      OpenUploadAttendance()
+      {
+        this.$router.replace('/UploadAttendance');
+      },
     }
   }
 </script>

@@ -45,8 +45,6 @@
           <el-menu-item index="4-1" @click="OpenAttendanceInfoStudent">考勤信息查询</el-menu-item>
           <el-menu-item index="4-2">请假</el-menu-item>
           <el-menu-item index="4-3">缺勤申述</el-menu-item>
-          <el-menu-item index="4-4" @click="OpenUploadAttendance">考勤信息上传</el-menu-item>
-          <el-menu-item index="4-5" @click="OpenAttendanceInfoTeacher">考勤信息统计</el-menu-item>
       </el-submenu>
       <el-menu-item index="5" style="text-align: left;" @click="OpenSetting">
         <i class="el-icon-setting"></i>
@@ -101,10 +99,6 @@
       OpenAttendanceInfoStudent()
       {
         this.$router.replace('/AttendanceInfoStudent');
-      },
-      OpenUploadAttendance()
-      {
-        this.$router.replace('/UploadAttendance');
       },
     }
   }

@@ -73,13 +73,9 @@
                 tmp['date']=attendinfo[5];
                 tmp['starttime']=attendinfo[6];
                 tmp['endtime']=attendinfo[7];
-                if(attendinfo[8]='1')
-                    tmp['effective']='是';
-                else if(attendinfo[8]='0')
-                    tmp['effective']='否';
-                else if(attendinfo[8]='2')
-                    tmp['effective']='请假';
+                tmp['effective']=attendinfo[8];
                 this.tableData.push(tmp);
+                //console.log(val[i])
             }
         }
     },

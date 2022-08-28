@@ -10,7 +10,6 @@
           <div>
             <el-row><br></el-row>
             <el-row>
-              
               <el-autocomplete
                 class="inline-input"
                 v-model="courseid"
@@ -53,26 +52,28 @@
 </template>
 
 <script>
-import AttendanceTable from '@/components/AttendanceTable.vue'
-import { getAllCourse } from '@/api/course'
-import { uploadAttendance,getStudentAttendance } from '@/api/attendance'
+import AttendanceTable from '@/components/AttendanceTableStudent.vue'
+import { getInstructorCourse } from '@/api/course'
+import { uploadAttendance } from '@/api/attendance'
 export default {
-  mounted() {
-    /*getAllCourse().then(response=>{
-      this.courselist=response.data.CoursesList
-    }).catch((error)=>{
-      this.$message({
-        message: '获取课程信息失败',
-        type: 'warning'
-      });
-    });*/
-      //读所有courseid
-    this.courselist=[{"value":"10001"},
-                       {"value":"62"},
-                       {"value":"134145235"}];
-    console.log(this.courselist);
+  mounted(){
+      let courseMsg=''
+      let _this=this
+      getInstructorCourse().then(response=>{
+        courseMsg=response.data.CoursesList
+        _this.courselist=[]
+        for(var i=0;i<courseMsg.length;++i)
+        {
+          _this.courselist[i]={"value":courseMsg[i].CourseId.toString(),"name":courseMsg[i].CourseName}
+        }
+      }).catch((error)=>{
+        this.$message({
+          message: '获取授课信息失败',
+          type: 'warning'
+        });
+      })
+    },
 
-  },
   data() {
       return{
         courselist:[],
@@ -157,15 +158,12 @@ export default {
         _this.message[i]=tmp;
         
         //传给后端的数据
-        json["courseId"]=Number(_this.courseid);
-        json["studentId"]=Number(id_name[0]);
-        json["isEffective"]=1;
-        json["number"]=Number(_this.number);
-        //json["startTime"]=outdata[i]['首次入会时间'];
-        //json["endTime"]=outdata[i]['最后退会时间'];
-        json["startTime"]=new Date(outdata[i]['首次入会时间']);
-        json["endTime"]=new Date(outdata[i]['最后退会时间']);
-        json["attendanceId"]=i;
+        json["CourseId"]=Number(_this.courseid);
+        json["StudentId"]=Number(id_name[0]);
+        json["IsEffective"]=true
+        json["CourseNumber"]=Number(_this.number);
+        json["StartTime"]=new Date(outdata[i]['首次入会时间']);
+        json["EndTime"]=new Date(outdata[i]['最后退会时间']);
         _this.jsonlist.push(json);
         }
       }

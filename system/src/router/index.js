@@ -93,6 +93,11 @@ const routes = [
     name: 'UploadAttendance',
     component: () => import(/* webpackChunkName: "about" */ '../views/UploadAttendance.vue')
   },
+  {
+    path: '/AttendanceInfoTeacher',
+    name: 'AttendanceInfoTeacher',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfoTeacher.vue')
+  },
 ]
 
 const router = new VueRouter({
