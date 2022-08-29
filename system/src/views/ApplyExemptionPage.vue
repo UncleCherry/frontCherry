@@ -3,20 +3,17 @@
 </template>
 
 <script>
-import ApplyExemption from '@/components/ApplyExemption.vue'
+import ApplyExemption from "@/components/ApplyExemption.vue";
 export default {
-  name: 'ApplyExemptionPage',
+  name: "ApplyExemptionPage",
   data() {
-      return{
-      }
-    },
-   methods:{
-  },    
+    return {};
+  },
+  methods: {},
   components: {
-      ApplyExemption
-  }
-}
+    ApplyExemption,
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>

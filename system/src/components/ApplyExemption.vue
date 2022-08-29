@@ -49,21 +49,6 @@
         </el-input>
       </div>
       <div>
-        <!-- <el-upload
-          style="clear: both; float: left; margin-top: 30px"
-          action=""
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          multiple
-          :limit="3"
-          :on-exceed="handleExceed"
-          :file-list="fileList"
-        >
-          <el-button size="small" style="float: right" type="primary"
-            >点击上传申请表</el-button
-          >
-        </el-upload> -->
         <el-upload
           style="clear: both; float: left; margin-top: 30px"
           class="upload-demo"
@@ -88,6 +73,7 @@
       >
     </div>
     <div style="width: 100%">
+      <div style="font-weight: bold; font-size: large">申请免修/免听列表</div>
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -104,22 +90,22 @@
         </el-table-column>
         <el-table-column prop="courseName" label="课程名称" width="230">
         </el-table-column>
-        <el-table-column prop="applyDate" label="申请日期" width="240">
+        <el-table-column prop="applyDate" label="申请日期" width="210">
         </el-table-column>
         <el-table-column prop="applyType" label="申请类型" width="155">
         </el-table-column>
         <el-table-column prop="State" label="审核状态" width="160">
         </el-table-column>
-        <el-table-column label="操作" width="170">
+        <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >编辑</el-button
+              >重新编辑</el-button
             >
             <el-button
               size="mini"
               type="danger"
               @click="handleDelete(scope.$index, scope.row)"
-              >删除</el-button
+              >撤销申请</el-button
             >
           </template>
         </el-table-column>
@@ -265,9 +251,6 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
     },
     handleDelete(index, row) {
       console.log(index, row);
