@@ -29,34 +29,21 @@
             left: 10%;
             top:10%;
             "
-          
             >
           </el-image>
           
         </el-menu-item>
 
-        <el-menu-item style="width: 30%;">
-          <!--搜索框-->
-          <div style="width:100%; margin-left: 50px;">
-            <el-input 
-            placeholder="从这里开始，寻找你的归宿" 
-            v-model="searchText" 
-            class="input-with-select"
-            size='medium'
-            maxlength=20
-            clearable
-            >
-              <!--
-                <el-select v-model="selectSearch" slot="prepend" placeholder="请选择"
-              style="width:80px">
-                <el-option label="民宿" value="1"></el-option>
-                <el-option label="地点" value="2"></el-option>
-              </el-select>
-              -->
-              <el-button slot="append" icon="el-icon-search"></el-button>
-            </el-input>
+        <el-menu-item style="width: 20%;margin:0;padding:0">
+          <!--标题-->
+          <a href="https://github.com/UncleCherry" target="_blank">
+          <div style="width:100%;">
+              <el-image
+              :src="logoUrl"
+              fit="contain"
+              style="background-color: rgba(246,248,248,0.913);"></el-image>
           </div>
-
+          </a>
         </el-menu-item>
         
         <el-menu-item style="margin-left:30%;">
@@ -110,6 +97,7 @@ export default {
       userName:'',//用户名
       userAvatar:'',//用户头像
       imgUrl:require('../assets/study.png'),
+      logoUrl:require('../assets/logo.png'),
       dialogVisible: false,
       password:'',
       account:'',
@@ -278,3 +266,9 @@ export default {
   }    
 }
 </script>
+
+<style lang="scss" scoped>
+::v-deep .el-image__inner {
+    vertical-align: middle;
+}
+</style>
