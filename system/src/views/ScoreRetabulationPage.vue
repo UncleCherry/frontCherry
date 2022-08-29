@@ -75,6 +75,8 @@
       >
     </div>
     <div style="width: 100%">
+      <div style="font-weight: bold; font-size: large">申请成绩复核列表</div>
+
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -132,7 +134,6 @@
 
 <script>
 export default {
-  name: "ApplyExemption",
   data() {
     return {
       courseNameOptions: [

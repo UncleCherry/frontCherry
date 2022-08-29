@@ -108,7 +108,6 @@ export default {
     OpenCreditRecognitionPage() {
       this.$router.replace("/CreditRecognitionPage");
     },
-
     OpenRetabulationPage() {
       this.$router.replace("/ScoreRetabulationPage");
     },

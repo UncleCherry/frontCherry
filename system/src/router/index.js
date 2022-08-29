@@ -33,6 +33,11 @@ const routes = [
     name: 'ScoreRetabulationPage',
     component: () => import('../views/ScoreRetabulationPage.vue')
   },
+    {
+    path: '/CreditRecognitionPage',
+    name: 'CreditRecognitionPage',
+    component: () => import('../views/CreditRecognitionPage.vue')
+  },
   {
     path: '/ClassSchedulePage',
     name: 'ClassSchedulePage',
@@ -86,8 +91,8 @@ const router = new VueRouter({
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
-  if (to.path === '/Login' 
-  || to.path==='/' 
+  if (to.path === '/Login'
+  || to.path==='/'
   || to.path==='/Register'
   || to.path==='/license'
   || to.path==='/forgetPassword'
@@ -99,7 +104,7 @@ router.beforeEach((to, from, next) => {
       //前往登录页
       this.$router.replace('/Login');
 
-      
+
     } else {
       next();
     }

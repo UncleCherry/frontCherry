@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <div slot="header" class="clearfix">
       <div style="float: left; display: inline-block, inline">
-        <span>申请课程名称</span>
+        <span>已修课程(未在培养方案中)</span>
         <el-select
           v-model="courseName"
           clearable
@@ -18,53 +18,22 @@
           </el-option>
         </el-select>
       </div>
-      <!-- <div style="clear: both; float: left; margin-top: 30px">
-        <span>学生</span>
+      <div style="margin-left: 30px; display: inline-block, inline">
+        <span>未休课程(在培养方案中)</span>
         <el-select
-          v-model="applyType"
+          v-model="UntakencourseName"
           clearable
           placeholder="请选择"
-          style="width: 200px; margin-left: 10px"
+          style="width: 300px; margin-left: 10px"
         >
           <el-option
-            v-for="item in applyTypeOptions"
+            v-for="item in UntakencourseNameOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
           >
           </el-option>
         </el-select>
-      </div> -->
-      <!-- <div style="clear: both; float: left; margin-top: 30px">
-        <span style="text-align: center">申请理由</span>
-        <el-input
-          type="textarea"
-          clearable
-          placeholder="请输入内容"
-          v-model="applyReason"
-          maxlength="200"
-          show-word-limit
-          style="width: 700px; height: 40px; margin-left: 10px"
-        >
-        </el-input>
-      </div> -->
-      <div>
-        <el-upload
-          style="clear: both; float: left; margin-top: 30px"
-          class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          multiple
-          :limit="3"
-          :on-exceed="handleExceed"
-          :file-list="fileList"
-        >
-          <el-button size="small" type="primary"
-            >点击上传成绩复合申请表</el-button
-          >
-        </el-upload>
       </div>
       <el-button
         size="small"
@@ -75,6 +44,8 @@
       >
     </div>
     <div style="width: 100%">
+      <div style="font-weight: bold; font-size: large">申请学分认定列表</div>
+
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -87,15 +58,23 @@
 
         <el-table-column prop="Snum" label="序号" width="120">
         </el-table-column>
-        <el-table-column prop="CourseID" label="课程ID" width="160">
+        <el-table-column
+          prop="courseName"
+          label="已修课程(未在培养方案中)"
+          width="255"
+        >
         </el-table-column>
-        <el-table-column prop="courseName" label="课程名称" width="280">
+        <el-table-column
+          prop="UntakencourseName"
+          label="未休课程(在培养方案中)"
+          width="255"
+        >
         </el-table-column>
         <el-table-column prop="applyDate" label="申请日期" width="240">
         </el-table-column>
         <el-table-column prop="State" label="审核状态" width="160">
         </el-table-column>
-        <el-table-column label="操作" width="275">
+        <el-table-column label="操作" width="205">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
               >重新编辑</el-button
@@ -132,7 +111,6 @@
 
 <script>
 export default {
-  name: "ApplyExemption",
   data() {
     return {
       courseNameOptions: [
@@ -157,17 +135,19 @@ export default {
           value: "毛泽东思想概述",
         },
       ],
-      applyTypeOptions: [
+      UntakencourseNameOptions: [
+        { label: "数据库原理和应用", value: "数据库原理和应用" },
+        { label: "计算机系统结构", value: "计算机系统结构" },
+        { label: "操作系统", value: "操作系统" },
+        { label: "系统分析与设计", value: "系统分析与设计" },
         {
-          label: "申请免听",
-          value: "申请免听",
-        },
-        {
-          label: "申请免修",
-          value: "申请免修",
+          label: "毛泽东思想概述",
+          value: "毛泽东思想概述",
         },
       ],
+
       courseName: "",
+      UntakencourseName: "",
       applyType: "",
       applyReason: "",
       search: "",
@@ -176,19 +156,19 @@ export default {
       tableData: [
         {
           Snum: 1,
-          CourseID: 20512314,
           courseName: "数据库原理和应用",
+          UntakencourseName: "数据库原理和应用",
           applyDate: "2016-05-03",
           applyType: "张三",
           State: "待审核",
         },
         {
           Snum: 2,
-          CourseID: 20534512,
           courseName: "计算机系统结构",
+          UntakencourseName: "数据库原理和应用",
           applyDate: "2022-02-03",
           applyType: "李四",
-          State: "已审核",
+          State: "已通过",
         },
       ],
       currentPage: 1,
