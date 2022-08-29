@@ -8,9 +8,9 @@
       text-color="#fff"
       active-text-color="#ffd04b"
       style="height:100%;text-align: left;">
-      <el-menu-item index="1">
-        <i class="el-icon-menu"></i>
-        <span slot="title">添加专业培养计划</span>
+      <el-menu-item index="1" @click="OpenEditTrainingPlan">
+        <i class="el-icon-menu" ></i>
+        <span slot="title">编辑专业培养计划</span>
       </el-menu-item>
       <el-menu-item index="2"  @click="OpenCreateCourse">
         <i class="el-icon-menu"></i>
@@ -65,6 +65,10 @@
       OpenOnlineCourseManagement()
       {
         this.$router.replace('/OnlineCourseManagement')
+      },
+      OpenEditTrainingPlan()
+      {
+        this.$router.replace('/EditTrainingPlan');
       }
     }
   }

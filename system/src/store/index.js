@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import { Loading } from 'element-ui'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,6 +10,7 @@ export default new Vuex.Store({
     userName:localStorage.getItem('userName')?localStorage.getItem('userName'):'',
     userAvatar:localStorage.getItem('userAvatar')?localStorage.getItem('userAvatar'):'',
     userType:localStorage.getItem('userType')?localStorage.getItem('userType'):'',
+    loadingInstance:''
   },
   getters: {
   },
@@ -35,6 +36,19 @@ export default new Vuex.Store({
       // localStorage.removeItem('userName')
       // localStorage.removeItem('userAvatar')
     },
+    startLoading(){
+      this.loadingInstance = Loading.service("fullscreen");
+      setTimeout(() => {
+        this.loadingInstance.close();
+      }, 2000);
+      // this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+      //   this.loadingInstance.close();
+      // });
+    },
+    closeLoading(){
+      this.loadingInstance.close();
+    }
+
   },
   actions: {
   },
