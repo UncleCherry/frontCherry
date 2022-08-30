@@ -7,7 +7,7 @@
         <StudentNavigate v-if="LoginState==0" style="padding-top: 50px;margin-left:0px"/>
         <InstructorNavigate v-if="LoginState==1" style="padding-top: 50px;margin-left:0px"/>
         <AdminNavigate v-if="LoginState==2" style="padding-top: 50px;"/>
-        <StudentInfo ref="studentInfo"/>
+        <Help ref="help" />
           <el-main style="padding:0%; margin-left:201px;">
             <router-view
       style="padding-top: 55px;" v-if="isRouterAlive"
@@ -23,7 +23,7 @@ import Header from './components/Header.vue'
 import StudentNavigate from './components/StudentNavigate.vue'
 import InstructorNavigate from './components/InstructorNavigate.vue'
 import AdminNavigate from './components/AdminNavigate.vue'
-import StudentInfo from './components/StudentInfo.vue'
+import Help from './components/Help.vue'
 import './css/global.scss'
 export default {
   name: 'app',
@@ -42,15 +42,14 @@ export default {
       getLoginState(data){
         this.LoginState=data;      
       },
-      openStudentInfo(){
-        this.$refs.studentInfo.getMessage();
-        this.$refs.studentInfo.drawer=true;
-      },
       reload () {
         this.isRouterAlive = false
         this.$nextTick(function () {
           this.isRouterAlive = true
         })
+      },
+      openHelp(){
+        this.$refs.help.dialogVisible=true;
       }
   },    
   created(){
@@ -62,8 +61,8 @@ export default {
   },
   components: {
     Header,
+    Help,
     StudentNavigate,
-    StudentInfo,
     InstructorNavigate,
     AdminNavigate
   }
