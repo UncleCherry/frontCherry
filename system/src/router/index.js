@@ -79,6 +79,7 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
+
     path: '/GradeEdit',
     name: 'GradeEdit',
     component: () => import('../views/GradeEdit.vue')
@@ -122,6 +123,14 @@ const routes = [
     path: '/DropClass',
     name: 'DropClass',
     component: () => import('../views/DropClass.vue')
+    path: '/ExamSchedulePage',
+    name: 'ExamSchedulePage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/ExamSchedulePage.vue')
+  },
+  {
+    path: '/RetakeExamPage',
+    name: 'RetakeExamPage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/RetakeExamPage.vue')
   },
 ]
 

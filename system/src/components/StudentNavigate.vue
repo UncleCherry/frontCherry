@@ -24,8 +24,8 @@
           <i class="el-icon-location"></i>
           <span>考试管理</span>
         </template>
-          <el-menu-item index="2-1" @click="OpenScorePage">考试安排查询</el-menu-item>
-          <el-menu-item index="2-2">重/缓考申请</el-menu-item>
+          <el-menu-item index="2-1" @click="OpenExamSchedulePage">考试安排查询</el-menu-item>
+          <el-menu-item index="2-2" @click="OpenRetakeExamPage">重/缓考申请</el-menu-item>
       </el-submenu>
       <el-submenu index="3" style="text-align: left;">
         <template slot="title">
@@ -87,6 +87,15 @@
       {
         this.$router.replace('/ClassSchedulePage');
       },
+
+      OpenExamSchedulePage()
+      {
+        this.$router.replace('/ExamSchedulePage');
+      },
+      OpenRetakeExamPage()
+      {
+        this.$router.replace('/RetakeExamPage');
+      }，
       OpenCourseSelect()
       {
         this.$router.replace('/CourseSelect');
@@ -94,6 +103,7 @@
       OpenSetting()
       {
         this.$router.replace('/Setting');
+
       },
       OpenAttendanceInfoStudent()
       {
@@ -111,6 +121,8 @@
       {
         this.$router.replace('/DropClass');
       },
+      }
+
     }
   }
 </script>
