@@ -103,6 +103,11 @@ const routes = [
     name: 'AttendanceScore',
     component: () => import('../views/AttendanceScore.vue')
   },
+  {
+    path: '/ApplyLeavePage',
+    name: 'ApplyLeavePage',
+    component: () => import('../views/ApplyLeavePage.vue')
+  },
 ]
 
 const router = new VueRouter({

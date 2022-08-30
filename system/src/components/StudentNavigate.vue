@@ -43,8 +43,7 @@
           <span>考勤管理</span>
         </template>
           <el-menu-item index="4-1" @click="OpenAttendanceInfoStudent">考勤信息查询</el-menu-item>
-          <el-menu-item index="4-2">请假</el-menu-item>
-          <el-menu-item index="4-3">缺勤申述</el-menu-item>
+          <el-menu-item index="4-2" @click="OpenApplyLeavePage">请假申请</el-menu-item>
       </el-submenu>
       <el-menu-item index="5" style="text-align: left;" @click="OpenSetting">
         <i class="el-icon-setting"></i>
@@ -99,6 +98,10 @@
       OpenAttendanceInfoStudent()
       {
         this.$router.replace('/AttendanceInfoStudent');
+      },
+      OpenApplyLeavePage()
+      {
+        this.$router.replace('/ApplyLeavePage');
       },
     }
   }

@@ -9,7 +9,7 @@
                 <template slot="prepend">请假课程ID:</template>
             </el-input>
             <el-input placeholder="请输入内容" v-model="date" @input="change($event)">
-                <template slot="prepend">请假日期:  </template>
+                <template slot="prepend">请假课次:  </template>
             </el-input>
           <div style="margin: 15px 0;"></div>
           <span style="float: left;  margin-left: 100px;">请假理由:</span>
