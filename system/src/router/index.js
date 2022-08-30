@@ -123,15 +123,23 @@ const routes = [
     path: '/DropClass',
     name: 'DropClass',
     component: () => import('../views/DropClass.vue')
+  },
+  {
     path: '/ExamSchedulePage',
     name: 'ExamSchedulePage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/ExamSchedulePage.vue')
+    component: () => import('../views/ExamSchedulePage.vue')
   },
   {
     path: '/RetakeExamPage',
     name: 'RetakeExamPage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/RetakeExamPage.vue')
+    component: () => import('../views/RetakeExamPage.vue')
   },
+  {
+    path: '/CreatExamPage',
+    name: 'CreatExamPage',
+    component: () => import('../views/CreatExamPage.vue')
+  },
+
 ]
 
 const router = new VueRouter({

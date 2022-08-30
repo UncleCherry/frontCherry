@@ -87,7 +87,6 @@
       {
         this.$router.replace('/ClassSchedulePage');
       },
-
       OpenExamSchedulePage()
       {
         this.$router.replace('/ExamSchedulePage');
@@ -95,7 +94,7 @@
       OpenRetakeExamPage()
       {
         this.$router.replace('/RetakeExamPage');
-      }，
+      },
       OpenCourseSelect()
       {
         this.$router.replace('/CourseSelect');
@@ -103,7 +102,6 @@
       OpenSetting()
       {
         this.$router.replace('/Setting');
-
       },
       OpenAttendanceInfoStudent()
       {
@@ -121,8 +119,6 @@
       {
         this.$router.replace('/DropClass');
       },
-      }
-
     }
   }
 </script>

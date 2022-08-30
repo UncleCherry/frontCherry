@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import ApplyExemption from '@/components/ApplyExemption.vue'
+import ApplyExemption from '@/components/ApplyRetakeExam.vue'
 export default {
-  name: 'RetakeExamPage',
+  name: 'ApplyRetakeExamPage',
   data() {
       return{
       }

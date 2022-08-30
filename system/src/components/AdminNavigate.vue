@@ -16,7 +16,7 @@
         <i class="el-icon-menu"></i>
         <span slot="title">创建课程</span>
       </el-menu-item>
-      <el-menu-item index="3">
+      <el-menu-item index="3" @click="OpenCreatExamPage">
         <i class="el-icon-menu"></i>
         <span slot="title">添加考试安排</span>
       </el-menu-item>
@@ -61,6 +61,10 @@
       OpenSetting()
       {
         this.$router.replace('/Setting');
+      },
+      OpenCreatExamPage()
+      {
+        this.$router.replace('/CreatExamPage');
       },
       OpenOnlineCourseManagement()
       {
