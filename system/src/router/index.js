@@ -139,6 +139,8 @@ const routes = [
     name: 'CreatExamPage',
     component: () => import('../views/CreatExamPage.vue')
   },
+  
+  
 
 ]
 
