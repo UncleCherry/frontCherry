@@ -79,14 +79,14 @@ import axios from 'axios'
       this.$refs.dialog.rendered=true;
     },
     created(){
-    getAllPlans().then(response=>{
-      this.tableData=response.data.PlansList
-    }).catch((error)=>{
-      this.$message({
-        message: '获取培养计划失败',
-        type: 'warning'
-      });
-    })
+      getAllPlans().then(response=>{
+        this.tableData=response.data.PlansList
+      }).catch((error)=>{
+        this.$message({
+          message: '获取培养计划失败',
+          type: 'warning'
+        });
+      })
     },
     data() {
       return {
@@ -105,9 +105,6 @@ import axios from 'axios'
           value: '计算机科学与技术',
           label: '计算机科学与技术'
         }, {
-          value: '土木工程',
-          label: '土木工程'
-        }, {
           value: '大数据',
           label: '大数据'
         }, {
@@ -116,7 +113,16 @@ import axios from 'axios'
         },{
           value: '自动化',
           label: '自动化'
-        }],
+        },{
+          value: '网络安全',
+          label: '网络安全'
+        },{
+          value: '测绘',
+          label: '测绘'
+        },{
+          value: '光电',
+          label: '光电'
+        },],
         value: ''
       }
     },
