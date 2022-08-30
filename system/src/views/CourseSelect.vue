@@ -53,7 +53,7 @@ export default {
       });
     })]).then(()=>{
       this.particularSemesterCourse(this.choosedCourse,this.year,this.semester);   
-      this.particularSemesterCourse(this.choosedCourse,this.year,this.semester);
+      this.particularSemesterCourse(this.allCourse,this.year,this.semester);
       this.processData();
     })
     //初始化二维数组
