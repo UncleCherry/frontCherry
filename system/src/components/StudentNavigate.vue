@@ -32,9 +32,9 @@
           <i class="el-icon-location"></i>
           <span>课程管理</span>
         </template>
-          <el-menu-item index="3-1" @click="OpenScorePage">查看专业培养计划</el-menu-item>
+          <el-menu-item index="3-1" @click="OpenTrainingPlan">查看专业培养计划</el-menu-item>
           <el-menu-item index="3-2" @click="OpenCourseSelect">个人选课</el-menu-item>
-          <el-menu-item index="3-3">期中退课</el-menu-item>
+          <el-menu-item index="3-3" @click="OpenDropClass">期中退课</el-menu-item>
           <el-menu-item index="3-4" @click="OpenScheduleTable">查看课表</el-menu-item>
       </el-submenu>
       <el-submenu index="4" style="text-align: left;">
@@ -102,6 +102,14 @@
       OpenApplyLeavePage()
       {
         this.$router.replace('/ApplyLeavePage');
+      },
+      OpenTrainingPlan()
+      {
+        this.$router.replace('/TrainingPlan');
+      },
+      OpenDropClass()
+      {
+        this.$router.replace('/DropClass');
       },
     }
   }

@@ -108,6 +108,21 @@ const routes = [
     name: 'ApplyLeavePage',
     component: () => import('../views/ApplyLeavePage.vue')
   },
+  {
+    path: '/TrainingPlan',
+    name: 'TrainingPlan',
+    component: () => import('../views/TrainingPlan.vue')
+  },
+  {
+    path: '/EditTrainingPlan',
+    name: 'EditTrainingPlan',
+    component: () => import('../views/EditTrainingPlan.vue')
+  },
+  {
+    path: '/DropClass',
+    name: 'DropClass',
+    component: () => import('../views/DropClass.vue')
+  },
 ]
 
 const router = new VueRouter({
