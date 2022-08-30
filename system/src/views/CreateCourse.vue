@@ -34,7 +34,7 @@
               <el-switch v-model="ruleForm.isRequired"></el-switch>
           </el-form-item>
           <el-form-item label="课程年份" prop="year">
-              <el-date-picker type="year" placeholder="选择年份" v-model="ruleForm.year" :picker-options="optionsDisable" value-format="yyyy-MM-dd" ></el-date-picker>
+              <el-date-picker type="year" placeholder="选择年份" v-model="ruleForm.year"  value-format="yyyy-MM-dd" ></el-date-picker>
           </el-form-item>
           <el-form-item label="课程学期" prop="semester">
               <el-select v-model="ruleForm.semester" placeholder="请选择学期">

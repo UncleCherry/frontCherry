@@ -157,6 +157,7 @@ export default {
       setTimeout(function(){that.changeExam(that.params)},500);
     },
     modScore(params){
+      console.log(params)
       if(params[0]==0){
         altGrade(params[1]).then(response=>{
         }).catch((error)=>{
