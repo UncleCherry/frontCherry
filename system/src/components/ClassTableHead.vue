@@ -5,7 +5,7 @@
         <span style="color:white; font-size: 12px; float:right">切换学期</span>
         <i class="el-icon-setting" style=" color:white; "></i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="item in 4" :key="item" @click.native="changeSemester(item-1)">
+          <el-dropdown-item v-for="item in semester.length" :key="item" @click.native="changeSemester(item-1)">
             {{semester[item-1]}}
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -17,13 +17,29 @@
 <script>
   export default {
       name: 'Score',
+      created(){
+        if(localStorage.getItem('userType')==0)
+        {
+          this.semester=[]
+          var year=parseInt(localStorage.getItem('grade'))
+          var myDate = new Date();
+          var tYear =parseInt(myDate.getFullYear());
+          for(var i=tYear;i>year;--i)
+          {
+            this.semester.push(i.toString()+"第二学期")
+            this.semester.push(i.toString()+"第一学期")
+          }
+          this.semester.push(year.toString()+"第二学期")
+        }
+      },
     data() {
       return {
         semester:[
-          '2022第二学期',
-          '2022第一学期',
-          '2021第二学期',
-          '2021第一学期',
+          "2022第二学期",
+          "2022第一学期",
+          "2021第二学期",
+          "2021第一学期",
+          "2020第二学期"
         ],
         curSemester:0,
 
