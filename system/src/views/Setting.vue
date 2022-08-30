@@ -6,19 +6,19 @@
             <template slot="label">
                 用户名
             </template>
-            kooriookami
+            {{userName}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template slot="label">
                 用户id
             </template>
-            18100000000
+            {{id}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template slot="label">
                 用户身份
             </template>
-            学生
+            {{userType}}
             </el-descriptions-item>
             </el-descriptions>
         </div>
@@ -51,12 +51,31 @@ import { mapMutations } from 'vuex';
 import { eventBus } from "../main.js";
 export default {
   name: 'Setting',
+  created(){
+    this.userName=localStorage.getItem('userName')
+    this.id=localStorage.getItem('id')
+    if(localStorage.getItem('userType')==0)
+    {
+      this.userType="学生"
+    }
+    else if(localStorage.getItem('userType')==1)
+    {
+      this.userType="教师"
+    }
+    else if(localStorage.getItem('userType')==2)
+    {
+      this.userType="教务"
+    }
+  },
   data() {
       return{
         dialogFormVisible: false,
         formLabelWidth: '100px',
         psw:'',
         checkpsw:'',
+        userName:'',
+        id:'',
+        userType:''
       }
     },
    methods:{

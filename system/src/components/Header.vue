@@ -50,7 +50,7 @@
           <el-divider direction="vertical" >  </el-divider>
         </el-menu-item>
       
-        <el-menu-item index="1" style="padding-left:0%">
+        <el-menu-item index="1" style="padding-left:0%" @click="help">
           <i class="el-icon-question"></i>
           帮助
 
@@ -64,12 +64,24 @@
             </el-avatar>
             {{userName}}
           </template>
-          <el-menu-item index="2-1" @click="openUserInfo">
-            <i class="el-icon-info" ></i>
-            个人信息</el-menu-item>
-          <el-menu-item index="2-2"  @click="Logout">
-            <i class="el-icon-remove"></i>
-            退出登录</el-menu-item>
+          <el-menu-item index="2-1"  style="margin-left:15px">
+            姓名: {{name}}</el-menu-item>
+            <el-menu-item v-if="loginState==0" index="2-2"  style="margin-left:15px">
+            学号: {{id}}</el-menu-item>
+            <el-menu-item v-if="loginState==1||loginState==2" index="2-2"  style="margin-left:15px">
+            教工号: {{id}}</el-menu-item>
+            <el-menu-item v-if="loginState==0" index="2-3"  style="margin-left:15px">
+            入学年份: {{grade}}</el-menu-item>
+            <el-menu-item v-if="loginState==0"  index="2-4"  style="margin-left:15px">
+            培养专业: {{major}}</el-menu-item>
+            <el-menu-item v-if="loginState==0" index="2-5"  style="margin-left:15px">
+            已修学分: {{credit}}</el-menu-item>
+            <el-menu-item v-if="loginState==1||loginState==2" index="2-3"  style="margin-left:15px">
+            学院: {{department}}</el-menu-item>
+            <el-menu-item index="2-6"  style="margin-left:15px">
+              <el-button plain size="mini" @click="gotoSetting">修改信息</el-button>
+              <el-button type="primary" size="mini" @click="Logout">退出</el-button>
+          </el-menu-item>
         </el-submenu>
         <el-menu-item  v-if="loginState==-1" style="float: right;" >
           <el-link :underline="false"  @click="openLogin" >登录</el-link>
@@ -81,8 +93,10 @@
 
 <script >
 import { login } from '@/api/login'
+import { getStudentInfo,getInstructorInfo,getAdminInfo } from '@/api/userInfo'
 import { mapMutations } from 'vuex';
 import { eventBus } from '../main'
+import axios from 'axios';
 export default {
   name: 'header',
   data(){
@@ -101,7 +115,12 @@ export default {
       dialogVisible: false,
       password:'',
       account:'',
-      
+      name:'',
+      id:'',
+      major:'',
+      grade:'',
+      credit:'',
+      department:''
     }
   },
   created(){
@@ -129,13 +148,19 @@ export default {
       console.log('本次访问网页有token信息，已自动读取')
       this.userName=localStorage.getItem('userName');
       this.loginState=localStorage.getItem('userType');
+      this.name=localStorage.getItem('name');
+      this.id=localStorage.getItem('id');
       if(this.loginState==0)
       {
         this.userAvatar=require('../assets/S_avatar.png');
+        this.major=localStorage.getItem('major');
+        this.credit=localStorage.getItem('credit');
+        this.grade=localStorage.getItem('grade');
       }
       else
       {
         this.userAvatar=require('../assets/T_avatar.png');
+        this.department=localStorage.getItem('department');
       }
     };
 
@@ -161,14 +186,12 @@ export default {
         return true;
       },
 
-      openUserInfo()
-      {
-        console.log(this.$parent)
-        this.$parent.openStudentInfo();
-      },
-
       errorHandler(){
         return true
+      },
+
+      gotoSetting(){
+        this.$router.replace('/setting')
       },
 
       ...mapMutations(['delLogin']),
@@ -189,71 +212,152 @@ export default {
       ...mapMutations(['changeLogin']),
 
       changeLoginState(param){
-        login(param).then(response=>{
-            //判断是否登录成功
-          if (response.data.loginState){
-            this.userName=response.data.userName;
-            //获取token
-            this.userToken = response.data.token;
-            //获取用户身份类别
-            this.loginState = response.data.userType
+        axios.all([
+          login(param).then(response=>{
+              //判断是否登录成功
+            if (response.data.loginState){
+              this.userName=response.data.userName;
+              //获取token
+              this.userToken = response.data.token;
+              //获取用户身份类别
+              this.loginState = response.data.userType
 
-            this.changeLogin({ 
-              Authorization:this.userToken,
-              userName:this.userName,
-              userType:this.loginState
-            });     
-            this.dialogTableVisible=false;
-            //将用户token保存到vuex中
-            //返回类型为学生登录
-            // if(this.userType==0)
-            // {
-            //   this.changeLogin({ 
-            //     Authorization:this.userToken,
-            //     userName:this.userName,
-            //     userType:0
-            //   });             
-            //   this.dialogTableVisible=false;
-            //   this.loginState=0;
-            //   console.log('学生成功登录')
-            // }
-            if(this.loginState==0)
-            {
-              this.$router.replace('/StudentScorePage');
+              this.changeLogin({ 
+                Authorization:this.userToken,
+                userName:this.userName,
+                userType:this.loginState
+              });     
+              this.dialogTableVisible=false;
+              if(this.loginState==0)
+              {
+                this.$router.replace('/StudentScorePage');
+              }
+              else if(this.loginState==1)
+              {
+                this.$router.replace('/InstructSchedule');
+              }
+              else
+              {
+                this.$router.replace('/CreateCourse');
+              }
+              this.$message({
+                message: '登录成功！',
+                type: 'success'
+              });
+
+              //跳转路由
+
+              this.$emit('func',this.loginState);
+              this.userAvatar=require('../assets/S_avatar.png');
             }
-            else if(this.loginState==1)
-            {
-              this.$router.replace('/InstructSchedule');
+            else{
+              this.$message({
+                message: '账号不存在或密码错误！',
+                type: 'warning'
+              });
+              return;
             }
-            else
-            {
-              this.$router.replace('/CreateCourse');
+          }).catch((error)=>{
+          this.$message({
+            message: '登录失败，请稍后重试',
+            type: 'warning'
+          });
+          console.log('error',error)
+          return;
+          })   
+        ]).then(()=>{
+          this.getUserInfo();
+        })  
+      },
+      ...mapMutations(['storeInfo']),
+      getUserInfo(){
+        if(this.loginState==0)
+        {
+          getStudentInfo().then(response=>{
+            //获取api中的数据
+            var student={
+              id:response.data.studentID,
+              name:response.data.studentName,
+              grade:response.data.studentGrade,
+              major:response.data.studentMajor,
+              credit:response.data.studentCredit
             }
+            this.id=student.id
+            this.name=student.name
+            this.major=student.major
+            this.grade=student.grade
+            this.credit=student.credit
+            this.storeInfo({
+              id:this.id,
+              name:this.name,
+              grade:this.grade,
+              major:this.major,
+              credit:this.credit
+            })
+            console.log(student);
+          }).catch((error)=>{
             this.$message({
-              message: '登录成功！',
-              type: 'success'
+              message:'获取学生信息失败',
+              type:'warning'
             });
-
-            //跳转路由
-
-            this.$emit('func',this.loginState);
-            this.userAvatar=require('../assets/S_avatar.png');
-          }
-          else{
-            this.$message({
-              message: '账号不存在或密码错误！',
-              type: 'warning'
-            });
+            console.log('error',error)
             return;
-          }
-        }).catch((error)=>{
-        this.$message({
-          message: '登录失败，请稍后重试',
-          type: 'warning'
-        });
-        console.log('error',error)
-        return;
-        })     
+          })
+        }
+        else if(this.loginState==1)
+        {
+          getInstructorInfo().then(response=>{
+            //获取api中的数据
+            var Instructor={
+              id:response.data.instructorID,
+              name:response.data.instructorName,
+              department:response.data.instructorDepartment,
+            }
+            this.id=Instructor.id
+            this.name=Instructor.name
+            this.department=Instructor.department
+            this.storeInfo(Instructor)
+            console.log({
+              id:this.id,
+              name:this.name,
+              department:this.department,
+            });
+          }).catch((error)=>{
+            this.$message({
+              message:'获取教师信息失败',
+              type:'warning'
+            });
+            console.log('error',error)
+            return;
+          })
+        }
+        else if(this.loginState==2)
+        {
+          getAdminInfo().then(response=>{
+            //获取api中的数据
+            var Admin={
+              id:response.data.adminID,
+              name:response.data.adminName,
+              department:response.data.adminDepartment,
+            }
+            this.id=Admin.id
+            this.name=Admin.name
+            this.department=Admin.department
+            this.storeInfo({
+              id:this.id,
+              name:this.name,
+              department:this.department,
+            })
+            console.log(Admin);
+          }).catch((error)=>{
+            this.$message({
+              message:'获取教务信息失败',
+              type:'warning'
+            });
+            console.log('error',error)
+            return;
+          })
+        }
       },
 
       register(){
@@ -262,6 +366,9 @@ export default {
       },
       openLogin(){
         this.$router.replace('/Login');
+      },
+      help(){
+        this.$parent.openHelp();
       }
   }    
 }
