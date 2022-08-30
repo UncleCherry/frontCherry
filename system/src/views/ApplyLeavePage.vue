@@ -127,42 +127,34 @@ export default {
       let _this = this
       _this.message = []
       getStudentLeave().then(async(response)=>{
-        _this.list = response.data.ApplicationsList
-        
-        for(_this.i = 0; _this.i < _this.list.length; ++_this.i){
-          console.log("列表长度",_this.list.length)
-          console.log(_this.i)
+        var list = response.data.ApplicationsList
+        for(var i = 0; i < list.length; ++i){
           let tmp = ''
-          var myreason = _this.list[_this.i].Reason.split('-')
-          var mytime = _this.list[_this.i].Time.split('T')
+          var myreason = list[i].Reason.split('-')
+          var mytime = list[i].Time.split('T')
           var mycoursename = ''
           var param = {
             courseid: parseInt(myreason[0])
           }
           await getCourseInfo(param).then(response=>{
             mycoursename = response.data.course.CourseName
-            console.log("接口catch前",_this.i)
-            console.log(response.data.course.CourseName)
           }).catch((error)=>{
-            console.log("课程",error)
-            console.log("接口catch后",_this.i)
             this.$message({
               message:'获取课程信息失败',
               type:'warning',
             })
           });
-          tmp += _this.list[_this.i].ApplicationId + ' - '
-            tmp += myreason[0] + ' - '
-            tmp += mycoursename + ' - '
-            tmp += _this.list[_this.i].StudentName + ' - '
-            tmp += _this.list[_this.i].UserId + ' - '
-            tmp += mytime[0] + ' - '
-            tmp += _this.list[_this.i].State
-            console.log(tmp)
-            _this.message.push(tmp);
+          tmp += list[i].ApplicationId + ' - '
+          tmp += myreason[0] + ' - '
+          tmp += mycoursename + ' - '
+          tmp += list[i].StudentName + ' - '
+          tmp += list[i].UserId + ' - '
+          tmp += mytime[0] + ' - '
+          tmp += list[i].State
+          console.log(tmp)
+          _this.message.push(tmp);
         }
       }).catch((error)=>{
-        console.log("申请",error)
         this.$message({
           message:'获取申请信息失败',
           type:'warning',

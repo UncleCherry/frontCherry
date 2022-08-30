@@ -100,13 +100,13 @@
                 type: 'success',
                 message: '请假申请撤销成功' 
               });
+              rows.splice(row, 1);
             }).catch((error)=>{
               this.$message({
                 message: '撤销失败',
                 type: 'warning'
               });
             });
-            rows.splice(row, 1);
           }).catch((error) => {
             console.log(error)
             this.$message({
