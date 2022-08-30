@@ -84,9 +84,29 @@ const routes = [
     component: () => import('../views/GradeEdit.vue')
   },
   {
-    path: '/OnlineCourseManagement',
-    name: 'OnlineCourseManagement',
-    component: () => import('../views/OnlineCourseManagement.vue')
+    path: '/AttendanceInfoStudent',
+    name: 'AttendanceInfoStudent',
+    component: () => import('../views/AttendanceInfoStudent.vue')
+  },
+  {
+    path: '/UploadAttendance',
+    name: 'UploadAttendance',
+    component: () => import('../views/UploadAttendance.vue')
+  },
+  {
+    path: '/AttendanceInfoTeacher',
+    name: 'AttendanceInfoTeacher',
+    component: () => import('../views/AttendanceInfoTeacher.vue')
+  },
+  {
+    path: '/AttendanceScore',
+    name: 'AttendanceScore',
+    component: () => import('../views/AttendanceScore.vue')
+  },
+  {
+    path: '/ApplyLeavePage',
+    name: 'ApplyLeavePage',
+    component: () => import('../views/ApplyLeavePage.vue')
   },
   {
     path: '/TrainingPlan',
@@ -108,6 +128,7 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
