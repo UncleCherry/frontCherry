@@ -8,9 +8,9 @@
       text-color="#fff"
       active-text-color="#ffd04b"
       style="height:100%;text-align: left;">
-      <el-menu-item index="1">
-        <i class="el-icon-menu"></i>
-        <span slot="title">添加专业培养计划</span>
+      <el-menu-item index="1" @click="OpenEditTrainingPlan">
+        <i class="el-icon-menu" ></i>
+        <span slot="title">编辑专业培养计划</span>
       </el-menu-item>
       <el-menu-item index="2"  @click="OpenCreateCourse">
         <i class="el-icon-menu"></i>
@@ -28,7 +28,11 @@
         <i class="el-icon-menu"></i>
         <span slot="title">申请审核</span>
       </el-menu-item>
-      <el-menu-item index="6" @click="OpenSetting">
+      <el-menu-item index="6"  @click="OpenOnlineCourseManagement">
+        <i class="el-icon-menu"></i>
+        <span slot="title">网课管理</span>
+      </el-menu-item>
+      <el-menu-item index="7" @click="OpenSetting">
         <i class="el-icon-setting"></i>
         <span slot="title">设置</span>
       </el-menu-item>
@@ -58,6 +62,14 @@
       {
         this.$router.replace('/Setting');
       },
+      OpenOnlineCourseManagement()
+      {
+        this.$router.replace('/OnlineCourseManagement')
+      },
+      OpenEditTrainingPlan()
+      {
+        this.$router.replace('/EditTrainingPlan');
+      }
     }
   }
 </script>

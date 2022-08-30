@@ -32,9 +32,9 @@
           <i class="el-icon-location"></i>
           <span>课程管理</span>
         </template>
-          <el-menu-item index="3-1" @click="OpenScorePage">查看专业培养计划</el-menu-item>
+          <el-menu-item index="3-1" @click="OpenTrainingPlan">查看专业培养计划</el-menu-item>
           <el-menu-item index="3-2" @click="OpenCourseSelect">个人选课</el-menu-item>
-          <el-menu-item index="3-3">期中退课</el-menu-item>
+          <el-menu-item index="3-3" @click="OpenDropClass">期中退课</el-menu-item>
           <el-menu-item index="3-4" @click="OpenScheduleTable">查看课表</el-menu-item>
       </el-submenu>
       <el-submenu index="4" style="text-align: left;">
@@ -43,8 +43,7 @@
           <span>考勤管理</span>
         </template>
           <el-menu-item index="4-1" @click="OpenAttendanceInfoStudent">考勤信息查询</el-menu-item>
-          <el-menu-item index="4-2">请假</el-menu-item>
-          <el-menu-item index="4-3">缺勤申述</el-menu-item>
+          <el-menu-item index="4-2" @click="OpenApplyLeavePage">请假申请</el-menu-item>
       </el-submenu>
       <el-menu-item index="5" style="text-align: left;" @click="OpenSetting">
         <i class="el-icon-setting"></i>
@@ -99,6 +98,18 @@
       OpenAttendanceInfoStudent()
       {
         this.$router.replace('/AttendanceInfoStudent');
+      },
+      OpenApplyLeavePage()
+      {
+        this.$router.replace('/ApplyLeavePage');
+      },
+      OpenTrainingPlan()
+      {
+        this.$router.replace('/TrainingPlan');
+      },
+      OpenDropClass()
+      {
+        this.$router.replace('/DropClass');
       },
     }
   }

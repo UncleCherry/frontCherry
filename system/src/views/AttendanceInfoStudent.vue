@@ -24,7 +24,7 @@
             </el-input></el-col>
             <el-col :span="4">
             <el-button style="background:#409EFF; border-color:#409EFF; margin-top: 30px;" type="primary" icon="el-icon-search" @click.native="getResult">搜索</el-button></el-col>
-            </el-row>
+          </el-row>
         </div>
         <AttendanceTable :AttendanceMsg="message" style="margin-top: 50px"/>
       </el-main>

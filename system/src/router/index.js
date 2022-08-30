@@ -86,17 +86,42 @@ const routes = [
   {
     path: '/AttendanceInfoStudent',
     name: 'AttendanceInfoStudent',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfoStudent.vue')
+    component: () => import('../views/AttendanceInfoStudent.vue')
   },
   {
     path: '/UploadAttendance',
     name: 'UploadAttendance',
-    component: () => import(/* webpackChunkName: "about" */ '../views/UploadAttendance.vue')
+    component: () => import('../views/UploadAttendance.vue')
   },
   {
     path: '/AttendanceInfoTeacher',
     name: 'AttendanceInfoTeacher',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AttendanceInfoTeacher.vue')
+    component: () => import('../views/AttendanceInfoTeacher.vue')
+  },
+  {
+    path: '/AttendanceScore',
+    name: 'AttendanceScore',
+    component: () => import('../views/AttendanceScore.vue')
+  },
+  {
+    path: '/ApplyLeavePage',
+    name: 'ApplyLeavePage',
+    component: () => import('../views/ApplyLeavePage.vue')
+  },
+  {
+    path: '/TrainingPlan',
+    name: 'TrainingPlan',
+    component: () => import('../views/TrainingPlan.vue')
+  },
+  {
+    path: '/EditTrainingPlan',
+    name: 'EditTrainingPlan',
+    component: () => import('../views/EditTrainingPlan.vue')
+  },
+  {
+    path: '/DropClass',
+    name: 'DropClass',
+    component: () => import('../views/DropClass.vue')
   },
 ]
 
