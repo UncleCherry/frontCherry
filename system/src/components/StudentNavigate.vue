@@ -88,7 +88,6 @@
       {
         this.$router.replace('/ClassSchedulePage');
       },
-<<<<<<< HEAD:system/src/views/StudentPageSide.vue
       OpenExamSchedulePage()
       {
         this.$router.replace('/ExamSchedulePage');
@@ -96,9 +95,7 @@
       OpenRetakeExamPage()
       {
         this.$router.replace('/RetakeExamPage');
-      }
-
-=======
+      },
       OpenCourseSelect()
       {
         this.$router.replace('/CourseSelect');
@@ -107,7 +104,7 @@
       {
         this.$router.replace('/Setting');
       }
->>>>>>> 26ea61503168b65a8867f292ec8fed3c899b5567:system/src/components/StudentNavigate.vue
+
     }
   }
 </script>

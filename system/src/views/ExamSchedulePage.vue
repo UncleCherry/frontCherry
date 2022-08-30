@@ -42,41 +42,79 @@
 </template>
 
 <script>
-  export default {
-      name: 'Score',
+import { getAllExam} from '../api/Exam'
+export default {
+  name: 'ExamSchedulePage',
+  created(){
+    getAllExam().then(response=>{
+      this.$message({
+        message: '获取考试信息成功',
+        type: 'success'
+      });
+      this.examList=response.data.ExamsList
+    }).catch((error)=>{
+      this.$message({
+        message: '获取考试信息失败',
+        type: 'warning'
+      });
+      this.examList=response.data.ExamsList
+    })
+  },
     data() {
-      const item = {
-        number:1,
-        code:'10000',
-        name:"数据库原理和应用",
-        time:"2089-12-89",
-        place:"马桶楼",
-        updateDate: '2022-7-13',
-      };
       return {
-        tableData: Array(20).fill(item),
+        tableData:[],
         semester:[
-          '2021-2022第二学期',
-          '2021-2022第一学期',
-          '2020-2021第二学期',
-          '2020-2021第一学期',
+          '2022第二学期',
+          '2022第一学期',
+          '2021第二学期',
+          '2021第一学期',
         ],
         curSemester:0,
-
+        allGrades:[]
       }
     },
     methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      },
       changeSemester(chooseTerm){
         this.curSemester=chooseTerm;
       },
-    }
-  }
+      changeTableData(){
+        var year=this.semester[this.curSemester].substring(0,4);
+        var semester=this.semester[this.curSemester].substring(4);
+        this.tableData=[];
+        for(var i=0;i<this.examList.length();++i)
+        {
+          if(this.examList[i].Year==year&&this.examList[i].Semester==semester)
+          {
+            var grade=this.examList[i].Grade;
+            var pass="是",gpa;
+            if(parseInt(grade)<60)
+            {
+              pass="否";
+              gpa=0;
+            }
+            else if(parseInt(grade)>=60&&parseInt(grade)<70)
+            {
+              gpa=2;
+            }
+            else if(parseInt(grade)>=70&&parseInt(grade)<80)
+            {
+              gpa=3;
+            }
+            else if(parseInt(grade)>=80&&parseInt(grade)<90)
+            {
+              gpa=4;
+            }
+            else
+            {
+              gpa=5;
+            }
+            var temp={
+            }
+          }
+        }
+      }
+    }  
+}
 </script>
 
 <style>
