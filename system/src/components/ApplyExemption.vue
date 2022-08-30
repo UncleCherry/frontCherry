@@ -10,10 +10,10 @@
           style="width: 300px; margin-left: 10px"
         >
           <el-option
-            v-for="item in courseNameOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            v-for="item in courseMsg"
+            :key="item.CourseID"
+            :label="item.CourseName"
+            :value="item.CourseName"
           >
           </el-option>
         </el-select>
@@ -82,25 +82,17 @@
         @selection-change="handleSelectionChange"
         ref="multipleTable"
       >
-        <el-table-column type="selection" width="55"> </el-table-column>
-
-        <el-table-column prop="Snum" label="序号" width="120">
+        <el-table-column type="selection" width="50"> </el-table-column>
+        <!-- <el-table-column prop="courseName" label="课程名称" width="230">
+        </el-table-column> -->
+        <el-table-column prop="Time" label="申请日期" width="340">
         </el-table-column>
-        <el-table-column prop="CourseID" label="课程ID" width="160">
+        <!-- <el-table-column prop="Type" label="申请类型" width="300">
+        </el-table-column> -->
+        <el-table-column prop="State" label="审核状态" width="300">
         </el-table-column>
-        <el-table-column prop="courseName" label="课程名称" width="230">
-        </el-table-column>
-        <el-table-column prop="applyDate" label="申请日期" width="210">
-        </el-table-column>
-        <el-table-column prop="applyType" label="申请类型" width="155">
-        </el-table-column>
-        <el-table-column prop="State" label="审核状态" width="160">
-        </el-table-column>
-        <el-table-column label="操作" width="200">
+        <el-table-column label="操作" width="300">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-              >重新编辑</el-button
-            >
             <el-button
               size="mini"
               type="danger"
@@ -120,10 +112,10 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
-        :page-sizes="[2, 5, 10]"
+        :page-sizes="[2, 5]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="10"
+        :total="20"
       >
       </el-pagination>
     </div>
@@ -131,32 +123,14 @@
 </template>
 
 <script>
+import { getStudentCourse } from "@/api/course";
+import { StudentCreateScoreApplication } from "@/api/apply";
+import { getStudentScoreApplication } from "@/api/apply";
+
 export default {
   name: "ApplyExemption",
   data() {
     return {
-      courseNameOptions: [
-        {
-          label: "数据库原理和应用",
-          value: "数据库原理和应用",
-        },
-        {
-          label: "计算机系统结构",
-          value: "计算机系统结构",
-        },
-        {
-          label: "操作系统",
-          value: "操作系统",
-        },
-        {
-          label: "系统分析与设计",
-          value: "系统分析与设计",
-        },
-        {
-          label: "毛泽东思想概述",
-          value: "毛泽东思想概述",
-        },
-      ],
       applyTypeOptions: [
         {
           label: "申请免听",
@@ -172,30 +146,78 @@ export default {
       applyReason: "",
       search: "",
       fileList: [],
+      applicationMsg: [],
+      courseMsg: "",
       multipleSelection: [],
-      tableData: [
-        {
-          Snum: 1,
-          CourseID: 20512314,
-          courseName: "数据库原理和应用",
-          applyDate: "2016-05-03",
-          applyType: "免修",
-          State: "正在申请",
-        },
-        {
-          Snum: 2,
-          CourseID: 20534512,
-          courseName: "计算机系统结构",
-          applyDate: "2022-02-03",
-          applyType: "免听",
-          State: "申请通过",
-        },
-      ],
+      tableData: [],
       currentPage: 1,
       pageSize: 2,
     };
   },
+  created() {
+    getStudentCourse()
+      .then((response) => {
+        this.$message({
+          message: "获取授课信息成功",
+          type: "success",
+        });
+        this.courseMsg = response.data.CoursesList;
+      })
+      .catch((error) => {
+        this.$message({
+          message: "获取授课信息失败",
+          type: "warning",
+        });
+      });
+    // getStudentScoreApplication()
+    //   .then((response) => {
+    //     this.tableData = [];
+    //     this.$message({ message: "获取申请信息成功", type: "success" });
+    //     console.log(response.data.ApplicaitionsList);
+    //     this.tableData = response.data.ApplicaitionsList;
+    //   })
+    //   .catch((error) => {
+    //     this.$message({ message: "获取申请信息失败", type: "warning" });
+    //   });
+  },
+  mounted() {
+    getStudentScoreApplication()
+      .then((response) => {
+        this.tableData = [];
+        this.$message({ message: "获取申请信息成功", type: "success" });
+        console.log(response.data.ApplicaitionsList);
+        this.tableData = response.data.ApplicaitionsList;
+      })
+      .catch((error) => {
+        this.$message({ message: "获取申请信息失败", type: "warning" });
+      });
+  },
   methods: {
+    submitApplication() {
+      this.applicationMsg = [];
+      var applyType_;
+      if (this.applyType === "申请免修") applyType_ = 2;
+      else applyType_ = 3;
+      var param = { reason: this.applyReason, type: applyType_ };
+      StudentCreateScoreApplication(param)
+        .then((response) => {
+          this.$message({
+            message: "申请失败",
+            type: "success",
+          });
+        })
+        .catch((error) => {
+          this.$message({
+            message: "申请成功",
+            type: "warning",
+          });
+        });
+      var that = this;
+      setTimeout(function () {
+        that.reload();
+      }, 500);
+    },
+
     Apply() {
       var str = "";
       console.log(this.applyTypeOptions.value);
@@ -213,7 +235,26 @@ export default {
               type: "warning",
             })
               .then(() => {
-                this.$message({ type: "success", message: "申请成功!" });
+                this.applicationMsg = [];
+                var applyType_;
+                if (this.applyType === "申请免修") applyType_ = 2;
+                else applyType_ = 3;
+                var param = { reason: this.applyReason, type: applyType_ };
+                StudentCreateScoreApplication(param)
+                  .then((response) => {
+                    this.$message({ message: "申请成功", type: "success" });
+                  })
+                  .catch((error) => {
+                    this.$message({ message: "申请失败", type: "warning" });
+                  });
+                var that = this;
+                setTimeout(function () {
+                  that.reload();
+                }, 500);
+                // this.tableData.push({
+                //   couseName: this.CourseName,
+                //   applyType: this.applyType,
+                // });
               })
               .catch(() => {
                 this.$message({ type: "info", message: "已取消申请" });
@@ -228,6 +269,7 @@ export default {
         this.$message({ type: "info", message: "未选择申请课程" });
       }
     },
+
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -253,7 +295,7 @@ export default {
       this.currentPage = val;
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      this.tableData.splice(index, 1);
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
