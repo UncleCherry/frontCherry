@@ -24,10 +24,14 @@
         <i class="el-icon-menu"></i>
         <span slot="title">添加成绩</span>
       </el-menu-item>
-      <el-menu-item index="5">
-        <i class="el-icon-menu"></i>
-        <span slot="title">申请审核</span>
-      </el-menu-item>
+      <el-submenu index="5" style="text-align: left;">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>申请审核</span>
+        </template>
+          <el-menu-item index="5-1">免修免听申请</el-menu-item>
+          <el-menu-item index="5-2" @click="OpenLeaveVerifyPage">请假申请</el-menu-item>
+      </el-submenu>
       <el-menu-item index="6"  @click="OpenOnlineCourseManagement">
         <i class="el-icon-menu"></i>
         <span slot="title">网课管理</span>
@@ -69,6 +73,10 @@
       OpenEditTrainingPlan()
       {
         this.$router.replace('/EditTrainingPlan');
+      },
+      OpenLeaveVerifyPage()
+      {
+        this.$router.replace('/LeaveVerifyPage');
       }
     }
   }

@@ -41,6 +41,7 @@
     <el-table-column
       prop="state"
       label="审核状态"
+      sortable
       min-width="10%">
     </el-table-column>
     <el-table-column
@@ -48,6 +49,7 @@
       label="操作"
       min-width="15%">
       <template slot-scope="scope">
+        <el-button @click="handleClick(scope.$index)" type="text" size="small" style="color:blue">查看请假理由</el-button>
         <el-button
           @click.native.prevent="deleteRow(scope.$index, tableData)"
           type="text"
@@ -62,7 +64,7 @@
 </template>
 
 <script>
-  import { deleteLeave } from "@/api/leave";
+  import { deleteLeave,getApplicationInfo } from "@/api/leave";
   export default {
     methods: {
         show(val){
@@ -116,7 +118,25 @@
           });
         },
         handleClick(row) {
-          console.log(row);
+          let _this = this
+          var param = {
+            leaveid:_this.tableData[row]['applicationid']
+          };
+          console.log(param)
+          getApplicationInfo(param).then(response=>{
+            var list = response.data.ApplicationsList
+            var reason = list[0].Reason.split('-')
+            var myreason = reason[2]
+            this.$alert(myreason, '请假理由', {
+              confirmButtonText: '确定',
+            });
+          }).catch((error)=>{
+            console.log(error)
+            this.$message({
+              message:'查询请假理由失败',
+              type:'warning'
+            })
+          });
         } 
     },
 

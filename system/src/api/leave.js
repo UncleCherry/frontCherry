@@ -25,6 +25,23 @@ export function deleteLeave(data){
 export function getStudentLeave(){
     return request({
         url:'/Leave/student',
+        method:'get'
+    })
+}
+
+export function getAdminLeave(){
+    return request({
+        url:'/Leave/admin',
+        method:'get'
+    })
+}
+
+export function getApplicationInfo(data){
+    return request({
+        url:'/Leave/getApplicationInfo',
         method:'get',
+        params:{
+            "leaveid":data["leaveid"]
+        }
     })
 }
