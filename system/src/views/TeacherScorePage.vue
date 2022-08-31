@@ -94,28 +94,28 @@ export default {
       pageSize: 2,
       dialogTableVisible: false,
       dialogFormVisible: false,
-      gridData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-      ],
+      // gridData: [
+      //   {
+      //     date: "2016-05-02",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1518 弄",
+      //   },
+      //   {
+      //     date: "2016-05-04",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1518 弄",
+      //   },
+      //   {
+      //     date: "2016-05-01",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1518 弄",
+      //   },
+      //   {
+      //     date: "2016-05-03",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1518 弄",
+      //   },
+      // ],
     };
   },
   created() {
@@ -170,58 +170,6 @@ export default {
     //   setTimeout(function () {
     //     that.reload();
     //   }, 500);
-    // },
-
-    // Apply() {
-    //   var str = "";
-    //   console.log(this.applyTypeOptions.value);
-    //   if (this.courseName != "") {
-    //     if (this.applyReason != "") {
-    //       if (this.applyType != "") {
-    //         if (this.applyType === "申请免修") {
-    //           str = "是否确定申请免修课程";
-    //         } else if (this.applyType === "申请免听") {
-    //           str = "是否确定申请免听课程";
-    //         }
-    //         this.$confirm(str + ":《" + this.courseName + "》", "提示", {
-    //           confirmButtonText: "确定",
-    //           cancelButtonText: "取消",
-    //           type: "warning",
-    //         })
-    //           .then(() => {
-    //             this.applicationMsg = [];
-    //             var applyType_;
-    //             if (this.applyType === "申请免修") applyType_ = 2;
-    //             else applyType_ = 3;
-    //             var param = { reason: this.applyReason, type: applyType_ };
-    //             StudentCreateScoreApplication(param)
-    //               .then((response) => {
-    //                 this.$message({ message: "申请成功", type: "success" });
-    //               })
-    //               .catch((error) => {
-    //                 this.$message({ message: "申请失败", type: "warning" });
-    //               });
-    //             var that = this;
-    //             setTimeout(function () {
-    //               that.reload();
-    //             }, 500);
-    //             // this.tableData.push({
-    //             //   couseName: this.CourseName,
-    //             //   applyType: this.applyType,
-    //             // });
-    //           })
-    //           .catch(() => {
-    //             this.$message({ type: "info", message: "已取消申请" });
-    //           });
-    //       } else {
-    //         this.$message({ type: "info", message: "未选择申请类型" });
-    //       }
-    //     } else {
-    //       this.$message({ type: "info", message: "申请理由不能为空" });
-    //     }
-    //   } else {
-    //     this.$message({ type: "info", message: "未选择申请课程" });
-    //   }
     // },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
