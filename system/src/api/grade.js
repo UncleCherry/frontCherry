@@ -20,4 +20,18 @@ export function getStudentScore() {
         method: 'get',
     })
 }
+export function getTeacherScore() {
+    return request({
+        url: '/Grade/ins_exam',
+        method: 'get',
+    })
+}
+export function ShowStudentScore(examid) {
+    let param = new URLSearchParams(examid);
+    return request({
+        url: '/Grade/studentsinexam',
+        method: 'get',
+        data:examid
+    })
+}
 

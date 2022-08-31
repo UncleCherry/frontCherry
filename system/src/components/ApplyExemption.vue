@@ -202,13 +202,13 @@ export default {
       StudentCreateScoreApplication(param)
         .then((response) => {
           this.$message({
-            message: "申请失败",
+            message: "申请成功",
             type: "success",
           });
         })
         .catch((error) => {
           this.$message({
-            message: "申请成功",
+            message: "申请失败",
             type: "warning",
           });
         });

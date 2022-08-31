@@ -23,9 +23,18 @@
           <i class="el-icon-menu"></i>
           <span slot="title">选择授课</span>
         </el-menu-item>
+        <el-submenu index="4" style="text-align: left">
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>成绩管理</span>
+          </template>
+          <el-menu-item index="4-1" @click="OpenScorePage"
+            >编辑学生成绩</el-menu-item
+          >
+        </el-submenu>
 
         <!-- 有新功能加这里 -->
-        <el-menu-item index="4" @click="OpenSetting">
+        <el-menu-item index="5" @click="OpenSetting">
           <i class="el-icon-setting"></i>
           <span slot="title">设置</span>
         </el-menu-item>
@@ -48,6 +57,9 @@ export default {
   methods: {
     OpenSetting() {
       this.$router.replace("/Setting");
+    },
+    OpenScorePage() {
+      this.$router.replace("/TeacherScorePage");
     },
     OpenInstructSchedule() {
       this.$router.replace("/InstructSchedule");

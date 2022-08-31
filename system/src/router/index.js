@@ -49,6 +49,11 @@ const routes = [
     component: () => import('../views/ApplyExemptionPage.vue')
   },
   {
+    path: '/TeacherScorePage',
+    name: 'TeacherScorePage',
+    component: () => import('../views/TeacherScorePage.vue')
+  },
+  {
     path: '/Register',
     name: 'Register',
     component: () => import('../views/Register.vue')
