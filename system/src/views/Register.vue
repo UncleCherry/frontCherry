@@ -42,7 +42,6 @@
               <el-option label="电子信息" value="电子信息"></el-option>
               <el-option label="自动化" value="自动化"></el-option>
               <el-option label="测绘" value="测绘"></el-option>
-              <el-option label="光电" value="光电"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="院系" v-if="userType==1||userType==2" prop="department">

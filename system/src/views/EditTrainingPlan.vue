@@ -105,9 +105,6 @@ import axios from 'axios'
           value: '计算机科学与技术',
           label: '计算机科学与技术'
         }, {
-          value: '大数据',
-          label: '大数据'
-        }, {
           value: '电子信息',
           label: '电子信息'
         },{
@@ -120,9 +117,9 @@ import axios from 'axios'
           value: '测绘',
           label: '测绘'
         },{
-          value: '光电',
-          label: '光电'
-        },],
+          value: '网络安全',
+          label: '网络安全'
+        }],
         value: ''
       }
     },
