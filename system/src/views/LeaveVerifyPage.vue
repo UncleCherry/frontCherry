@@ -13,22 +13,23 @@
         style="margin-top: 20px"
         @filter-change="filterChange"
       >
-        <el-table-column type="selection" width="55"> </el-table-column>
-
         <el-table-column prop="applicationid" label="申请序号" width="120">
         </el-table-column>
-        <el-table-column prop="courseid" label="课程ID" width="160">
+        <el-table-column prop="courseid" label="课程ID" width="140">
         </el-table-column>
         <el-table-column
           prop="courseName"
           label="课程名称"
-          width="180"
+          width="200"
           sortable
           column-key="courseName"
           :filters="getfilterNameItem()"
+          :filter-method="filterHandler"
         >
         </el-table-column>
-        <el-table-column prop="date" label="申请日期" width="200">
+        <el-table-column prop="number" label="课次" width="87">
+        </el-table-column>
+        <el-table-column prop="date" label="申请日期" width="150">
         </el-table-column>
         <el-table-column prop="student" label="申请人" width="160">
         </el-table-column>
@@ -40,38 +41,34 @@
           :filters="[
             { text: '已审核', value: '已审核' },
             { text: '待审核', value: '待审核' }]"
-          :filter-method="filterState"
+          :filter-method="filterHandler"
         >
         </el-table-column>
-        <el-table-column prop="reason" label="申请原因" width="80">
+        <el-table-column prop="reason" label="请假理由" width="80">
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row)"
+              @click="handleSearch(scope.$index)"
               icon="el-icon-search"
             ></el-button>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" width="175">
+        <el-table-column label="操作" width="200">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
+            <el-button size="mini" @click="handlePass(scope.$index)"
               >同意</el-button
             >
             <el-button
               size="mini"
               type="danger"
               style="margin-left: 20px"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="handleReject(scope.$index)"
               >拒绝</el-button
             >
           </template>
         </el-table-column>
       </el-table>
-      <div style="clear: both; float: left; margin-top: 15px">
-        <el-button @click="toggleSelection(tableData)">全选</el-button>
-        <el-button @click="toggleSelection()">取消选择</el-button>
-      </div>
 
       <el-pagination
         style="clear: both; margin-top: 30px"
@@ -89,8 +86,8 @@
 </template>
 
 <script>
-import { getCourseInfo } from '@/api/course';
-import { getAdminLeave } from '@/api/leave'
+import { getCourseInfo,getAllCourse } from '@/api/course';
+import { getAdminLeave,getApplicationInfo,passStudentLeave,rejectStudentLeave } from '@/api/leave'
 export default {
   name: 'LeaveVerify',
   inject: ['reload'],
@@ -119,7 +116,7 @@ export default {
       multipleSelection: [],
       tableData: [],
       currentPage: 1,
-      pageSize: 2,
+      pageSize: 5,
       totalnum: 0,
     };
   },
@@ -153,6 +150,7 @@ export default {
           tmp['applicationid'] = list[i].ApplicationId
           tmp['courseid'] = myreason[0]
           tmp['courseName'] = mycoursename
+          tmp['number'] = myreason[1]
           tmp['date'] = mytime[0]
           tmp['student'] = list[i].UserId.toString() + '-' + list[i].StudentName
           if(list[i].State == 0){
@@ -172,21 +170,27 @@ export default {
       });
     },
     getfilterNameItem() {
-      let apiArr = [
-        // 发请求获取筛选项的数据
-        { text: "数据库原理和应用", value: "数据库原理和应用" },
-        {
-          text: "计算机系统结构",
-          value: "计算机系统结构",
-        },
-      ];
+      let apiArr = [];
+      let courseMsg = ''
+      getAllCourse().then(response=>{
+        courseMsg = response.data.CoursesList
+        for(var i = 0; i < courseMsg.length; ++i){
+          apiArr[i] = { "text":courseMsg[i].CourseName, "value":courseMsg[i].CourseName }
+        }
+      }).catch((error)=>{
+        this.$message({
+          message:'获取课程信息失败',
+          type:'warning',
+        })
+      });
       return apiArr;
     },
     filterChange(filterObj) {
-      console.log(filterObj['state'].length);
+      console.log("筛选条件变化",filterObj);
     },
-    filterState(value, row){
-      return row.state = value;
+    filterHandler(value, row, column){
+      const property = column['property'];
+      return row[property] === value;
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -199,11 +203,105 @@ export default {
       console.log(`当前页: ${val}`);
       this.currentPage = val;
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleSearch(row){
+      let _this = this
+      var param = {
+        leaveid:_this.tableData[row]['applicationid']
+      };
+      getApplicationInfo(param).then(response=>{
+        var list = response.data.ApplicationsList
+        var reason = list[0].Reason.split('-')
+        var myreason = reason[2]
+        this.$alert(myreason, '请假理由', {
+          confirmButtonText: '确定',
+        });
+      }).catch((error)=>{
+        console.log(error)
+        this.$message({
+          message:'查询请假理由失败',
+          type:'warning'
+        })
+      });
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    handlePass(row) {
+      let _this = this
+      if(_this.tableData[row]['state'] == "已审核"){
+        this.$message({
+          message:"该申请已通过审核，无法进行操作",
+          type:'warning'
+        })
+      }
+      else{
+        this.$confirm('确认通过这条申请吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type:'warning'
+        }).then(()=>{
+          var param = {
+            applicationid:_this.tableData[row]['applicationid']
+          };
+          passStudentLeave(param).then(response=>{
+            this.$message({
+              type: 'success',
+              message: '已通过申请'
+            });
+            _this.tableData[row]['state'] = "已审核"
+            this.reload()
+          }).catch((error)=>{
+            this.$message({
+              type: 'warning',
+              message: '通过申请失败'
+            });
+          })
+        }).catch((error) => {
+          console.log(error)
+          this.$message({
+            type: 'info',
+            message: '取消通过申请操作'
+          });       
+        });
+      }
+      console.log(row);
+    },
+    handleReject(row) {
+      let _this = this
+      if(_this.tableData[row]['state'] == "已审核"){
+        this.$message({
+          message:"该申请已通过审核，无法进行操作",
+          type:'warning'
+        })
+      }
+      else{
+        this.$confirm('确认拒绝这条申请吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type:'warning'
+        }).then(()=>{
+          var param = {
+            applicationid:_this.tableData[row]['applicationid']
+          };
+          rejectStudentLeave(param).then(response=>{
+            this.$message({
+              type: 'success',
+              message: '已拒绝申请'
+            });
+            _this.tableData[row]['state'] = "已审核"
+            this.reload()
+          }).catch((error)=>{
+            this.$message({
+              type: 'warning',
+              message: '拒绝申请失败'
+            });
+          })
+        }).catch((error) => {
+          console.log(error)
+          this.$message({
+            type: 'info',
+            message: '取消拒绝申请操作'
+          });       
+        });
+      }
+      console.log(row);
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

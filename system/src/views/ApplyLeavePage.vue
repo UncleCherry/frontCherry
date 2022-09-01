@@ -147,6 +147,7 @@ export default {
           tmp += list[i].ApplicationId + ' - '
           tmp += myreason[0] + ' - '
           tmp += mycoursename + ' - '
+          tmp += myreason[1] + ' - '
           tmp += list[i].StudentName + ' - '
           tmp += list[i].UserId + ' - '
           tmp += mytime[0] + ' - '

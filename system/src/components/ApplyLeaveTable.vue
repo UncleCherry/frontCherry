@@ -24,6 +24,12 @@
       min-width="15%">
     </el-table-column>
     <el-table-column
+      fixed
+      prop="number"
+      label="课次"
+      min-width="5%">
+    </el-table-column>
+    <el-table-column
       prop="id"
       label="学号"
       min-width="10%">
@@ -75,47 +81,57 @@
                 tmp['applicationid']=leaveinfo[0];
                 tmp['courseid']=leaveinfo[1];
                 tmp['course']=leaveinfo[2];
-                tmp['name']=leaveinfo[3];
-                tmp['id']=leaveinfo[4];
-                tmp['date']=leaveinfo[5];
-                if(leaveinfo[6]=='0')
+                tmp['number']=leaveinfo[3];
+                tmp['name']=leaveinfo[4];
+                tmp['id']=leaveinfo[5];
+                tmp['date']=leaveinfo[6];
+                if(leaveinfo[7]=='0')
                   tmp['state']='待审核'
-                else if(leaveinfo[6]=='1')
+                else if(leaveinfo[7]=='1')
                   tmp['state']='申请成功'
-                else if(leaveinfo[6]=='2')
+                else if(leaveinfo[7]=='2')
                   tmp['state']='申请失败'
                 this.tableData.push(tmp);
             }
         },
         deleteRow(row, rows){
           let _this = this
-          this.$confirm('确认撤销这条申请吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type:'warning'
-          }).then(()=>{
-            var param = {
-              applicationid:_this.tableData[row]['applicationid']
-            };
-            deleteLeave(param).then(response=>{
-              this.$message({
-                type: 'success',
-                message: '请假申请撤销成功' 
-              });
-              rows.splice(row, 1);
-            }).catch((error)=>{
-              this.$message({
-                message: '撤销失败',
-                type: 'warning'
-              });
-            });
-          }).catch((error) => {
-            console.log(error)
+          if(_this.tableData[row]['state'] != '待审核'){
             this.$message({
-              type: 'info',
-              message: '取消撤销操作'
-            });       
-          });
+              message:"该申请已通过审核，无法进行撤销操作",
+              type:'warning'
+            })
+          }
+          else{
+            this.$confirm('确认撤销这条申请吗?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type:'warning'
+            }).then(()=>{
+              var param = {
+                applicationid:_this.tableData[row]['applicationid']
+              };
+              deleteLeave(param).then(response=>{
+                this.$message({
+                  type: 'success',
+                  message: '请假申请撤销成功' 
+                });
+                rows.splice(row, 1);
+              }).catch((error)=>{
+                this.$message({
+                  message: '撤销失败',
+                  type: 'warning'
+                });
+              });
+            }).catch((error) => {
+              console.log(error)
+              this.$message({
+                type: 'info',
+                message: '取消撤销操作'
+              });       
+            });
+          }
+          
         },
         handleClick(row) {
           let _this = this

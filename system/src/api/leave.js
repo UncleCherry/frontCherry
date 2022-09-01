@@ -36,6 +36,24 @@ export function getAdminLeave(){
     })
 }
 
+export function passStudentLeave(data){
+    let param = new URLSearchParams(data);
+    return request({
+        url:'/Application/pass',
+        method:'put',
+        data:param
+    })
+}
+
+export function rejectStudentLeave(data){
+    let param = new URLSearchParams(data);
+    return request({
+        url:'/Application/reject',
+        method:'put',
+        data:param
+    })
+}
+
 export function getApplicationInfo(data){
     return request({
         url:'/Leave/getApplicationInfo',
