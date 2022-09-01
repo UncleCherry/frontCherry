@@ -178,11 +178,9 @@ router.beforeEach((to, from, next) => {
     if (token === null || token === '') {
       //前往登录页
       this.$router.replace('/Login');
-
-
-      this.$router.replace('/Login');
-      next();
     }
+    else{
+      next();
   }
 });
 
