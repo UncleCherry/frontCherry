@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <div slot="header" class="clearfix">
       <div style="float: left; display: inline-block, inline">
-        <span>申请课程名称</span>
+        <span>已修课程(未在培养方案中)</span>
         <el-select
           v-model="courseName"
           clearable
@@ -18,24 +18,22 @@
           </el-option>
         </el-select>
       </div>
-
-      <div>
-        <el-upload
-          style="clear: both; float: left; margin-top: 30px"
-          class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :before-remove="beforeRemove"
-          multiple
-          :limit="3"
-          :on-exceed="handleExceed"
-          :file-list="fileList"
+      <div style="margin-left: 30px; display: inline-block, inline">
+        <span>未休课程(在培养方案中)</span>
+        <el-select
+          v-model="courseName"
+          clearable
+          placeholder="请选择"
+          style="width: 300px; margin-left: 10px"
         >
-          <el-button size="small" type="primary"
-            >点击上传成绩复核申请表</el-button
+          <el-option
+            v-for="item in courseMsg"
+            :key="item.CourseID"
+            :label="item.CourseName"
+            :value="item.CourseName"
           >
-        </el-upload>
+          </el-option>
+        </el-select>
       </div>
       <el-button
         size="small"
@@ -46,7 +44,7 @@
       >
     </div>
     <div style="width: 100%">
-      <div style="font-weight: bold; font-size: large">申请成绩复核列表</div>
+      <div style="font-weight: bold; font-size: large">申请学分认定列表</div>
 
       <el-table
         :data="
@@ -76,6 +74,7 @@
           </template>
         </el-table-column>
       </el-table>
+
       <div style="clear: both; float: left; margin-top: 15px">
         <el-button @click="toggleSelection(tableData)">全选</el-button>
         <el-button @click="toggleSelection()">取消选择</el-button>
@@ -104,14 +103,14 @@ import { getStudentScoreApplication } from "@/api/apply";
 export default {
   data() {
     return {
-      courseNameOptions: [],
       courseName: "",
+      UntakencourseName: "",
       applyType: "",
       applyReason: "",
       search: "",
-      fileList: [],
       applicationMsg: [],
       courseMsg: "",
+      fileList: [],
       multipleSelection: [],
       tableData: [],
       currentPage: 1,

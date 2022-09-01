@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <!--
   注册页面
 -->
@@ -11,7 +12,7 @@
                 <i class="el-icon-back"></i>
                     返回登录
             </el-button>
-        </div>  
+        </div>
         <strong style="font-family:仿宋;font-size:25px;color:white;">欢迎注册</strong>
         <el-divider></el-divider>
         <el-form label-width="80px" class="item" style="font-color:white">
@@ -72,7 +73,7 @@
       </div>
     </div>
 </template>
-<script>  
+<script>
 import { studentRegister, instructorRegister, adminRegister} from '@/api/register'
 export default {
 
@@ -88,7 +89,7 @@ export default {
       grade:'',
       major:'',
       department:'',
-             
+
       optionsDisable: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -191,7 +192,7 @@ export default {
 
       //判断注册类型
       if(this.userType===0)
-      {    
+      {
         studentRegister(param).then(response=>{
           this.$message({
             message: '注册成功',
@@ -226,8 +227,8 @@ export default {
             return;
         })
       }
-      
-      
+
+
     },
 
     reset(){
@@ -250,8 +251,8 @@ export default {
 
 <style lang="scss" scoped>
 .background{
-    width:100%;  
-    height:calc(100vh - 55px);   
+    width:100%;
+    height:calc(100vh - 55px);
     background-position: center;
     position: absolute;
     background-image: url('../assets/registerBg.jpg');
