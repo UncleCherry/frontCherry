@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
   <el-table
     :data="tableData"
@@ -65,6 +66,7 @@
     props:['listMsg'],
     watch:{
       listMsg:{
+        // eslint-disable-next-line no-unused-vars
         handler(val) {
           for(var i=0;i<this.listMsg.length;++i)
           {

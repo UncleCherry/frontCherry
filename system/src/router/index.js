@@ -33,6 +33,11 @@ const routes = [
     name: 'ScoreRetabulationPage',
     component: () => import('../views/ScoreRetabulationPage.vue')
   },
+    {
+    path: '/CreditRecognitionPage',
+    name: 'CreditRecognitionPage',
+    component: () => import('../views/CreditRecognitionPage.vue')
+  },
   {
     path: '/ClassSchedulePage',
     name: 'ClassSchedulePage',
@@ -42,6 +47,11 @@ const routes = [
     path: '/ApplyExemptionPage',
     name: 'ApplyExemptionPage',
     component: () => import('../views/ApplyExemptionPage.vue')
+  },
+  {
+    path: '/TeacherScorePage',
+    name: 'TeacherScorePage',
+    component: () => import('../views/TeacherScorePage.vue')
   },
   {
     path: '/Register',
@@ -72,6 +82,11 @@ const routes = [
     path: '/InstructSelect',
     name: 'InstructSelect',
     component: () => import('../views/InstructSelect.vue')
+  },
+    {
+    path: '/StudentCreditVerifyPage',
+    name: 'StudentCreditVerifyPage',
+    component: () => import('../views/StudentCreditVerifyPage.vue')
   },
   {
     path: '/Login',
@@ -140,6 +155,8 @@ const routes = [
     component: () => import('../views/CreatExamPage.vue')
   },
 
+
+
 ]
 
 const router = new VueRouter({
@@ -149,8 +166,8 @@ const router = new VueRouter({
 
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
-  if (to.path === '/Login' 
-  || to.path==='/' 
+  if (to.path === '/Login'
+  || to.path==='/'
   || to.path==='/Register'
   || to.path==='/license'
   || to.path==='/forgetPassword'
@@ -160,8 +177,10 @@ router.beforeEach((to, from, next) => {
     let token = localStorage.getItem('Authorization');
     if (token === null || token === '') {
       //前往登录页
-      this.$router.replace('/Login');     
-    } else {
+      this.$router.replace('/Login');
+
+
+      this.$router.replace('/Login');
       next();
     }
   }
