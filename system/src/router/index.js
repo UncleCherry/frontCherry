@@ -24,6 +24,11 @@ const routes = [
     component: () => import('../views/StudentScorePage.vue')
   },
   {
+    path: '/StudentCoursePlaybackPage',
+    name: 'StudentCoursePlaybackPage',
+    component: () => import('../views/StudentCoursePlaybackPage.vue')
+  },
+  {
     path: '/StudentWelcomePage',
     name: 'StudentWelcomePage',
     component: () => import('../views/StudentWelcomePage.vue')
