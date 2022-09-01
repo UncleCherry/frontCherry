@@ -19,21 +19,27 @@
           <i class="el-icon-menu"></i>
           <span slot="title">选择授课</span>
         </el-menu-item>
-        <el-menu-item index="3" @click="OpenInstructSelect">
+        <el-menu-item index="3" @click="OpenGradeEdit">
           <i class="el-icon-menu"></i>
-          <span slot="title">选择授课</span>
+          <span slot="title">编辑成绩</span>
         </el-menu-item>
+        <!-- 有新功能加这里 -->
+
         <el-submenu index="4" style="text-align: left">
           <template slot="title">
             <i class="el-icon-location"></i>
-            <span>成绩管理</span>
+            <span>考勤管理</span>
           </template>
-          <el-menu-item index="4-1" @click="OpenScorePage"
-            >编辑学生成绩</el-menu-item
+          <el-menu-item index="4-1" @click="OpenAttendanceInfoTeacher"
+            >考勤信息管理</el-menu-item
+          >
+          <el-menu-item index="4-2" @click="OpenUploadAttendance"
+            >考勤信息上传</el-menu-item
+          >
+          <el-menu-item index="4-3" @click="OpenAttendanceScore"
+            >考勤成绩</el-menu-item
           >
         </el-submenu>
-
-        <!-- 有新功能加这里 -->
         <el-menu-item index="5" @click="OpenSetting">
           <i class="el-icon-setting"></i>
           <span slot="title">设置</span>
@@ -58,14 +64,23 @@ export default {
     OpenSetting() {
       this.$router.replace("/Setting");
     },
-    OpenScorePage() {
-      this.$router.replace("/TeacherScorePage");
-    },
     OpenInstructSchedule() {
       this.$router.replace("/InstructSchedule");
     },
     OpenInstructSelect() {
       this.$router.replace("/InstructSelect");
+    },
+    OpenGradeEdit() {
+      this.$router.replace("/GradeEdit");
+    },
+    OpenAttendanceInfoTeacher() {
+      this.$router.replace("/AttendanceInfoTeacher");
+    },
+    OpenUploadAttendance() {
+      this.$router.replace("/UploadAttendance");
+    },
+    OpenAttendanceScore() {
+      this.$router.replace("/AttendanceScore");
     },
   },
 };

@@ -1,10 +1,11 @@
 import axios from 'axios'
 import store from '@/store'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
+
 
 const service = axios.create({
     //baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-    baseURL:'https://localhost:44359/api/',
+    baseURL:'http://47.103.94.33:5002/api/',
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000, // request timeout
     //withCredentials: true//携带cookie
@@ -16,6 +17,7 @@ const service = axios.create({
 service.interceptors.request.use(
     config => {
       // do something before request is sent
+      store.commit("startLoading")
       if (localStorage.getItem('Authorization')) {
         config.headers.Token = localStorage.getItem('Authorization');
         console.log('本次request请求传递了token信息')
@@ -43,8 +45,13 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
+      setTimeout(() => {
+        store.commit("closeLoading")
+      }, 500);
+
       const res = response.data
       console.log('真实的回复为：',response)
+
       // if the custom code is not 200, it is judged as an error.
       if (res.errorCode != 200) {
         //判断token是否失效
@@ -83,6 +90,9 @@ service.interceptors.response.use(
       }
     },
     error => {
+      setTimeout(() => {
+        store.commit("closeLoading")
+      }, 500);
       console.log('error') // for debug
       return Promise.reject(error)
     }

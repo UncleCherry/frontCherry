@@ -11,15 +11,15 @@
         active-text-color="#ffd04b"
         style="height: 100%; text-align: left"
       >
-        <el-menu-item index="1">
+        <el-menu-item index="1" @click="OpenEditTrainingPlan">
           <i class="el-icon-menu"></i>
-          <span slot="title">添加专业培养计划</span>
+          <span slot="title">编辑专业培养计划</span>
         </el-menu-item>
         <el-menu-item index="2" @click="OpenCreateCourse">
           <i class="el-icon-menu"></i>
           <span slot="title">创建课程</span>
         </el-menu-item>
-        <el-menu-item index="3">
+        <el-menu-item index="3" @click="OpenCreatExamPage">
           <i class="el-icon-menu"></i>
           <span slot="title">添加考试安排</span>
         </el-menu-item>
@@ -27,17 +27,15 @@
           <i class="el-icon-menu"></i>
           <span slot="title">添加成绩</span>
         </el-menu-item>
-        <el-submenu index="5" style="text-align: left">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>审核申请</span>
-          </template>
-          <el-menu-item index="5-1" @click="OpenStudentCreditVerifyPage"
-            >学生学分认定申请</el-menu-item
-          >
-        </el-submenu>
-
-        <el-menu-item index="6" @click="OpenSetting">
+        <el-menu-item index="5">
+          <i class="el-icon-menu"></i>
+          <span slot="title">申请审核</span>
+        </el-menu-item>
+        <el-menu-item index="6" @click="OpenOnlineCourseManagement">
+          <i class="el-icon-menu"></i>
+          <span slot="title">网课管理</span>
+        </el-menu-item>
+        <el-menu-item index="7" @click="OpenSetting">
           <i class="el-icon-setting"></i>
           <span slot="title">设置</span>
         </el-menu-item>
@@ -61,12 +59,17 @@ export default {
     OpenCreateCourse() {
       this.$router.replace("/CreateCourse");
     },
-    OpenStudentCreditVerifyPage() {
-      this.$router.replace("/StudentCreditVerifyPage");
-    },
-
     OpenSetting() {
       this.$router.replace("/Setting");
+    },
+    OpenCreatExamPage() {
+      this.$router.replace("/CreatExamPage");
+    },
+    OpenOnlineCourseManagement() {
+      this.$router.replace("/OnlineCourseManagement");
+    },
+    OpenEditTrainingPlan() {
+      this.$router.replace("/EditTrainingPlan");
     },
   },
 };
