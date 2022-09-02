@@ -23,11 +23,11 @@
           <i class="el-icon-menu"></i>
           <span slot="title">添加考试安排</span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="4" @click="OpenCreatExamPage">
           <i class="el-icon-menu"></i>
           <span slot="title">添加成绩</span>
         </el-menu-item>
-        <el-menu-item index="5">
+        <el-menu-item index="5" @click="OpenApplicationVerifyPage">
           <i class="el-icon-menu"></i>
           <span slot="title">申请审核</span>
         </el-menu-item>
@@ -70,6 +70,9 @@ export default {
     },
     OpenEditTrainingPlan() {
       this.$router.replace("/EditTrainingPlan");
+    },
+    OpenApplicationVerifyPage() {
+      this.$router.replace("/OpenApplicationVerifyPage");
     },
   },
 };
