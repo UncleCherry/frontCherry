@@ -6,11 +6,11 @@
 
     <el-main>
         <el-table :data="courseData" border style="width: 100%">
-            <el-table-column prop="CourseID" label="课程号" width="100">
+            <el-table-column prop="CourseID" label="课程号" width="150">
             </el-table-column>
-            <el-table-column prop="CourseName" label="课程名称" width="180">
+            <el-table-column prop="CourseName" label="课程名称" width="300">
             </el-table-column>
-            <el-table-column prop="TimeSlot" label="上课时间" width="180">
+            <el-table-column prop="TimeSlot" label="上课时间" width="300">
             </el-table-column>
             <el-table-column prop="MeetingID" label="会议号">
             </el-table-column>
@@ -26,7 +26,7 @@
             <el-table :data="recordData" height="400" border style="width: 100%">
                 <el-table-column prop="RecordID" label="录播ID" width="120">
                 </el-table-column>
-                <el-table-column prop="Time" label="时间" width="120">
+                <el-table-column prop="Time" label="时间" width="180">
                 </el-table-column>
                 <el-table-column prop="URL" label="回看链接">
                     <template slot-scope="scope">
