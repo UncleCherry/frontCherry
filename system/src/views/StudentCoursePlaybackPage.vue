@@ -124,6 +124,7 @@ export default {
             })
         },
         processRecord() {
+            this.recordData=[];
             var rlen = this.recordMsg.length;
             console.log(rlen);
             if (rlen) {
