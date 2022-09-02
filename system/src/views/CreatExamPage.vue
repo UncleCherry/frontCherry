@@ -26,7 +26,7 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="openChange">修改</el-button>
+            @click="openChange(scope.$index)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -73,7 +73,7 @@
         <el-col :span="20">
           <el-form :model="changeExamForm"  ref="changeExamForm" label-width="100px" class="demo-ruleForm" style="width:90%;padding-top:20px;padding-bottom:10px">
               <el-form-item label="考试课程" prop="startTime">
-              <el-select v-model="examId" placeholder="选择课程" @change="setExamId">
+              <el-select v-model="courseName" placeholder="选择课程" @change="setExamId">
               <el-option
                 v-for="item in tableData"
                 :key="item.CourseId"
@@ -82,18 +82,18 @@
               </el-option>
             </el-select>
             </el-form-item>
-          <el-form-item label="开始时间" prop="startTime">
-              <el-input v-model="changeExamForm.starttime" placeholder="请输入考试开始时间  格式:2022-08-08T10:00:00"></el-input>
+          <el-form-item label="开始时间" prop="starttime">
+              <el-input v-model="changeExamForm.starttime" placeholder="请输入考试开始时间  格式:2022-08-08 10:00:00"></el-input>
           </el-form-item>
-          <el-form-item label="结束时间" prop="endTime">
-              <el-input v-model="changeExamForm.endtime" placeholder="请输入考试结束时间  格式:2022-08-08T11:00:00"></el-input>
+          <el-form-item label="结束时间" prop="endtime">
+              <el-input v-model="changeExamForm.endtime" placeholder="请输入考试结束时间  格式:2022-08-08 11:00:00"></el-input>
           </el-form-item>
-          <el-form-item label="会议号" prop="meetingId">
+          <el-form-item label="会议号" prop="meetingid">
               <el-input v-model="changeExamForm.meetingid" placeholder="请输入考试会议号"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="change">立即修改</el-button>
-            <el-button @click="deleteExam">删除考试</el-button>
+            <el-button type = "danger" @click="deleteExam">删除考试</el-button>
           </el-form-item>
           </el-form>
         </el-col>
@@ -159,6 +159,7 @@ import { getAllCourse } from '@/api/course'
         },
 
         courseId:"",
+        courseName:"",
         examId:"",
         allCourse: [],
         tableData: [],
@@ -196,10 +197,16 @@ import { getAllCourse } from '@/api/course'
           this.reload();
         })
       },
-      openChange(){
+      openChange(index){
         this.changeExamTableVisible=true;
         this.title="修改考试";
         this.isCreate=true; 
+        this.courseName = this.tableData[index].CourseName;
+        this.changeExamForm.examId = this.tableData[index].ExamId;
+        this.changeExamForm.starttime = this.tableData[index].StartTime.replace(" ","T");
+        this.changeExamForm.endtime = this.tableData[index].EndTime.replace(" ","T");
+        this.changeExamForm.meetingid = this.tableData[index].MeetingId;
+        console.log(this.changeExamForm);
       },
       change(){
         var param=this.changeExamForm;
