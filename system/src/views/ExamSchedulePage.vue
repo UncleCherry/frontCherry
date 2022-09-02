@@ -15,24 +15,23 @@
     </el-header>
     
     <el-main>
-      <el-table :data="tableData" height="100%">
-        <el-table-column prop="number" label="序号" sortable width="120">
+      <el-table :data="tableData" width="100%">
+        <el-table-column prop="CourseId" label="课程代码" sortable width="150">
         </el-table-column>
-        <el-table-column prop="code" label="课程代码" sortable width="150">
+        <el-table-column prop="CourseName" label="课程名称" sortable width="150">
         </el-table-column>
-        <el-table-column prop="name" label="课程名称" sortable width="200">
+        <el-table-column prop="StartTime" label="考试开始时间" sortable width="200">
         </el-table-column>
-        <el-table-column prop="time" label="考试时间" sortable width="120">
+        <el-table-column prop="EndTime" label="考试结束时间" sortable width="200">
         </el-table-column>
-        <el-table-column prop="place" label="考试地点" sortable width="120">
+        <el-table-column prop="MeetingId" label="会议号" sortable width="150">
         </el-table-column>
-        <el-table-column prop="examState" label="考试情况" sortable width="120">
-        </el-table-column>
-        <el-table-column prop="remark" label="考试备注" sortable width="120">
-        </el-table-column>
-        <el-table-column prop="verifyState" label="审核状态" sortable width="120">
-        </el-table-column>
-        <el-table-column prop="updateDate" sortable label="操作">
+        <el-table-column  sortable label="操作">
+          <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="OpenRetakeExamPage(scope.$index, scope.row)">申请缓考/重考</el-button>
+        </template>
         </el-table-column>
       </el-table>
     </el-main>
@@ -47,9 +46,14 @@ export default {
     getAllExam().then(response=>{
       this.$message({
         message: '获取考试信息成功',
+        //message: response.data.ExamsList,
         type: 'success'
       });
-      this.examList=response.data.ExamsList
+      this.tableData=response.data.ExamsList
+     // for(i=0;i<this.tableData.length;i++){
+        //this.tableData[i].StartTime = this.tableData[i].StartTime.replace('T',' ');
+       // this.tableData[i].StartTime[10]=' ';
+      //}
     }).catch((error)=>{
       this.$message({
         message: '获取考试信息失败',
@@ -74,25 +78,8 @@ export default {
       changeSemester(chooseTerm){
         this.curSemester=chooseTerm;
       },
-      changeTableData(){
-        var year=this.semester[this.curSemester].substring(0,4);
-        var semester=this.semester[this.curSemester].substring(4);
-        this.tableData=[];
-        for(var i=0;i<this.examList.length();++i)
-        {
-          if(this.examList[i].Year==year&&this.examList[i].Semester==semester)
-          {
-              var temp={
-                  courseId:this.examList[i].CourseId,
-                  courseName:this.examList[i].CourseName,
-                  examId:this.examList[i].ExamId,
-                  startTime:this.examList[i].StartTime,
-                  endTime:this.examList[i].EndTime,
-                  meetingId:this.examList[i].MeetingId,
-              };
-              this.tableData.push(temp);
-          }
-        }
+      OpenRetakeExamPage(){
+        this.$router.replace("/RetakeExamPage");
       }
     }  
 }

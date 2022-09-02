@@ -61,6 +61,9 @@
           <el-menu-item index="3-4" @click="OpenScheduleTable"
             >查看课表</el-menu-item
           >
+          <el-menu-item index="3-5" @click="OpenStudentCoursePlaybackPage"
+            >网课信息</el-menu-item
+          >
         </el-submenu>
         <el-submenu index="4" style="text-align: left">
           <template slot="title">
@@ -128,6 +131,9 @@ export default {
     },
     OpenCourseSelect() {
       this.$router.replace("/CourseSelect");
+    },
+    OpenStudentCoursePlaybackPage() {
+      this.$router.replace("/StudentCoursePlaybackPage");
     },
     OpenSetting() {
       this.$router.replace("/Setting");

@@ -19,23 +19,27 @@
           <i class="el-icon-menu"></i>
           <span slot="title">创建课程</span>
         </el-menu-item>
-        <el-menu-item index="3" @click="OpenCreatExamPage">
+        <el-menu-item index="3" @click="OpenCreateExamPage">
           <i class="el-icon-menu"></i>
-          <span slot="title">添加考试安排</span>
+          <span slot="title">修改考试安排</span>
         </el-menu-item>
-        <el-menu-item index="4">
+        <el-menu-item index="4" @click="">
           <i class="el-icon-menu"></i>
           <span slot="title">添加成绩</span>
         </el-menu-item>
-        <el-menu-item index="5">
+        <el-menu-item index="5" @click="OpenApplicationVerifyPage">
           <i class="el-icon-menu"></i>
           <span slot="title">申请审核</span>
         </el-menu-item>
-        <el-menu-item index="6" @click="OpenOnlineCourseManagement">
+        <el-menu-item index="6" @click="OpenLeaveVerifyPage">
+          <i class="el-icon-menu"></i>
+          <span slot="title">请假申请审核</span>
+        </el-menu-item>
+        <el-menu-item index="7" @click="OpenOnlineCourseManagement">
           <i class="el-icon-menu"></i>
           <span slot="title">网课管理</span>
         </el-menu-item>
-        <el-menu-item index="7" @click="OpenSetting">
+        <el-menu-item index="8" @click="OpenSetting">
           <i class="el-icon-setting"></i>
           <span slot="title">设置</span>
         </el-menu-item>
@@ -62,7 +66,7 @@ export default {
     OpenSetting() {
       this.$router.replace("/Setting");
     },
-    OpenCreatExamPage() {
+    OpenCreateExamPage() {
       this.$router.replace("/CreatExamPage");
     },
     OpenOnlineCourseManagement() {
@@ -70,6 +74,12 @@ export default {
     },
     OpenEditTrainingPlan() {
       this.$router.replace("/EditTrainingPlan");
+    },
+    OpenApplicationVerifyPage() {
+      this.$router.replace("/ApplicationVerifyPage");
+    },
+    OpenLeaveVerifyPage() {
+      this.$router.replace("/LeaveVerifyPage");
     },
   },
 };
