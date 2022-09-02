@@ -16,10 +16,10 @@
               <el-input v-model="ruleForm.meetingid" placeholder="请输入考试会议号"></el-input>
           </el-form-item>
           <el-form-item label="考试开始时间" prop="timeslot">
-              <el-input v-model="ruleForm.starttime" placeholder="请输入考试开始时间  格式:周一1-3节/周三3-5节"></el-input>
+              <el-input v-model="ruleForm.starttime" placeholder="请输入考试开始时间  格式:2022-08-08T10:00:00"></el-input>
           </el-form-item>
           <el-form-item label="考试结束时间" prop="timeslot">
-              <el-input v-model="ruleForm.endtime" placeholder="请输入考试结束时间  格式:周一1-3节/周三3-5节"></el-input>
+              <el-input v-model="ruleForm.endtime" placeholder="请输入考试结束时间  格式:2022-08-08T10:00:00"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -48,11 +48,11 @@ import { creatExam } from '@/api/Exam'
             { required: true, message: '请输入考试名称', trigger: 'blur' },
           ],
           starttime: [
-            { required: true, message: '请输入考试开始时间  格式:周一1-3节/周三3-5节', trigger: 'change' },
+            { required: true, message: '请输入考试开始时间  格式:2022-08-08T10:00:00', trigger: 'change' },
             { required: true, trigger: "blur", validator: this.validTimeSlot },
           ],
           endtime: [
-            { required: true, message: '请输入考试结束时间  格式:周一1-3节/周三3-5节', trigger: 'change' },
+            { required: true, message: '请输入考试结束时间  格式:2022-08-08T12:00:00', trigger: 'change' },
             { required: true, trigger: "blur", validator: this.validTimeSlot },
           ],
           meetingid:[
@@ -106,7 +106,7 @@ import { creatExam } from '@/api/Exam'
       },
       isValidTime(str){
         var patt=/^周[一二三四五六日]\d{1,2}-\d{1,2}节$/;
-        return patt.test(str);
+        return true;
       }
     }
   }

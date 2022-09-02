@@ -30,8 +30,6 @@
         </el-table-column>
         <el-table-column prop="remark" label="考试备注" sortable width="120">
         </el-table-column>
-        <el-table-column prop="explain" label="审核说明" sortable width="120">
-        </el-table-column>
         <el-table-column prop="verifyState" label="审核状态" sortable width="120">
         </el-table-column>
         <el-table-column prop="updateDate" sortable label="操作">
@@ -57,7 +55,6 @@ export default {
         message: '获取考试信息失败',
         type: 'warning'
       });
-      this.examList=response.data.ExamsList
     })
   },
     data() {
@@ -85,31 +82,15 @@ export default {
         {
           if(this.examList[i].Year==year&&this.examList[i].Semester==semester)
           {
-            var grade=this.examList[i].Grade;
-            var pass="是",gpa;
-            if(parseInt(grade)<60)
-            {
-              pass="否";
-              gpa=0;
-            }
-            else if(parseInt(grade)>=60&&parseInt(grade)<70)
-            {
-              gpa=2;
-            }
-            else if(parseInt(grade)>=70&&parseInt(grade)<80)
-            {
-              gpa=3;
-            }
-            else if(parseInt(grade)>=80&&parseInt(grade)<90)
-            {
-              gpa=4;
-            }
-            else
-            {
-              gpa=5;
-            }
-            var temp={
-            }
+              var temp={
+                  courseId:this.examList[i].CourseId,
+                  courseName:this.examList[i].CourseName,
+                  examId:this.examList[i].ExamId,
+                  startTime:this.examList[i].StartTime,
+                  endTime:this.examList[i].EndTime,
+                  meetingId:this.examList[i].MeetingId,
+              };
+              this.tableData.push(temp);
           }
         }
       }

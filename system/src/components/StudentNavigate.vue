@@ -94,8 +94,8 @@ export default {
   data() {
     return {
       // eslint-disable-next-line no-undef
-      tableData: Array(20).fill(item),
-      isCollapse: true,
+      //tableData: Array(20).fill(item),
+      //isCollapse: true,
     };
   },
   methods: {

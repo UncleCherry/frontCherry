@@ -112,7 +112,7 @@
          {
           if(this.textarea!='')
           {
-            this.$confirm('是否确定申请《'+this.value+'》这门课程免修', '提示', {
+            this.$confirm('是否确定申请《'+this.value+'》这门课程缓考', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
@@ -147,7 +147,7 @@
          {
           if(this.textarea!='')
           {
-            this.$confirm('是否确定申请《'+this.value+'》这门课程免听', '提示', {
+            this.$confirm('是否确定申请《'+this.value+'》这门课程重考', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
