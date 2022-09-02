@@ -5,7 +5,7 @@ import { Message } from 'element-ui'
 
 const service = axios.create({
     //baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-    baseURL:'https://localhost:44359',
+    baseURL:'http://81.68.67.192:5002/api',
     // withCredentials: true, // send cookies when cross-domain requests
     timeout: 5000, // request timeout
     //withCredentials: true//携带cookie
