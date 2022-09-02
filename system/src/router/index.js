@@ -154,8 +154,11 @@ const routes = [
     name: 'CreatExamPage',
     component: () => import('../views/CreatExamPage.vue')
   },
-
-
+  {
+    path: '/OnlineCourseManagement',
+    name: 'OnlineCourseManagement',
+    component: () => import('../views/OnlineCourseManagement.vue')
+  },
 
 ]
 

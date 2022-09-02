@@ -156,6 +156,7 @@ export default {
           _this.message.push(tmp);
         }
       }).catch((error)=>{
+        console.log(error);
         this.$message({
           message:'获取申请信息失败',
           type:'warning',
