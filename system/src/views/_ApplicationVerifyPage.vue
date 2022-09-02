@@ -13,30 +13,22 @@
         style="margin-top: 20px"
         @filter-change="filterChange"
       >
-        <el-table-column prop="applicationid" label="申请序号" width="120">
+        <el-table-column prop="applicationid" label="申请序号" width="120" min-width="10%">
         </el-table-column>
-        <el-table-column prop="courseid" label="课程ID" width="140">
+        <el-table-column prop="courseid" label="课程ID" min-width="10%">
         </el-table-column>
-        <el-table-column
-          prop="courseName"
-          label="课程名称"
-          width="200"
-          sortable
-          column-key="courseName"
-          :filters="getfilterNameItem()"
-          :filter-method="filterHandler"
-        >
+        <el-table-column prop="number" label="课次" min-width="10%">
         </el-table-column>
-        <el-table-column prop="number" label="课次" width="87">
+        <el-table-column prop="date" label="申请日期" min-width="12.5%">
         </el-table-column>
-        <el-table-column prop="date" label="申请日期" width="150">
+        <el-table-column prop="type" label="申请类别" min-width="10%">
         </el-table-column>
-        <el-table-column prop="student" label="申请人" width="160">
+        <el-table-column prop="student" label="申请人" min-width="12.5%">
         </el-table-column>
         <el-table-column
           prop="state"
           label="审核状态"
-          width="140"
+          min-width="10%"
           column-key="state"
           :filters="[
             { text: '已审核', value: '已审核' },
@@ -44,7 +36,7 @@
           :filter-method="filterHandler"
         >
         </el-table-column>
-        <el-table-column prop="reason" label="请假理由" width="80">
+        <el-table-column prop="reason" label="请假理由" min-width="10%">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -54,7 +46,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" width="200">
+        <el-table-column label="操作" min-width="15%">
           <template slot-scope="scope">
             <el-button size="mini" @click="handlePass(scope.$index)"
               >同意</el-button
@@ -88,6 +80,7 @@
 <script>
 import { getCourseInfo,getAllCourse } from '@/api/course';
 import { getAdminLeave,getApplicationInfo,passStudentLeave,rejectStudentLeave } from '@/api/leave'
+import { AdmingetStudentApplication } from '@/api/apply'
 export default {
   name: 'LeaveVerify',
   inject: ['reload'],
@@ -102,7 +95,7 @@ export default {
     else{
       //有token,则读取token
       console.log('有token信息')
-      _this.getLeave()
+      _this.getAllApply()
     }
   },
   data() {
@@ -127,32 +120,42 @@ export default {
   },
 
   methods: {
-    getLeave(){
-      let _this = this
-      getAdminLeave().then(async(response)=>{
-        var list = response.data.ApplicationsList
+    getAllApply(){
+      let _this = this;
+      AdmingetStudentApplication().then(async(response)=>{
+        var list = response.data.ApplicaitionsList
         for(var i = 0; i < list.length; ++i){
           var tmp = {};
           var myreason = list[i].Reason.split('-')
           var mytime = list[i].Time.split('T')
           var mycoursename = ''
-          var param = {
-            courseid: parseInt(myreason[0])
-          }
-          await getCourseInfo(param).then(response=>{
-            mycoursename = response.data.course.CourseName
-          }).catch((error)=>{
-            this.$message({
-              message:'获取课程信息失败',
-              type:'warning',
-            })
-          });
           tmp['applicationid'] = list[i].ApplicationId
           tmp['courseid'] = myreason[0]
-          tmp['courseName'] = mycoursename
-          tmp['number'] = myreason[1]
+          tmp['number'] = myreason[1]==0?'/':myreason[1]
           tmp['date'] = mytime[0]
           tmp['student'] = list[i].UserId.toString() + '-' + list[i].StudentName
+          switch (list[i].Type) {
+            case 0:
+              tmp['type']='重考'
+              break;
+            case 1:
+              tmp['type']='缓考'
+              break;
+            case 2:
+              tmp['type']='免修'
+              break;
+            case 3:
+              tmp['type']='免听'
+              break;
+            case 4:
+              tmp['type']='成绩复核'
+              break;
+            case 5:
+              tmp['type']='请假'
+              break;
+            default:
+              break;
+          }
           if(list[i].State == 0){
             tmp['state'] = "待审核"
           }
@@ -163,27 +166,12 @@ export default {
           _this.totalnum++;
         }
       }).catch((error)=>{
+        console.log(error);
         this.$message({
           message:'获取申请信息失败',
           type:'warning',
         })
       });
-    },
-    getfilterNameItem() {
-      let apiArr = [];
-      let courseMsg = ''
-      getAllCourse().then(response=>{
-        courseMsg = response.data.CoursesList
-        for(var i = 0; i < courseMsg.length; ++i){
-          apiArr[i] = { "text":courseMsg[i].CourseName, "value":courseMsg[i].CourseName }
-        }
-      }).catch((error)=>{
-        this.$message({
-          message:'获取课程信息失败',
-          type:'warning',
-        })
-      });
-      return apiArr;
     },
     filterChange(filterObj) {
       console.log("筛选条件变化",filterObj);

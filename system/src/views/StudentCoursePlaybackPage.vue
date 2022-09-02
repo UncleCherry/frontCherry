@@ -86,14 +86,15 @@ export default {
         processData() {
             var len = this.courseMsg.length;
             console.log(len);
+            console.log(this.courseMsg);
             if (len)
                 for (var i = 0; i < len; i++) {
                     if (this.courseMsg[i].Year == this.year && this.courseMsg[i].Semester == this.semester) {
                         var s = {
-                            CourseID: this.courseMsg[i].CourseID,
+                            CourseID: this.courseMsg[i].CourseId,
                             CourseName: this.courseMsg[i].CourseName,
                             TimeSlot: this.courseMsg[i].TimeSlot,
-                            MeetingID: this.courseMsg[i].MeetingID
+                            MeetingID: this.courseMsg[i].MeetingId
                         }
                         this.courseData.push(s);
                     }
@@ -112,7 +113,8 @@ export default {
                     message: '获取录播信息成功',
                     type: 'success'
                 });
-                this.recordMsg = response.data.RecordsList
+                console.log(response.data.RecordsList)
+                this.recordMsg = response.data.RecordsList;
                 this.processRecord()
             }).catch((error) => {
                 this.$message({
@@ -122,16 +124,17 @@ export default {
             })
         },
         processRecord() {
+            this.recordData=[];
             var rlen = this.recordMsg.length;
             console.log(rlen);
             if (rlen) {
                 for (var i = 0; i < rlen; i++) {
                     var s = {
-                        RecordID: this.recordMsg[i].RecordID,
+                        RecordID: this.recordMsg[i].RecordId,
                         Time: this.recordMsg[i].Time,
                         URL: this.recordMsg[i].Url
                     }
-                    this.courseData.push(s);
+                    this.recordData.push(s);
                 }
             }
         }

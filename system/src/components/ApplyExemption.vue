@@ -11,9 +11,9 @@
         >
           <el-option
             v-for="item in courseMsg"
-            :key="item.CourseID"
+            :key="item.CourseId"
             :label="item.CourseName"
-            :value="item.CourseName"
+            :value="item.CourseId"
           >
           </el-option>
         </el-select>
@@ -76,7 +76,10 @@
       <div style="font-weight: bold; font-size: large">申请免修/免听列表</div>
       <el-table
         :data="
-          tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+          this.tableData.slice(
+            (this.currentPage - 1) * this.pageSize,
+            this.currentPage * this.pageSize
+          )
         "
         border
         @selection-change="handleSelectionChange"
@@ -85,13 +88,15 @@
         <el-table-column type="selection" width="50"> </el-table-column>
         <!-- <el-table-column prop="courseName" label="课程名称" width="230">
         </el-table-column> -->
-        <el-table-column prop="Time" label="申请日期" width="340">
+        <el-table-column prop="Time" label="申请日期" width="200">
         </el-table-column>
-        <!-- <el-table-column prop="Type" label="申请类型" width="300">
-        </el-table-column> -->
-        <el-table-column prop="State" label="审核状态" width="300">
+        <el-table-column prop="Type" label="申请类型" width="200">
         </el-table-column>
-        <el-table-column label="操作" width="300">
+        <el-table-column prop="Reason" label="申请理由" width="400">
+        </el-table-column>
+        <el-table-column prop="State" label="审核状态" width="200">
+        </el-table-column>
+        <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -152,20 +157,24 @@ export default {
       tableData: [],
       currentPage: 1,
       pageSize: 2,
+      year:"2022",
+      semester:"第二学期"
     };
   },
   created() {
     getStudentCourse()
       .then((response) => {
         this.$message({
-          message: "获取授课信息成功",
+          message: "获取选课信息成功",
           type: "success",
         });
         this.courseMsg = response.data.CoursesList;
+        this.particularSemesterCourse(this.courseMsg,this.year,this.semester);
+        console.log(this.courseMsg);
       })
       .catch((error) => {
         this.$message({
-          message: "获取授课信息失败",
+          message: "获取选课信息失败",
           type: "warning",
         });
       });
@@ -183,44 +192,35 @@ export default {
   mounted() {
     getStudentScoreApplication()
       .then((response) => {
-        this.tableData = [];
         this.$message({ message: "获取申请信息成功", type: "success" });
-        console.log(response.data.ApplicaitionsList);
         this.tableData = response.data.ApplicaitionsList;
+        this.tableData = this.tableData.filter(
+          (data) =>
+            (data.Type += "").toLowerCase().includes("2") ||
+            (data.Type += "").toLowerCase().includes("3")
+        );
       })
       .catch((error) => {
         this.$message({ message: "获取申请信息失败", type: "warning" });
       });
   },
-  methods: {
-    submitApplication() {
-      this.applicationMsg = [];
-      var applyType_;
-      if (this.applyType === "申请免修") applyType_ = 2;
-      else applyType_ = 3;
-      var param = { reason: this.applyReason, type: applyType_ };
-      StudentCreateScoreApplication(param)
-        .then((response) => {
-          this.$message({
-            message: "申请成功",
-            type: "success",
-          });
-        })
-        .catch((error) => {
-          this.$message({
-            message: "申请失败",
-            type: "warning",
-          });
-        });
-      var that = this;
-      setTimeout(function () {
-        that.reload();
-      }, 500);
-    },
 
+  computed: {
+
+  },
+  methods: {
+    particularSemesterCourse(course,year,semester){
+      for(var i=0;i<course.length;++i)
+      {
+        if(!(course[i].Year==year&&course[i].Semester==semester))
+        {
+          course.splice(i,1);
+          --i
+        }
+      }
+    },
     Apply() {
       var str = "";
-      console.log(this.applyTypeOptions.value);
       if (this.courseName != "") {
         if (this.applyReason != "") {
           if (this.applyType != "") {
@@ -229,7 +229,7 @@ export default {
             } else if (this.applyType === "申请免听") {
               str = "是否确定申请免听课程";
             }
-            this.$confirm(str + ":《" + this.courseName + "》", "提示", {
+            this.$confirm(str, "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
               type: "warning",
@@ -239,7 +239,12 @@ export default {
                 var applyType_;
                 if (this.applyType === "申请免修") applyType_ = 2;
                 else applyType_ = 3;
-                var param = { reason: this.applyReason, type: applyType_ };
+                var str = this.applyReason;
+                var param = {
+                  reason: this.applyReason,
+                  type: applyType_,
+                  courseid: this.courseName,
+                };
                 StudentCreateScoreApplication(param)
                   .then((response) => {
                     this.$message({ message: "申请成功", type: "success" });
@@ -247,10 +252,10 @@ export default {
                   .catch((error) => {
                     this.$message({ message: "申请失败", type: "warning" });
                   });
-                var that = this;
-                setTimeout(function () {
-                  that.reload();
-                }, 500);
+                // var that = this;
+                // setTimeout(function () {
+                //   that.reload();
+                // }, 500);
                 // this.tableData.push({
                 //   couseName: this.CourseName,
                 //   applyType: this.applyType,
@@ -287,11 +292,11 @@ export default {
       return this.$confirm(`确定移除 ${file.name}?`);
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
     },
     handleDelete(index, row) {

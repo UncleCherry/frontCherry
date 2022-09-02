@@ -125,9 +125,9 @@ const routes = [
     component: () => import('../views/ApplyLeavePage.vue')
   },
   {
-    path: '/LeaveVerifyPage',
-    name: 'LeaveVerifyPage',
-    component: () => import('../views/LeaveVerifyPage.vue')
+    path: '/_ApplicationVerifyPage',
+    name: '_ApplicationVerifyPage',
+    component: () => import('../views/_ApplicationVerifyPage.vue')
   },
   {
     path: '/TrainingPlan',
@@ -159,8 +159,11 @@ const routes = [
     name: 'CreatExamPage',
     component: () => import('../views/CreatExamPage.vue')
   },
-
-
+  {
+    path: '/OnlineCourseManagement',
+    name: 'OnlineCourseManagement',
+    component: () => import('../views/OnlineCourseManagement.vue')
+  },
 
 ]
 

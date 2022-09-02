@@ -23,23 +23,15 @@
           <i class="el-icon-menu"></i>
           <span slot="title">修改考试安排</span>
         </el-menu-item>
-        <el-menu-item index="4" @click="">
-          <i class="el-icon-menu"></i>
-          <span slot="title">添加成绩</span>
-        </el-menu-item>
-        <el-menu-item index="5" @click="OpenApplicationVerifyPage">
+        <el-menu-item index="4" @click="OpenLeaveVerifyPage">
           <i class="el-icon-menu"></i>
           <span slot="title">申请审核</span>
         </el-menu-item>
-        <el-menu-item index="6" @click="OpenLeaveVerifyPage">
-          <i class="el-icon-menu"></i>
-          <span slot="title">请假申请审核</span>
-        </el-menu-item>
-        <el-menu-item index="7" @click="OpenOnlineCourseManagement">
+        <el-menu-item index="5" @click="OpenOnlineCourseManagement">
           <i class="el-icon-menu"></i>
           <span slot="title">网课管理</span>
         </el-menu-item>
-        <el-menu-item index="8" @click="OpenSetting">
+        <el-menu-item index="6" @click="OpenSetting">
           <i class="el-icon-setting"></i>
           <span slot="title">设置</span>
         </el-menu-item>
@@ -79,7 +71,7 @@ export default {
       this.$router.replace("/ApplicationVerifyPage");
     },
     OpenLeaveVerifyPage() {
-      this.$router.replace("/LeaveVerifyPage");
+      this.$router.replace("/_ApplicationVerifyPage");
     },
   },
 };

@@ -13,7 +13,7 @@
             v-for="item in courseMsg"
             :key="item.CourseID"
             :label="item.CourseName"
-            :value="item.CourseName"
+            :value="item.CourseID"
           >
           </el-option>
         </el-select>
@@ -159,19 +159,20 @@ export default {
   methods: {
     Apply() {
       if (this.courseName != "") {
-        this.$confirm(
-          "是否确定申请复核成绩" + ":《" + this.courseName + "》",
-          "提示",
-          {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "warning",
-          }
-        )
+        this.$confirm("是否确定申请复核成绩", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
           .then(() => {
             this.applicationMsg = [];
             var applyType_ = 4;
-            var param = { reason: this.applyReason, type: applyType_ };
+            var param = {
+              reason: this.applyReason,
+              type: applyType_,
+              courseid: this.courseName,
+            };
+
             StudentCreateScoreApplication(param)
               .then((response) => {
                 this.$message({ message: "申请成功", type: "success" });
