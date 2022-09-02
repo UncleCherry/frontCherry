@@ -76,7 +76,10 @@
       <div style="font-weight: bold; font-size: large">申请免修/免听列表</div>
       <el-table
         :data="
-          tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+          this.tableData.slice(
+            (this.currentPage - 1) * this.pageSize,
+            this.currentPage * this.pageSize
+          )
         "
         border
         @selection-change="handleSelectionChange"
@@ -87,8 +90,8 @@
         </el-table-column> -->
         <el-table-column prop="Time" label="申请日期" width="340">
         </el-table-column>
-        <!-- <el-table-column prop="Type" label="申请类型" width="300">
-        </el-table-column> -->
+        <el-table-column prop="Type" label="申请类型" width="300">
+        </el-table-column>
         <el-table-column prop="State" label="审核状态" width="300">
         </el-table-column>
         <el-table-column label="操作" width="300">
@@ -158,14 +161,14 @@ export default {
     getStudentCourse()
       .then((response) => {
         this.$message({
-          message: "获取授课信息成功",
+          message: "获取选课信息成功",
           type: "success",
         });
         this.courseMsg = response.data.CoursesList;
       })
       .catch((error) => {
         this.$message({
-          message: "获取授课信息失败",
+          message: "获取选课信息失败",
           type: "warning",
         });
       });
@@ -185,14 +188,51 @@ export default {
       .then((response) => {
         this.tableData = [];
         this.$message({ message: "获取申请信息成功", type: "success" });
-        console.log(response.data.ApplicaitionsList);
         this.tableData = response.data.ApplicaitionsList;
+        this.tableData = this.tableData.filter(
+          (data) =>
+            (data.Type += "").toLowerCase().includes("2") ||
+            (data.Type += "").toLowerCase().includes("3")
+        );
+        console.log(this.tableData.Type);
       })
       .catch((error) => {
         this.$message({ message: "获取申请信息失败", type: "warning" });
       });
   },
+  // watch: {
+  //   tableData(newEle, oldEle) {
+  //     if (newEle != oldEle) {
+  //       this.tableData = this.tableDatafilter((data) =>
+  //         data.Type.toLowerCase().includes("2")
+  //       );
+  //     }
+  //   },
+  // },
+  computed: {
+    // tableData: function () {
+    //   if (this.Type) {
+    //     var that = this;
+    //     return this.List.filter(function (item) {
+    //       if (item.Type.indexOf(2) > -1) {
+    //         return item.Type.indexOf(2) > -1;
+    //       }
+    //     });
+    //   }
+    //   return this.List;
+    // },
+  },
   methods: {
+    gettableData() {
+      console.log(this.tableData);
+      this.tableData = this.tableData.filter((data) =>
+        (data.Type += "").toLowerCase().includes("2")
+      );
+      return this.tableData.slice(
+        (this.currentPage - 1) * this.pageSize,
+        this.currentPage * this.pageSize
+      );
+    },
     submitApplication() {
       this.applicationMsg = [];
       var applyType_;
@@ -220,7 +260,6 @@ export default {
 
     Apply() {
       var str = "";
-      console.log(this.applyTypeOptions.value);
       if (this.courseName != "") {
         if (this.applyReason != "") {
           if (this.applyType != "") {
@@ -287,11 +326,11 @@ export default {
       return this.$confirm(`确定移除 ${file.name}?`);
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      // console.log(`每页 ${val} 条`);
       this.pageSize = val;
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      // console.log(`当前页: ${val}`);
       this.currentPage = val;
     },
     handleDelete(index, row) {

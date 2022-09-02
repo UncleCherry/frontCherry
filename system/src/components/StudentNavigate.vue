@@ -27,9 +27,9 @@
           <el-menu-item index="1-3" @click="OpenRetabulationPage"
             >申请成绩复核</el-menu-item
           >
-          <el-menu-item index="1-4" @click="OpenCreditRecognitionPage"
+          <!-- <el-menu-item index="1-4" @click="OpenCreditRecognitionPage"
             >申请学分认定</el-menu-item
-          >
+          > -->
         </el-submenu>
 
         <el-submenu index="2" style="text-align: left">
@@ -60,6 +60,9 @@
           >
           <el-menu-item index="3-4" @click="OpenScheduleTable"
             >查看课表</el-menu-item
+          >
+          <el-menu-item index="3-5" @click="OpenStudentCoursePlaybackPage"
+            >网课信息</el-menu-item
           >
         </el-submenu>
         <el-submenu index="4" style="text-align: left">
@@ -128,6 +131,9 @@ export default {
     },
     OpenCourseSelect() {
       this.$router.replace("/CourseSelect");
+    },
+    OpenStudentCoursePlaybackPage() {
+      this.$router.replace("/StudentCoursePlaybackPage");
     },
     OpenSetting() {
       this.$router.replace("/Setting");
