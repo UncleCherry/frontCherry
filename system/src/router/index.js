@@ -125,9 +125,9 @@ const routes = [
     component: () => import('../views/ApplyLeavePage.vue')
   },
   {
-    path: '/LeaveVerifyPage',
-    name: 'LeaveVerifyPage',
-    component: () => import('../views/LeaveVerifyPage.vue')
+    path: '/_ApplicationVerifyPage',
+    name: '_ApplicationVerifyPage',
+    component: () => import('../views/_ApplicationVerifyPage.vue')
   },
   {
     path: '/TrainingPlan',

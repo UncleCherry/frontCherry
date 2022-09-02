@@ -90,7 +90,7 @@ export default {
                 for (var i = 0; i < len; i++) {
                     if (this.courseMsg[i].Year == this.year && this.courseMsg[i].Semester == this.semester) {
                         var s = {
-                            CourseID: this.courseMsg[i].CourseID,
+                            CourseID: this.courseMsg[i].CourseId,
                             CourseName: this.courseMsg[i].CourseName,
                             TimeSlot: this.courseMsg[i].TimeSlot,
                             MeetingID: this.courseMsg[i].MeetingID
