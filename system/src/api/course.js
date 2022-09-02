@@ -69,3 +69,19 @@ export function unInstructCourse(data) {
         data:param
     })
 }
+
+export function getCourseInfo(data) {
+    return request({
+        url: '/Course/getinfo',
+        method: 'get',
+        params: data
+    })
+}
+export function altMeetingid(data) {
+    let param = new URLSearchParams(data);
+    return request({
+        url: '/Course/altMeetingid',
+        method: 'put',
+        data:param
+      })
+}

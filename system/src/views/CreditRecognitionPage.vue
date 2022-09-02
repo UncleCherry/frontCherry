@@ -21,7 +21,7 @@
       <div style="margin-left: 30px; display: inline-block, inline">
         <span>未休课程(在培养方案中)</span>
         <el-select
-          v-model="courseName"
+          v-model="courseName_1"
           clearable
           placeholder="请选择"
           style="width: 300px; margin-left: 10px"
@@ -104,12 +104,14 @@ export default {
   data() {
     return {
       courseName: "",
+      courseName_1: "",
       UntakencourseName: "",
       applyType: "",
       applyReason: "",
       search: "",
       applicationMsg: [],
-      courseMsg: "",
+      courseMsg: [],
+      courseMsg_1: [],
       fileList: [],
       multipleSelection: [],
       tableData: [],
@@ -125,6 +127,7 @@ export default {
           type: "success",
         });
         this.courseMsg = response.data.CoursesList;
+        this.courseMsg_1 = response.data.CoursesList;
       })
       .catch((error) => {
         this.$message({
@@ -157,11 +160,9 @@ export default {
   },
   methods: {
     Apply() {
-      var str = "";
-      console.log(this.applyTypeOptions.value);
       if (this.courseName != "") {
         this.$confirm(
-          "是否确定申请复核成绩" + ":《" + this.courseName + "》",
+          "是否确定申请学分认定" + ":《" + this.courseName + "》",
           "提示",
           {
             confirmButtonText: "确定",
@@ -170,10 +171,7 @@ export default {
           }
         )
           .then(() => {
-            this.applicationMsg = [];
-            var applyType_;
-            if (this.applyType === "申请免修") applyType_ = 2;
-            else applyType_ = 3;
+            var applyType_ = 5;
             var param = { reason: this.applyReason, type: applyType_ };
             StudentCreateScoreApplication(param)
               .then((response) => {
@@ -186,10 +184,6 @@ export default {
             setTimeout(function () {
               that.reload();
             }, 500);
-            // this.tableData.push({
-            //   couseName: this.CourseName,
-            //   applyType: this.applyType,
-            // });
           })
           .catch(() => {
             this.$message({ type: "info", message: "已取消申请" });
@@ -203,16 +197,6 @@ export default {
     },
     handlePreview(file) {
       console.log(file);
-    },
-    handleExceed(files, fileList) {
-      this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${
-          files.length + fileList.length
-        } 个文件`
-      );
-    },
-    beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}?`);
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

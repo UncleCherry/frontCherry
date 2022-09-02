@@ -147,7 +147,7 @@ export default {
       search: "",
       fileList: [],
       applicationMsg: [],
-      courseMsg: "",
+      courseMsg: [],
       multipleSelection: [],
       tableData: [],
       currentPage: 1,

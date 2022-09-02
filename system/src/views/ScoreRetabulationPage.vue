@@ -111,7 +111,7 @@ export default {
       search: "",
       fileList: [],
       applicationMsg: [],
-      courseMsg: "",
+      courseMsg: [],
       multipleSelection: [],
       tableData: [],
       currentPage: 1,
@@ -158,8 +158,6 @@ export default {
   },
   methods: {
     Apply() {
-      var str = "";
-      console.log(this.applyTypeOptions.value);
       if (this.courseName != "") {
         this.$confirm(
           "是否确定申请复核成绩" + ":《" + this.courseName + "》",
@@ -172,9 +170,7 @@ export default {
         )
           .then(() => {
             this.applicationMsg = [];
-            var applyType_;
-            if (this.applyType === "申请免修") applyType_ = 2;
-            else applyType_ = 3;
+            var applyType_ = 4;
             var param = { reason: this.applyReason, type: applyType_ };
             StudentCreateScoreApplication(param)
               .then((response) => {

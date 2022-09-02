@@ -43,18 +43,13 @@
               <el-option label="电子信息" value="电子信息"></el-option>
               <el-option label="自动化" value="自动化"></el-option>
               <el-option label="测绘" value="测绘"></el-option>
-              <el-option label="光电" value="光电"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="院系" v-if="userType==1||userType==2" prop="department">
             <el-select v-model="department" placeholder="请选择院系">
-              <el-option label="软件工程" value="软件工程"></el-option>
-              <el-option label="计算机科学与技术" value="计算机科学与技术"></el-option>
-              <el-option label="网络安全" value="网络安全"></el-option>
-              <el-option label="电子信息" value="电子信息"></el-option>
-              <el-option label="自动化" value="自动化"></el-option>
-              <el-option label="测绘" value="测绘"></el-option>
-              <el-option label="光电" value="光电"></el-option>
+              <el-option label="软件学院" value="软件学院"></el-option>
+              <el-option label="电子与工程信息学院" value="电子与工程信息学院"></el-option>
+              <el-option label="测绘与地理信息学院" value="测绘与地理信息学院"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="密码" prop="pass">

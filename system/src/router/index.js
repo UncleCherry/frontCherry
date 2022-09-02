@@ -54,9 +54,9 @@ const routes = [
     component: () => import('../views/ApplyExemptionPage.vue')
   },
   {
-    path: '/TeacherScorePage',
-    name: 'TeacherScorePage',
-    component: () => import('../views/TeacherScorePage.vue')
+    path: '/ApplicationVerifyPage',
+    name: 'ApplicationVerifyPage',
+    component: () => import('../views/ApplicationVerifyPage.vue')
   },
   {
     path: '/Register',
@@ -88,29 +88,94 @@ const routes = [
     name: 'InstructSelect',
     component: () => import('../views/InstructSelect.vue')
   },
-    {
-    path: '/StudentCreditVerifyPage',
-    name: 'StudentCreditVerifyPage',
-    component: () => import('../views/StudentCreditVerifyPage.vue')
-  },
   {
     path: '/Login',
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
+  {
+
+    path: '/GradeEdit',
+    name: 'GradeEdit',
+    component: () => import('../views/GradeEdit.vue')
+  },
+  {
+    path: '/AttendanceInfoStudent',
+    name: 'AttendanceInfoStudent',
+    component: () => import('../views/AttendanceInfoStudent.vue')
+  },
+  {
+    path: '/UploadAttendance',
+    name: 'UploadAttendance',
+    component: () => import('../views/UploadAttendance.vue')
+  },
+  {
+    path: '/AttendanceInfoTeacher',
+    name: 'AttendanceInfoTeacher',
+    component: () => import('../views/AttendanceInfoTeacher.vue')
+  },
+  {
+    path: '/AttendanceScore',
+    name: 'AttendanceScore',
+    component: () => import('../views/AttendanceScore.vue')
+  },
+  {
+    path: '/ApplyLeavePage',
+    name: 'ApplyLeavePage',
+    component: () => import('../views/ApplyLeavePage.vue')
+  },
+  {
+    path: '/LeaveVerifyPage',
+    name: 'LeaveVerifyPage',
+    component: () => import('../views/LeaveVerifyPage.vue')
+  },
+  {
+    path: '/TrainingPlan',
+    name: 'TrainingPlan',
+    component: () => import('../views/TrainingPlan.vue')
+  },
+  {
+    path: '/EditTrainingPlan',
+    name: 'EditTrainingPlan',
+    component: () => import('../views/EditTrainingPlan.vue')
+  },
+  {
+    path: '/DropClass',
+    name: 'DropClass',
+    component: () => import('../views/DropClass.vue')
+  },
+  {
+    path: '/ExamSchedulePage',
+    name: 'ExamSchedulePage',
+    component: () => import('../views/ExamSchedulePage.vue')
+  },
+  {
+    path: '/RetakeExamPage',
+    name: 'RetakeExamPage',
+    component: () => import('../views/RetakeExamPage.vue')
+  },
+  {
+    path: '/CreatExamPage',
+    name: 'CreatExamPage',
+    component: () => import('../views/CreatExamPage.vue')
+  },
+
+
+
 ]
 
 const router = new VueRouter({
   routes
 })
 
+
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
   if (to.path === '/Login'
-  || to.path==='/'
-  || to.path==='/Register'
-  || to.path==='/license'
-  || to.path==='/forgetPassword'
+    || to.path === '/'
+    || to.path === '/Register'
+    || to.path === '/license'
+    || to.path === '/forgetPassword'
   ) {
     next();
   } else {
@@ -118,9 +183,8 @@ router.beforeEach((to, from, next) => {
     if (token === null || token === '') {
       //前往登录页
       this.$router.replace('/Login');
-
-
-    } else {
+    }
+    else {
       next();
     }
   }

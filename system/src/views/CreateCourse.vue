@@ -1,6 +1,6 @@
 <template>
     <div style="width:100%;display: flex;justify-content: center; margin-top:50px;">
-      <el-card style="width:50%;border-style:solid;border-width:2px;border-color:#7494f3;">
+      <el-card style="width:50%;border-style:solid;border-width:2px;border-color:#7494f3;box-shadow: 5px 5px 5px 5px #2D485C;">
         <div slot="header" class="clearfix" style="height:50px;background:#DCDFE6;overflow:hidden;">
           <span style="font-size:20px; font-weight:bold;  line-height: 50px">创建课程</span>
         </div>
@@ -34,7 +34,7 @@
               <el-switch v-model="ruleForm.isRequired"></el-switch>
           </el-form-item>
           <el-form-item label="课程年份" prop="year">
-              <el-date-picker type="year" placeholder="选择年份" v-model="ruleForm.year" :picker-options="optionsDisable" value-format="yyyy-MM-dd" ></el-date-picker>
+              <el-date-picker type="year" placeholder="选择年份" v-model="ruleForm.year"  value-format="yyyy-MM-dd" ></el-date-picker>
           </el-form-item>
           <el-form-item label="课程学期" prop="semester">
               <el-select v-model="ruleForm.semester" placeholder="请选择学期">

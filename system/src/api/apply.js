@@ -21,3 +21,26 @@ export function getStudentScoreApplication() {
     })
 }
 
+export function AdmingetStudentApplication() {
+    return request({
+        url: '/Application/admin',
+        method: 'get',
+    })
+}
+
+export function AdminRejectApplication(data) {
+    let param = new URLSearchParams(data);
+    return request({
+        url: '/Application/reject',
+        method: 'put',
+        data:param
+      })
+}
+export function AdminPassScoreApplication(data) {
+    let param = new URLSearchParams(data);
+    return request({
+        url: '/Application/pass',
+        method: 'put',
+        data:param
+      })
+}
