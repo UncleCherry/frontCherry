@@ -108,7 +108,7 @@ export default {
       for (var i = 0; i < this.allGrades.length; ++i) {
         var grade = this.allGrades[i].Grade;
         this.allCredit += this.allGrades[i].Credit;
-        var grade = parseInt(this.allGrades[i].Grade);
+        grade = parseInt(this.allGrades[i].Grade);
         var gpa;
         if (grade < 60) {
           this.passFailedCredit += this.allGrades[i].Credit;

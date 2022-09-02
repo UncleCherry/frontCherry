@@ -24,6 +24,11 @@ const routes = [
     component: () => import('../views/StudentScorePage.vue')
   },
   {
+    path: '/StudentCoursePlaybackPage',
+    name: 'StudentCoursePlaybackPage',
+    component: () => import('../views/StudentCoursePlaybackPage.vue')
+  },
+  {
     path: '/StudentWelcomePage',
     name: 'StudentWelcomePage',
     component: () => import('../views/StudentWelcomePage.vue')
@@ -49,9 +54,9 @@ const routes = [
     component: () => import('../views/ApplyExemptionPage.vue')
   },
   {
-    path: '/TeacherScorePage',
-    name: 'TeacherScorePage',
-    component: () => import('../views/TeacherScorePage.vue')
+    path: '/ApplicationVerifyPage',
+    name: 'ApplicationVerifyPage',
+    component: () => import('../views/ApplicationVerifyPage.vue')
   },
   {
     path: '/Register',
@@ -82,11 +87,6 @@ const routes = [
     path: '/InstructSelect',
     name: 'InstructSelect',
     component: () => import('../views/InstructSelect.vue')
-  },
-    {
-    path: '/StudentCreditVerifyPage',
-    name: 'StudentCreditVerifyPage',
-    component: () => import('../views/StudentCreditVerifyPage.vue')
   },
   {
     path: '/Login',
@@ -123,6 +123,11 @@ const routes = [
     path: '/ApplyLeavePage',
     name: 'ApplyLeavePage',
     component: () => import('../views/ApplyLeavePage.vue')
+  },
+  {
+    path: '/LeaveVerifyPage',
+    name: 'LeaveVerifyPage',
+    component: () => import('../views/LeaveVerifyPage.vue')
   },
   {
     path: '/TrainingPlan',
@@ -167,10 +172,10 @@ const router = new VueRouter({
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 router.beforeEach((to, from, next) => {
   if (to.path === '/Login'
-  || to.path==='/'
-  || to.path==='/Register'
-  || to.path==='/license'
-  || to.path==='/forgetPassword'
+    || to.path === '/'
+    || to.path === '/Register'
+    || to.path === '/license'
+    || to.path === '/forgetPassword'
   ) {
     next();
   } else {
@@ -178,9 +183,8 @@ router.beforeEach((to, from, next) => {
     if (token === null || token === '') {
       //前往登录页
       this.$router.replace('/Login');
-
-
-      this.$router.replace('/Login');
+    }
+    else {
       next();
     }
   }
