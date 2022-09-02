@@ -13,19 +13,19 @@
         border
         @selection-change="handleSelectionChange"
         ref="multipleTable"
+        tooltip-effect="light"
       >
         <el-table-column type="selection" width="50"> </el-table-column>
         <el-table-column prop="ApplicationId" label="申请编号" width="200">
         </el-table-column>
         <el-table-column prop="StudentName" label="学生姓名" width="200">
         </el-table-column>
-        <el-table-column prop="Reason" label="申请理由" width="200">
-          <el-button
-            type="primary"
-            icon="el-icon-search"
-            @click="dialogVisible = true"
-            >查看</el-button
-          >
+        <el-table-column
+          prop="Reason"
+          label="申请理由"
+          width="200"
+          show-overflow-tooltip="true"
+        >
         </el-table-column>
         <el-table-column prop="Time" label="时间" width="200">
         </el-table-column>
