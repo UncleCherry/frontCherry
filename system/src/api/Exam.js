@@ -5,7 +5,7 @@
 import request from '@/utils/request'
 
 
-export function creatExam(data) {
+export function createExam(data) {
     let param = new URLSearchParams(data);
     return request({
         url: '/Exam/create',
