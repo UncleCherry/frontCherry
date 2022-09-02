@@ -180,10 +180,6 @@ export default {
               .catch((error) => {
                 this.$message({ message: "申请失败", type: "warning" });
               });
-            var that = this;
-            setTimeout(function () {
-              that.reload();
-            }, 500);
           })
           .catch(() => {
             this.$message({ type: "info", message: "已取消申请" });

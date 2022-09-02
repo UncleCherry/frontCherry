@@ -133,10 +133,6 @@ export default {
             .catch((error) => {
               this.$message({ message: "操作失败,请重试", type: "warning" });
             });
-          var that = this;
-          setTimeout(function () {
-            that.reload();
-          }, 500);
         })
         .catch(() => {
           this.$message({ type: "info", message: "已取消" });
@@ -158,10 +154,6 @@ export default {
             .catch((error) => {
               this.$message({ message: "操作失败,请重试", type: "warning" });
             });
-          var that = this;
-          setTimeout(function () {
-            that.reload();
-          }, 500);
         })
         .catch(() => {
           this.$message({ type: "info", message: "已取消" });

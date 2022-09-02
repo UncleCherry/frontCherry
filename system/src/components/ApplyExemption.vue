@@ -11,9 +11,9 @@
         >
           <el-option
             v-for="item in courseMsg"
-            :key="item.CourseID"
+            :key="item.CourseId"
             :label="item.CourseName"
-            :value="item.CourseName"
+            :value="item.CourseId"
           >
           </el-option>
         </el-select>
@@ -88,13 +88,15 @@
         <el-table-column type="selection" width="50"> </el-table-column>
         <!-- <el-table-column prop="courseName" label="课程名称" width="230">
         </el-table-column> -->
-        <el-table-column prop="Time" label="申请日期" width="340">
+        <el-table-column prop="Time" label="申请日期" width="200">
         </el-table-column>
-        <el-table-column prop="Type" label="申请类型" width="300">
+        <el-table-column prop="Type" label="申请类型" width="200">
         </el-table-column>
-        <el-table-column prop="State" label="审核状态" width="300">
+        <el-table-column prop="Reason" label="申请理由" width="400">
         </el-table-column>
-        <el-table-column label="操作" width="300">
+        <el-table-column prop="State" label="审核状态" width="200">
+        </el-table-column>
+        <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -165,6 +167,7 @@ export default {
           type: "success",
         });
         this.courseMsg = response.data.CoursesList;
+        console.log(this.courseMsg);
       })
       .catch((error) => {
         this.$message({
@@ -186,7 +189,6 @@ export default {
   mounted() {
     getStudentScoreApplication()
       .then((response) => {
-        this.tableData = [];
         this.$message({ message: "获取申请信息成功", type: "success" });
         this.tableData = response.data.ApplicaitionsList;
         this.tableData = this.tableData.filter(
@@ -194,7 +196,6 @@ export default {
             (data.Type += "").toLowerCase().includes("2") ||
             (data.Type += "").toLowerCase().includes("3")
         );
-        console.log(this.tableData.Type);
       })
       .catch((error) => {
         this.$message({ message: "获取申请信息失败", type: "warning" });
@@ -223,40 +224,36 @@ export default {
     // },
   },
   methods: {
-    gettableData() {
-      console.log(this.tableData);
-      this.tableData = this.tableData.filter((data) =>
-        (data.Type += "").toLowerCase().includes("2")
-      );
-      return this.tableData.slice(
-        (this.currentPage - 1) * this.pageSize,
-        this.currentPage * this.pageSize
-      );
-    },
-    submitApplication() {
-      this.applicationMsg = [];
-      var applyType_;
-      if (this.applyType === "申请免修") applyType_ = 2;
-      else applyType_ = 3;
-      var param = { reason: this.applyReason, type: applyType_ };
-      StudentCreateScoreApplication(param)
-        .then((response) => {
-          this.$message({
-            message: "申请成功",
-            type: "success",
-          });
-        })
-        .catch((error) => {
-          this.$message({
-            message: "申请失败",
-            type: "warning",
-          });
-        });
-      var that = this;
-      setTimeout(function () {
-        that.reload();
-      }, 500);
-    },
+    // gettableData() {
+    //   console.log(this.tableData);
+    //   this.tableData = this.tableData.filter((data) =>
+    //     (data.Type += "").toLowerCase().includes("2")
+    //   );
+    //   return this.tableData.slice(
+    //     (this.currentPage - 1) * this.pageSize,
+    //     this.currentPage * this.pageSize
+    //   );
+    // },
+    // submitApplication() {
+    //   this.applicationMsg = [];
+    //   var applyType_;
+    //   if (this.applyType === "申请免修") applyType_ = 2;
+    //   else applyType_ = 3;
+    //   var param = { reason: this.applyReason, type: applyType_ };
+    //   StudentCreateScoreApplication(param)
+    //     .then((response) => {
+    //       this.$message({
+    //         message: "申请成功",
+    //         type: "success",
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       this.$message({
+    //         message: "申请失败",
+    //         type: "warning",
+    //       });
+    //     });
+    // },
 
     Apply() {
       var str = "";
@@ -268,7 +265,7 @@ export default {
             } else if (this.applyType === "申请免听") {
               str = "是否确定申请免听课程";
             }
-            this.$confirm(str + ":《" + this.courseName + "》", "提示", {
+            this.$confirm(str, "提示", {
               confirmButtonText: "确定",
               cancelButtonText: "取消",
               type: "warning",
@@ -278,7 +275,15 @@ export default {
                 var applyType_;
                 if (this.applyType === "申请免修") applyType_ = 2;
                 else applyType_ = 3;
-                var param = { reason: this.applyReason, type: applyType_ };
+                var str = this.courseName;
+                console.log(str);
+                str = this.courseName + "-" + this.applyReason;
+                console.log(str);
+                var param = {
+                  reason: str,
+                  type: applyType_,
+                  courseid: this.courseName,
+                };
                 StudentCreateScoreApplication(param)
                   .then((response) => {
                     this.$message({ message: "申请成功", type: "success" });
@@ -290,10 +295,10 @@ export default {
                 setTimeout(function () {
                   that.reload();
                 }, 500);
-                // this.tableData.push({
-                //   couseName: this.CourseName,
-                //   applyType: this.applyType,
-                // });
+                this.tableData.push({
+                  couseName: this.CourseName,
+                  applyType: this.applyType,
+                });
               })
               .catch(() => {
                 this.$message({ type: "info", message: "已取消申请" });
