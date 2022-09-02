@@ -241,7 +241,7 @@ export default {
                 else applyType_ = 3;
                 var str = this.applyReason;
                 var param = {
-                  reason: str,
+                  reason: this.applyReason,
                   type: applyType_,
                   courseid: this.courseName,
                 };
@@ -252,14 +252,14 @@ export default {
                   .catch((error) => {
                     this.$message({ message: "申请失败", type: "warning" });
                   });
-                var that = this;
-                setTimeout(function () {
-                  that.reload();
-                }, 500);
-                this.tableData.push({
-                  couseName: this.CourseName,
-                  applyType: this.applyType,
-                });
+                // var that = this;
+                // setTimeout(function () {
+                //   that.reload();
+                // }, 500);
+                // this.tableData.push({
+                //   couseName: this.CourseName,
+                //   applyType: this.applyType,
+                // });
               })
               .catch(() => {
                 this.$message({ type: "info", message: "已取消申请" });
