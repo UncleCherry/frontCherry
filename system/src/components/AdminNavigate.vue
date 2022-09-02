@@ -19,14 +19,10 @@
           <i class="el-icon-menu"></i>
           <span slot="title">创建课程</span>
         </el-menu-item>
-        <el-menu-item index="3" @click="OpenCreatExamPage">
+        <el-menu-item index="3" @click="OpenCreateExamPage">
           <i class="el-icon-menu"></i>
-          <span slot="title">添加考试安排</span>
+          <span slot="title">修改考试安排</span>
         </el-menu-item>
-        <!-- <el-menu-item index="5" @click="OpenApplicationVerifyPage">
-          <i class="el-icon-menu"></i>
-          <span slot="title">申请审核</span>
-        </el-menu-item> -->
         <el-menu-item index="4" @click="OpenLeaveVerifyPage">
           <i class="el-icon-menu"></i>
           <span slot="title">申请审核</span>
@@ -62,7 +58,7 @@ export default {
     OpenSetting() {
       this.$router.replace("/Setting");
     },
-    OpenCreatExamPage() {
+    OpenCreateExamPage() {
       this.$router.replace("/CreatExamPage");
     },
     OpenOnlineCourseManagement() {

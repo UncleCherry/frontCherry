@@ -187,7 +187,7 @@ router.beforeEach((to, from, next) => {
       //前往登录页
       this.$router.replace('/Login');
     }
-    else {
+    else{
       next();
     }
   }

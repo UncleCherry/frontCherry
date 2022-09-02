@@ -161,6 +161,8 @@ export default {
       tableData: [],
       currentPage: 1,
       pageSize: 2,
+      year: "2022",
+      semester: "第二学期",
     };
   },
   created() {
@@ -171,6 +173,7 @@ export default {
           type: "success",
         });
         this.courseMsg = response.data.CoursesList;
+        this.particularSemesterCourse(this.courseMsg, this.year, this.semester);
         console.log(this.courseMsg);
       })
       .catch((error) => {
@@ -245,22 +248,60 @@ export default {
         this.$message({ message: "获取申请信息失败", type: "warning" });
       });
   },
-
-  computed: {},
+  // watch: {
+  //   tableData(newEle, oldEle) {
+  //     if (newEle != oldEle) {
+  //       this.tableData = this.tableDatafilter((data) =>
+  //         data.Type.toLowerCase().includes("2")
+  //       );
+  //     }
+  //   },
+  // },
+  computed: {
+    // tableData: function () {
+    //   if (this.Type) {
+    //     var that = this;
+    //     return this.List.filter(function (item) {
+    //       if (item.Type.indexOf(2) > -1) {
+    //         return item.Type.indexOf(2) > -1;
+    //       }
+    //     });
+    //   }
+    //   return this.List;
+    // },
+  },
   methods: {
-    getCourseName() {
-      var _param = { courseid: this.courseID };
-      getCourseInfo(_param)
-        .then((response) => {
-          this.courseName = response.data.course.CourseName;
-        })
-        .catch((error) => {
-          this.$message({
-            message: "获取课程信息失败",
-            type: "warning",
-          });
-        });
-    },
+    // gettableData() {
+    //   console.log(this.tableData);
+    //   this.tableData = this.tableData.filter((data) =>
+    //     (data.Type += "").toLowerCase().includes("2")
+    //   );
+    //   return this.tableData.slice(
+    //     (this.currentPage - 1) * this.pageSize,
+    //     this.currentPage * this.pageSize
+    //   );
+    // },
+    // submitApplication() {
+    //   this.applicationMsg = [];
+    //   var applyType_;
+    //   if (this.applyType === "申请免修") applyType_ = 2;
+    //   else applyType_ = 3;
+    //   var param = { reason: this.applyReason, type: applyType_ };
+    //   StudentCreateScoreApplication(param)
+    //     .then((response) => {
+    //       this.$message({
+    //         message: "申请成功",
+    //         type: "success",
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       this.$message({
+    //         message: "申请失败",
+    //         type: "warning",
+    //       });
+    //     });
+    // },
+
     Apply() {
       var str = "";
       if (this.courseID != "") {
@@ -282,6 +323,10 @@ export default {
                 var applyType_;
                 if (this.applyType === "申请免修") applyType_ = 2;
                 else applyType_ = 3;
+                var str = this.courseName;
+                console.log(str);
+                str = this.courseName + "-" + this.applyReason;
+                console.log(str);
                 var param = {
                   reason: this.applyReason,
                   type: applyType_,

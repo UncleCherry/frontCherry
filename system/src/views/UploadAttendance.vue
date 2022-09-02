@@ -140,14 +140,20 @@ export default {
       const outdata = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
       _this.message=[];
       _this.jsonlist=new Array();
+      _this.c_name
+      for(var i=0;i<_this.courselist.length;i++){
+          if(_this.courselist[i].value==_this.courseid){
+            _this.c_name=_this.courselist[i]["name"]
+            break;
+          } 
+        }
       for(var i=0;i<outdata.length;i++){
         if(outdata[i]['身份']!="普通参会者")
           continue;
         let tmp='';
         let json={};
         tmp+=_this.courseid+ ' - ';
-        //后端读课程名
-        tmp+="数据库"+' - ';
+        tmp+=_this.c_name+' - ';
         tmp+=_this.number+' - ';
         let id_name =  outdata[i]['用户昵称（入会昵称）'].split(" "); 
         tmp+=id_name[1]+' - '+id_name[0]+' - ';
