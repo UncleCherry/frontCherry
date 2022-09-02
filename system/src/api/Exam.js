@@ -19,7 +19,7 @@ export function deleteExam(data) {
     let param = new URLSearchParams(data);
     return request({
         url: '/Exam/del',
-        method: 'del',
+        method: 'delete',
         data:param
       })
 }

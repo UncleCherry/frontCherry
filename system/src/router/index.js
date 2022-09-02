@@ -150,11 +150,6 @@ const routes = [
     component: () => import('../views/ExamSchedulePage.vue')
   },
   {
-    path: '/RetakeExamPage',
-    name: 'RetakeExamPage',
-    component: () => import('../views/RetakeExamPage.vue')
-  },
-  {
     path: '/CreatExamPage',
     name: 'CreatExamPage',
     component: () => import('../views/CreatExamPage.vue')
