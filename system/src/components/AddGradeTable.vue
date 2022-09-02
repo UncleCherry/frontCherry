@@ -12,7 +12,8 @@
     <el-table :data="items"
               :key="randomKey"
               @cell-click="editData"
-              style="width: 100%">
+              style="width: 100%"
+              max-height="400">
       <el-table-column label="学号"
                        property="studentId"
                        min-width="35%" />
