@@ -1,5 +1,5 @@
 <template>
-    <el-container style="height: 100%; margin-top:-19px; margin-left:-12px">
+    <el-container style="height: 100%;margin-top:-19px; margin-left:-12px">
     <el-header style=" background-color: #545c64;">
       <span style="color:white;  font-size: 15px;">考试安排查询</span>
       <el-dropdown style=" font-size : 12px; float:right;">
@@ -9,15 +9,15 @@
     
     <el-main>
       <el-table :data="tableData" width="100%">
-        <el-table-column prop="CourseId" label="课程代码" sortable width="150">
+        <el-table-column prop="CourseId" label="课程代码" sortable width="200">
         </el-table-column>
-        <el-table-column prop="CourseName" label="课程名称" sortable width="150">
+        <el-table-column prop="CourseName" label="课程名称" sortable width="300">
         </el-table-column>
-        <el-table-column prop="StartTime" label="考试开始时间" sortable width="200">
+        <el-table-column prop="StartTime" label="考试开始时间" sortable width="250">
         </el-table-column>
-        <el-table-column prop="EndTime" label="考试结束时间" sortable width="200">
+        <el-table-column prop="EndTime" label="考试结束时间" sortable width="250">
         </el-table-column>
-        <el-table-column prop="MeetingId" label="会议号" sortable width="150">
+        <el-table-column prop="MeetingId" label="会议号" sortable width="200">
         </el-table-column>
         <el-table-column  sortable label="操作">
           <template slot-scope="scope">
