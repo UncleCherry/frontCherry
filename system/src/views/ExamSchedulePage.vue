@@ -1,15 +1,8 @@
 <template>
     <el-container style="height: 100%; margin-top:-19px; margin-left:-12px">
     <el-header style=" background-color: #545c64;">
-      <span style="color:white;  font-size: 15px;">{{semester[curSemester]}}考试安排查询</span>
+      <span style="color:white;  font-size: 15px;">考试安排查询</span>
       <el-dropdown style=" font-size : 12px; float:right;">
-        <span style="color:white; font-size: 12px; float:right">切换学期</span>
-        <i class="el-icon-setting" style=" color:white; "></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item v-for="item in 4" :key="item" @click.native="changeSemester(item-1)">
-            {{semester[item-1]}}
-          </el-dropdown-item>
-        </el-dropdown-menu>
       </el-dropdown>
 
     </el-header>
@@ -35,25 +28,36 @@
         </el-table-column>
       </el-table>
     </el-main>
+
+  <el-dialog :visible.sync="tableVisible" width="75%" ref="dialog">
+      <div v-if="isCreate">
+      <el-row :span="200">
+        <el-col :span="20">
+          <ApplyTable :tableData="applyData" ref="applyTable"/>
+        </el-col>
+        </el-row>
+        </div>
+    </el-dialog>
   </el-container>
+
 </template>
+
+
+
+
 
 <script>
 import { getAllExam} from '../api/Exam'
+import ApplyTable from '@/components/ApplyTable.vue'
 export default {
   name: 'ExamSchedulePage',
   created(){
     getAllExam().then(response=>{
       this.$message({
         message: '获取考试信息成功',
-        //message: response.data.ExamsList,
         type: 'success'
       });
       this.tableData=response.data.ExamsList
-     // for(i=0;i<this.tableData.length;i++){
-        //this.tableData[i].StartTime = this.tableData[i].StartTime.replace('T',' ');
-       // this.tableData[i].StartTime[10]=' ';
-      //}
     }).catch((error)=>{
       this.$message({
         message: '获取考试信息失败',
@@ -63,23 +67,22 @@ export default {
   },
     data() {
       return {
+        isCreate: false,
+        tableVisible: false,
         tableData:[],
-        semester:[
-          '2022第二学期',
-          '2022第一学期',
-          '2021第二学期',
-          '2021第一学期',
-        ],
-        curSemester:0,
-        allGrades:[]
+        retForm:{
+          reason:"",
+        }
       }
     },
+  components:{
+      ApplyTable
+    },
     methods: {
-      changeSemester(chooseTerm){
-        this.curSemester=chooseTerm;
-      },
-      OpenRetakeExamPage(){
-        this.$router.replace("/RetakeExamPage");
+      OpenRetakeExamPage(index,row){
+        this.tableVisible = true;
+        console.log(index);
+        this.isCreate = true;
       }
     }  
 }

@@ -35,7 +35,7 @@
         <el-col :span="20">
           <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="demo-ruleForm" style="width:90%;padding-top:20px;padding-bottom:10px">
               <el-form-item label="考试课程" prop="startTime">
-              <el-select v-model="value" placeholder="选择课程" @change="setCourseId">
+              <el-select v-model="courseId" placeholder="选择课程" @change="setCourseId">
               <el-option
                 v-for="item in allCourse"
                 :key="item.CourseId"
@@ -45,10 +45,10 @@
             </el-select>
             </el-form-item>
           <el-form-item label="开始时间" prop="startTime">
-              <el-input v-model="ruleForm.starttime" placeholder="请输入课程时间  格式:2022-08-08T10:00:00"></el-input>
+              <el-input v-model="ruleForm.starttime" placeholder="请输入考试开始时间  格式:2022-08-08T10:00:00"></el-input>
           </el-form-item>
           <el-form-item label="结束时间" prop="endTime">
-              <el-input v-model="ruleForm.endtime" placeholder="请输入课程时间  格式:2022-08-08T11:00:00"></el-input>
+              <el-input v-model="ruleForm.endtime" placeholder="请输入考试结束时间  格式:2022-08-08T11:00:00"></el-input>
           </el-form-item>
           <el-form-item label="会议号" prop="meetingId">
               <el-input v-model="ruleForm.meetingid" placeholder="请输入考试会议号"></el-input>
@@ -71,7 +71,7 @@
         <el-col :span="20">
           <el-form :model="changeExamForm"  ref="changeExamForm" label-width="100px" class="demo-ruleForm" style="width:90%;padding-top:20px;padding-bottom:10px">
               <el-form-item label="考试课程" prop="startTime">
-              <el-select v-model="value" placeholder="选择课程" @change="setExamId">
+              <el-select v-model="examId" placeholder="选择课程" @change="setExamId">
               <el-option
                 v-for="item in tableData"
                 :key="item.CourseId"
@@ -81,17 +81,17 @@
             </el-select>
             </el-form-item>
           <el-form-item label="开始时间" prop="startTime">
-              <el-input v-model="changeExamForm.starttime" placeholder="请输入课程时间  格式:2022-08-08T10:00:00"></el-input>
+              <el-input v-model="changeExamForm.starttime" placeholder="请输入考试开始时间  格式:2022-08-08T10:00:00"></el-input>
           </el-form-item>
           <el-form-item label="结束时间" prop="endTime">
-              <el-input v-model="changeExamForm.endtime" placeholder="请输入课程时间  格式:2022-08-08T11:00:00"></el-input>
+              <el-input v-model="changeExamForm.endtime" placeholder="请输入考试结束时间  格式:2022-08-08T11:00:00"></el-input>
           </el-form-item>
           <el-form-item label="会议号" prop="meetingId">
               <el-input v-model="changeExamForm.meetingid" placeholder="请输入考试会议号"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="change()">立即修改</el-button>
-            <el-button @click="resetForm('ruleForm')">重置</el-button>
+            <el-button type="primary" @click="change">立即修改</el-button>
+            <el-button @click="deleteExam">删除考试</el-button>
           </el-form-item>
           </el-form>
         </el-col>
@@ -113,10 +113,10 @@ import { getAllCourse } from '@/api/course'
     },
     created(){
       getAllCourse().then(response=>{
-        this.$message({
+        /*this.$message({
           message: '获取课程信息成功',
           type: 'success'
-        });
+        });*/
         this.allCourse=response.data.CoursesList
       }).catch((error)=>{
         this.$message({
@@ -125,10 +125,10 @@ import { getAllCourse } from '@/api/course'
         });
       })
       getAllExam().then(response=>{
-        this.$message({
+        /*this.$message({
           message: '获取考试信息成功',
           type: 'success'
-        });
+        });*/
         this.tableData=response.data.ExamsList
       }).catch((error)=>{
         this.$message({
@@ -152,7 +152,8 @@ import { getAllCourse } from '@/api/course'
           meetingid: '',
         },
 
-        value:"",
+        courseId:"",
+        examId:"",
         allCourse: [],
         tableData: [],
         dialogTableVisible: false,
@@ -161,12 +162,12 @@ import { getAllCourse } from '@/api/course'
       }
     },
     methods: {
-      setCourseId(value){
-        this.ruleForm.courseid = value;
+      setCourseId(){
+        this.ruleForm.courseid = this.courseId;
         console.log(this.ruleForm.courseid);
       },
-      setExamId(value){
-        this.changeExamForm.examid = value;
+      setExamId(){
+        this.changeExamForm.examid = this.examId;
       },
       openCreate(){
         this.dialogTableVisible=true;
@@ -213,7 +214,29 @@ import { getAllCourse } from '@/api/course'
       close(){
         this.dialogTableVisible=false;
       },
-
+      deleteExam(){
+        if(this.examid != ""){
+        var param = {examid:this.examId};
+        axios.all([deleteExam(param).then(response=>{
+          this.$message({
+            message: '删除考试成功',
+            type: 'success'
+          });
+        }).catch((error)=>{
+          this.$message({
+            message: '删除考试失败',
+            type: 'warning'
+          });
+        })]).then(()=>{
+          this.reload();
+        })  
+        }else{
+          this.$message({
+            message: '请选择要删除的考试',
+            type: 'warning'
+          });          
+        }
+      },
     }
   }
 

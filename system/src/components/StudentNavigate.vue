@@ -32,18 +32,12 @@
           > -->
         </el-submenu>
 
-        <el-submenu index="2" style="text-align: left">
+        <el-menu-item index="2" style="text-align: left" @click="OpenExamSchedulePage">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>考试管理</span>
           </template>
-          <el-menu-item index="2-1" @click="OpenExamSchedulePage"
-            >考试安排查询</el-menu-item
-          >
-          <el-menu-item index="2-2" @click="OpenRetakeExamPage"
-            >重/缓考申请</el-menu-item
-          >
-        </el-submenu>
+        </el-menu-item>
         <el-submenu index="3" style="text-align: left">
           <template slot="title">
             <i class="el-icon-location"></i>
@@ -125,9 +119,6 @@ export default {
     },
     OpenExamSchedulePage() {
       this.$router.replace("/ExamSchedulePage");
-    },
-    OpenRetakeExamPage() {
-      this.$router.replace("/RetakeExamPage");
     },
     OpenCourseSelect() {
       this.$router.replace("/CourseSelect");
