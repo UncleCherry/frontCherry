@@ -72,7 +72,7 @@ export default {
       this.$router.replace("/EditTrainingPlan");
     },
     OpenApplicationVerifyPage() {
-      this.$router.replace("/OpenApplicationVerifyPage");
+      this.$router.replace("/ApplicationVerifyPage");
     },
   },
 };

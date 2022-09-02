@@ -83,11 +83,6 @@ const routes = [
     name: 'InstructSelect',
     component: () => import('../views/InstructSelect.vue')
   },
-    {
-    path: '/StudentCreditVerifyPage',
-    name: 'StudentCreditVerifyPage',
-    component: () => import('../views/StudentCreditVerifyPage.vue')
-  },
   {
     path: '/Login',
     name: 'Login',
