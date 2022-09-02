@@ -132,6 +132,10 @@ import { getAllCourse } from '@/api/course'
           type: 'success'
         });*/
         this.tableData=response.data.ExamsList
+        for(var i=0;i<this.tableData.length;i++){
+          this.tableData[i].StartTime = this.tableData[i].StartTime.replace("T"," ");
+          this.tableData[i].EndTime = this.tableData[i].EndTime.replace("T"," ");        
+        }
       }).catch((error)=>{
         this.$message({
           message: '获取考试信息失败',
