@@ -33,7 +33,7 @@
       <div v-if="isCreate">
       <el-row :span="200">
         <el-col :span="20">
-          <ApplyTable :tableData="applyData" ref="applyTable"/>
+          <ApplyTable  ref="applyTable"/>
         </el-col>
         </el-row>
         </div>

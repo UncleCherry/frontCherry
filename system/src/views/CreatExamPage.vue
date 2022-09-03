@@ -157,7 +157,7 @@ import { getAllCourse } from '@/api/course'
           endtime: '',
           meetingid: '',
         },
-        title:'',
+
         courseId:"",
         courseName:"",
         examId:"",
@@ -202,7 +202,7 @@ import { getAllCourse } from '@/api/course'
         this.title="修改考试";
         this.isCreate=true; 
         this.courseName = this.tableData[index].CourseName;
-        this.changeExamForm.examId = this.tableData[index].ExamId;
+        this.changeExamForm.examid = this.tableData[index].ExamId;
         this.changeExamForm.starttime = this.tableData[index].StartTime.replace(" ","T");
         this.changeExamForm.endtime = this.tableData[index].EndTime.replace(" ","T");
         this.changeExamForm.meetingid = this.tableData[index].MeetingId;
@@ -228,17 +228,14 @@ import { getAllCourse } from '@/api/course'
         this.dialogTableVisible=false;
       },
       deleteExam(){
-        this.examId=this.changeExamForm.examId;
-        if(this.examId != ""){
+        if(this.examid != ""){
         var param = {examid:this.examId};
-        console.log(param);
         axios.all([deleteExam(param).then(response=>{
           this.$message({
             message: '删除考试成功',
             type: 'success'
           });
         }).catch((error)=>{
-          console.log(error)
           this.$message({
             message: '删除考试失败',
             type: 'warning'
