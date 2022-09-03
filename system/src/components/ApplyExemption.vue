@@ -8,6 +8,7 @@
           clearable
           placeholder="请选择"
           style="width: 300px; margin-left: 10px"
+          @change="getCourseName"
         >
           <el-option
             v-for="item in courseMsg"
@@ -129,7 +130,7 @@
 
 <script>
 import { getStudentCourse, getCourseInfo } from "@/api/course";
-import { StudentCreateScoreApplication } from "@/api/apply";
+import { StudentCreateScoreApplication, cancelApplication } from "@/api/apply";
 import { getStudentScoreApplication } from "@/api/apply";
 
 export default {
@@ -192,6 +193,7 @@ export default {
           var tmp = {};
           var myreason = list[i].Reason.split("-");
           var mytime = list[i].Time.split("T");
+          tmp["applicationid"] = list[i].ApplicationId;
           tmp["courseid"] = myreason[0];
           tmp["reason"] = myreason[2];
           tmp["date"] = mytime[0];
@@ -347,6 +349,22 @@ export default {
     },
     handleDelete(index, row) {
       this.tableData.splice(index, 1);
+      console.log(row.applicationid);
+      var param = { applicationid: row.applicationid };
+      console.log(param);
+      cancelApplication(param)
+        .then((response) => {
+          this.$message({
+            message: "撤销申请成功",
+            type: "success",
+          });
+        })
+        .catch((error) => {
+          this.$message({
+            message: "撤销申请失败",
+            type: "warning",
+          });
+        });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;

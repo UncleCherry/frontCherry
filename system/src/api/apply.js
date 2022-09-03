@@ -44,3 +44,12 @@ export function AdminPassScoreApplication(data) {
         data:param
       })
 }
+
+export function cancelApplication(data) {
+    let param = new URLSearchParams(data);
+    return request({
+        url: '/Leave/DeleteInfo',
+        method: 'delete',
+        data:param
+    })
+}

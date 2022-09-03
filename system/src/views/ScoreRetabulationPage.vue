@@ -116,7 +116,7 @@
 
 <script>
 import { getStudentCourse, getCourseInfo } from "@/api/course";
-import { StudentCreateScoreApplication } from "@/api/apply";
+import { StudentCreateScoreApplication, cancelApplication } from "@/api/apply";
 import { getStudentScoreApplication } from "@/api/apply";
 
 export default {
@@ -147,7 +147,7 @@ export default {
           type: "success",
         });
         this.courseMsg = response.data.CoursesList;
-        this.particularSemesterCourse(this.courseMsg,this.year,this.semester);
+        this.particularSemesterCourse(this.courseMsg, this.year, this.semester);
       })
       .catch((error) => {
         this.$message({
@@ -167,6 +167,7 @@ export default {
           var myreason = list[i].Reason.split("-");
           var mytime = list[i].Time.split("T");
           var mycoursename = "";
+          tmp["applicationid"] = list[i].ApplicationId;
           tmp["courseid"] = myreason[0];
           tmp["reason"] = myreason[2];
           tmp["date"] = mytime[0];
@@ -294,6 +295,20 @@ export default {
     },
     handleDelete(index, row) {
       this.tableData.splice(index, 1);
+      var param = { applicationid: row.applicationid };
+      cancelApplication(param)
+        .then((response) => {
+          this.$message({
+            message: "撤销申请成功",
+            type: "success",
+          });
+        })
+        .catch((error) => {
+          this.$message({
+            message: "撤销申请失败",
+            type: "warning",
+          });
+        });
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
@@ -307,13 +322,11 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
-    particularSemesterCourse(course,year,semester){
-      for(var i=0;i<course.length;++i)
-      {
-        if(!(course[i].Year==year&&course[i].Semester==semester))
-        {
-          course.splice(i,1);
-          --i
+    particularSemesterCourse(course, year, semester) {
+      for (var i = 0; i < course.length; ++i) {
+        if (!(course[i].Year == year && course[i].Semester == semester)) {
+          course.splice(i, 1);
+          --i;
         }
       }
     },
