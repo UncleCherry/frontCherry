@@ -85,3 +85,10 @@ export function altMeetingid(data) {
         data:param
       })
 }
+
+export function allWithoutExam() {
+    return request({
+        url: '/Course/allwithoutexam',
+        method: 'get',
+    })
+}
