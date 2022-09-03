@@ -11,21 +11,21 @@
 
     <el-table class="el-table"
       :data="tableData.filter(data => !workspaceSearch || data.name.toLowerCase().includes(workspaceSearch.toLowerCase()))"
-      max-height="100%" highlight-current-row stripe :row-key="getRowKeys" :expand-row-keys="expands"
+      max-height="600px" highlight-current-row stripe :row-key="getRowKeys" :expand-row-keys="expands"
       @expand-change="expand">
-      <el-table-column prop="id" label="课程号" width="150px" sortable>
+      <el-table-column prop="id" label="课程号" min-width="10%" sortable>
       </el-table-column>
-      <el-table-column prop="name" label="课程名" width="300px">
+      <el-table-column prop="name" label="课程名" min-width="15%">
       </el-table-column>
-      <el-table-column prop="credit" label="学分" width="100px" sortable>
+      <el-table-column prop="credit" label="学分" min-width="10%" sortable>
       </el-table-column>
-      <el-table-column prop="time" label="上课时间" width="200px">
+      <el-table-column prop="time" label="上课时间" min-width="15%">
       </el-table-column>
-      <el-table-column prop="isRequired" label="必修/选修" width="100px">
+      <el-table-column prop="isRequired" label="必修/选修" min-width="10%">
       </el-table-column>
-      <el-table-column prop="meetingId" label="会议号" width="100px">
+      <el-table-column prop="meetingId" label="会议号" min-width="15%">
       </el-table-column>
-      <el-table-column prop="meetingId" label="操作" width="100px">
+      <el-table-column prop="meetingId" label="操作" min-width="15%">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditMeetingIdDialog(scope)" circle>
           </el-button>
@@ -44,7 +44,7 @@
       </el-row>
 
       <!--录播table-->
-      <el-table-column label="录播" type="expand" width="50px">
+      <el-table-column label="录播" type="expand" min-width="10%">
         <template slot-scope="scope">
           <el-table :data="recordData">
             <el-table-column prop="RecordId" label="录播号" width="100px" sortable>
