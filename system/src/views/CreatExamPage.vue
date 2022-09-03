@@ -185,6 +185,9 @@ import { getAllCourse,allWithoutExam } from '@/api/course'
         endtime1:'',
         meetingid: '',
         title:'',
+
+
+
         courseId:"",
         courseName:"",
         allCourse: [],
@@ -246,6 +249,7 @@ import { getAllCourse,allWithoutExam } from '@/api/course'
         this.starttime1 = this.tableData[index].StartTime;
         this.endtime1 = this.tableData[index].EndTime;
         this.meetingid = this.tableData[index].MeetingId;
+
         console.log(this.changeExamForm);
       },
       change(){
@@ -277,14 +281,12 @@ import { getAllCourse,allWithoutExam } from '@/api/course'
       deleteExam(){
         if(this.examId != ""){
         var param = {examid:this.examId};
-        console.log(param);
         axios.all([deleteExam(param).then(response=>{
           this.$message({
             message: '删除考试成功',
             type: 'success'
           });
         }).catch((error)=>{
-          console.log(error)
           this.$message({
             message: '删除考试失败',
             type: 'warning'

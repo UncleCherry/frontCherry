@@ -74,6 +74,58 @@
         >申请</el-button
       >
     </div>
+     <div style="width: 100%">
+      <div style="font-weight: bold; font-size: large">申请缓考/重考列表</div>
+      <el-table
+        :data="
+          this.tableData.slice(
+            (this.currentPage - 1) * this.pageSize,
+            this.currentPage * this.pageSize
+          )
+        "
+        border
+        @selection-change="handleSelectionChange"
+        ref="multipleTable"
+      >
+        <el-table-column type="selection" width="50"> </el-table-column>
+        <el-table-column prop="courseid" label="课程ID" width="100">
+        </el-table-column>
+        <el-table-column prop="date" label="申请日期" width="200">
+        </el-table-column>
+        <el-table-column prop="type" label="申请类型" width="100">
+        </el-table-column>
+        <el-table-column prop="reason" label="申请理由" width="200">
+        </el-table-column>
+        <el-table-column prop="state" label="审核状态" width="100">
+        </el-table-column>
+        <el-table-column label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)"
+              >撤销申请</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
+      <div style="clear: both; float: left; margin-top: 15px">
+        <el-button @click="toggleSelection(tableData)">全选</el-button>
+        <el-button @click="toggleSelection()">取消选择</el-button>
+      </div>
+
+      <el-pagination
+        style="clear: both; margin-top: 30px"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[2, 5]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="20"
+      >
+      </el-pagination>
+    </div>
   </el-card>
 </template>
 
@@ -83,7 +135,8 @@ import { StudentCreateScoreApplication } from "@/api/apply";
 import { getStudentScoreApplication } from "@/api/apply";
 
 export default {
-  name: "ApplyExemption",
+  inject:['reload'],
+  name: "ApplyTable",
   data() {
     return {
       applyTypeOptions: [
@@ -104,6 +157,8 @@ export default {
       fileList: [],
       examMsg: [],
       tableData: [],
+      currentPage: 1,
+      pageSize: 2,
     };
   },
   created() {
@@ -118,29 +173,61 @@ export default {
         });
       });
   },
+  mounted() {
+    this.GetApp();
+  },
   methods: {
-    submitApplication() {
-      console.log(courseId);
-      this.applicationMsg = [];
-      var applyType_;
-      if (this.applyType === "申请缓考") applyType_ = 1;
-      else applyType_ = 0;
-      var param = { courseid: this.courseId ,reason: this.applyReason, type: applyType_ };
-      StudentCreateScoreApplication(param)
-        .then((response) => {
-          this.$message({
-            message: "申请成功",
-            type: "success",
-          });
-        })
-        .catch((error) => {
-          this.$message({
-            message: "申请失败",
-            type: "warning",
-          });
-        });
+    GetApp(){
+      getStudentScoreApplication()
+      .then(async (response) => {
+        this.$message({ message: "获取申请信息成功", type: "success" });
+        var list = response.data.ApplicaitionsList;
+        this.tableData=[];
+        for (var i = 0; i < list.length; ++i) {
+          if (list[i].Type != 0 && list[i].Type != 1) continue;
+          var tmp = {};
+          var myreason = list[i].Reason.split("-");
+          var mytime = list[i].Time.split("T");
+          tmp["courseid"] = myreason[0];
+          tmp["reason"] = myreason[2];
+          tmp["date"] = mytime[0];
+          tmp["student"] =
+            list[i].UserId.toString() + "-" + list[i].StudentName;
+          switch (list[i].Type) {
+            case 0:
+              tmp["type"] = "重考";
+              break;
+            case 1:
+              tmp["type"] = "缓考";
+              break;
+            case 2:
+              tmp["type"] = "免修";
+              break;
+            case 3:
+              tmp["type"] = "免听";
+              break;
+            case 4:
+              tmp["type"] = "成绩复核";
+              break;
+            case 5:
+              tmp["type"] = "请假";
+              break;
+            default:
+              break;
+          }
+          if (list[i].State == 0) {
+            tmp["state"] = "待审核";
+          } else if (list[i].State == 1 || list[i].State == 2) {
+            tmp["state"] = "已审核";
+          }
+          this.tableData.push(tmp);
+          this.totalnum++;
+        }
+      })
+      .catch((error) => {
+        this.$message({ message: "获取申请信息失败", type: "warning" });
+      });
     },
-
     Apply() {
       var str = "";
       console.log(this.applyTypeOptions.value);
@@ -162,10 +249,11 @@ export default {
                 var applyType_;
                 if (this.applyType === "申请缓考") applyType_ = 1;
                 else applyType_ = 0;
-                var param = { reason: this.applyReason, type: applyType_ };
+                var param = {courseid: this.courseId , reason: this.applyReason, type: applyType_ };
                 StudentCreateScoreApplication(param)
                   .then((response) => {
                     this.$message({ message: "申请成功", type: "success" });
+                    this.GetApp();
                   })
                   .catch((error) => {
                     this.$message({ message: "申请失败", type: "warning" });
@@ -206,6 +294,29 @@ export default {
       this.courseId = data.courseId;
       this.courseName = data.courseName;
       console.log(this.courseId);
+    },
+        handleSizeChange(val) {
+      // console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+    },
+    handleCurrentChange(val) {
+      // console.log(`当前页: ${val}`);
+      this.currentPage = val;
+    },
+    handleDelete(index, row) {
+      this.tableData.splice(index, 1);
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach((row) => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
     },
   },
 };
