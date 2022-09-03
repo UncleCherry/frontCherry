@@ -103,7 +103,7 @@
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="deleteApplication(scope.$index)"
               >撤销申请</el-button
             >
           </template>
@@ -133,6 +133,7 @@
 import { getAllExam} from "@/api/Exam";
 import { StudentCreateScoreApplication } from "@/api/apply";
 import { getStudentScoreApplication } from "@/api/apply";
+import { deleteLeave } from "@/api/leave";
 
 export default {
   inject:['reload'],
@@ -188,6 +189,8 @@ export default {
           var tmp = {};
           var myreason = list[i].Reason.split("-");
           var mytime = list[i].Time.split("T");
+
+          tmp['applicationid'] = list[i].ApplicationId;
           tmp["courseid"] = myreason[0];
           tmp["reason"] = myreason[2];
           tmp["date"] = mytime[0];
@@ -318,6 +321,19 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
+    deleteApplication(index){
+      var i= (this.currentPage-1)*2 + index;
+      console.log((this.currentPage-1)*2 + index);
+      var param = {applicationid:this.tableData[i].applicationid};
+      deleteLeave(param)
+        .then((response) => {
+        this.$message({ message: "撤销成功", type: "success" });
+        this.GetApp();
+         })
+        .catch((error) => {
+         this.$message({ message: "撤销失败", type: "warning" });
+      });
+    }
   },
 };
 </script>
