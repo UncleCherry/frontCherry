@@ -71,20 +71,19 @@
         ref="multipleTable"
       >
         <el-table-column type="selection" width="50"> </el-table-column>
-        <el-table-column prop="courseid" label="课程ID" width="100">
-        </el-table-column>
-        <el-table-column prop="coursename" label="课程名称" width="200">
-        </el-table-column>
-        <el-table-column prop="date" label="申请日期" width="200">
-        </el-table-column>
-        <el-table-column prop="type" label="申请类型" width="100">
-        </el-table-column>
-        <el-table-column prop="reason" label="申请理由" width="200">
-        </el-table-column>
-        <el-table-column prop="state" label="审核状态" width="100">
+        <el-table-column prop="courseid" label="课程ID" min-width="15%">
         </el-table-column>
 
-        <el-table-column label="操作" width="100">
+        <el-table-column prop="date" label="申请日期" min-width="15%">
+        </el-table-column>
+        <el-table-column prop="type" label="申请类型" min-width="15%">
+        </el-table-column>
+        <el-table-column prop="reason" label="申请理由" min-width="25%">
+        </el-table-column>
+        <el-table-column prop="state" label="审核状态" min-width="15%">
+        </el-table-column>
+
+        <el-table-column label="操作" min-width="15%">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -136,6 +135,8 @@ export default {
       tableData: [],
       currentPage: 1,
       pageSize: 2,
+      year: "2022",
+      semester: "第二学期",
     };
   },
   created() {
@@ -146,6 +147,7 @@ export default {
           type: "success",
         });
         this.courseMsg = response.data.CoursesList;
+        this.particularSemesterCourse(this.courseMsg,this.year,this.semester);
       })
       .catch((error) => {
         this.$message({
@@ -197,20 +199,6 @@ export default {
           } else if (list[i].State == 1 || list[i].State == 2) {
             tmp["state"] = "已审核";
           }
-          var _param = { courseid: tmp["courseid"] };
-          getCourseInfo(_param)
-            .then((response) => {
-              this.courseName_ = response.data.course.CourseName;
-              // console.log(this.courseName_);
-            })
-            .catch((error) => {
-              this.$message({
-                message: "获取课程信息失败",
-                type: "warning",
-              });
-            });
-          console.log(this.courseName_);
-          tmp["coursename"] = this.courseName_;
           this.tableData.push(tmp);
           this.totalnum++;
         }
@@ -317,6 +305,16 @@ export default {
         });
       } else {
         this.$refs.multipleTable.clearSelection();
+      }
+    },
+    particularSemesterCourse(course,year,semester){
+      for(var i=0;i<course.length;++i)
+      {
+        if(!(course[i].Year==year&&course[i].Semester==semester))
+        {
+          course.splice(i,1);
+          --i
+        }
       }
     },
   },

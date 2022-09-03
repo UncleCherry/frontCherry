@@ -8,7 +8,6 @@
           clearable
           placeholder="请选择"
           style="width: 300px; margin-left: 10px"
-          @change="getCourseName"
         >
           <el-option
             v-for="item in courseMsg"
@@ -87,19 +86,17 @@
         ref="multipleTable"
       >
         <el-table-column type="selection" width="50"> </el-table-column>
-        <el-table-column prop="courseid" label="课程ID" width="100">
+        <el-table-column prop="courseid" label="课程ID" min-width="15%">
         </el-table-column>
-        <el-table-column prop="coursename" label="课程名称" width="200">
+        <el-table-column prop="date" label="申请日期" min-width="15%">
         </el-table-column>
-        <el-table-column prop="date" label="申请日期" width="200">
+        <el-table-column prop="type" label="申请类型" min-width="15%">
         </el-table-column>
-        <el-table-column prop="type" label="申请类型" width="100">
+        <el-table-column prop="reason" label="申请理由" min-width="25%">
         </el-table-column>
-        <el-table-column prop="reason" label="申请理由" width="200">
+        <el-table-column prop="state" label="审核状态" min-width="15%">
         </el-table-column>
-        <el-table-column prop="state" label="审核状态" width="100">
-        </el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="操作" min-width="15%">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -163,6 +160,7 @@ export default {
       pageSize: 2,
       year: "2022",
       semester: "第二学期",
+      fileList:[]
     };
   },
   created() {
@@ -177,6 +175,7 @@ export default {
         console.log(this.courseMsg);
       })
       .catch((error) => {
+        console.log(error)
         this.$message({
           message: "获取选课信息失败",
           type: "warning",
@@ -193,7 +192,6 @@ export default {
           var tmp = {};
           var myreason = list[i].Reason.split("-");
           var mytime = list[i].Time.split("T");
-          var mycoursename = "";
           tmp["courseid"] = myreason[0];
           tmp["reason"] = myreason[2];
           tmp["date"] = mytime[0];
@@ -301,7 +299,16 @@ export default {
     //       });
     //     });
     // },
-
+    particularSemesterCourse(course,year,semester){
+      for(var i=0;i<course.length;++i)
+      {
+        if(!(course[i].Year==year&&course[i].Semester==semester))
+        {
+          course.splice(i,1);
+          --i
+        }
+      }
+    },
     Apply() {
       var str = "";
       if (this.courseID != "") {
