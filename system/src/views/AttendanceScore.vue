@@ -67,7 +67,22 @@ export default {
     },
     getResult(){
       this.message=[]
-      this.getAttScore()
+      let _this = this
+      var valid = false
+      for(var i = 0; i < _this.courselist.length; ++i){
+        if(_this.courseid.toString() == _this.courselist[i]["value"]){
+          valid = true
+          break
+        }
+      }
+      if(valid == false){
+        this.$message({
+          message:'查询的课程不在您所教课程范围内，请重新填写',
+          type:'warning',
+        })
+      }else{
+        this.getAttScore()
+      }
     },
     getAttScore(){
       var _this = this
