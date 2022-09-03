@@ -133,23 +133,23 @@ export default {
       }
 
       //检验是否填写了验证码
-      //   if(this.code===''){
-      //     this.$message({
-      //       message: '请填写验证码',
-      //       type: 'warning'
-      //     });
-      //     return;
-      //   };
+        if(this.code===''){
+          this.$message({
+            message: '请填写验证码',
+            type: 'warning'
+          });
+          return;
+        };
 
-      //   //检验验证码是否填写正确
-      //   if(this.code.toLowerCase()!=this.identifyCode.toLowerCase()){
-      //     this.$message({
-      //       message: '验证码填写错误',
-      //       type: 'warning'
-      //     });
-      //     this.refreshCode()
-      //     return;
-      //   };
+        //检验验证码是否填写正确
+        if(this.code.toLowerCase()!=this.identifyCode.toLowerCase()){
+          this.$message({
+            message: '验证码填写错误',
+            type: 'warning'
+          });
+          this.refreshCode()
+          return;
+        };
 
       let param = {
         account: this.Id,
