@@ -125,10 +125,9 @@ export default {
           gpa = 5;
         }
         this.avgGpa += gpa;
-
-        if (this.allGrades.length != 0) {
-          this.avgGpa /= this.allGrades.length;
-        }
+      }     
+      if (this.allGrades.length != 0) {
+        this.avgGpa /= this.allGrades.length;
       }
     },
     changeTableData() {
