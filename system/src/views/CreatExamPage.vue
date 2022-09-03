@@ -83,14 +83,12 @@
         <el-col :span="20">
           <el-form :model="changeExamForm"  ref="changeExamForm" label-width="100px" class="demo-ruleForm" style="width:90%;padding-top:20px;padding-bottom:10px">
               <el-form-item label="考试课程" prop="startTime">
-              <el-select v-model="courseName" placeholder="选择课程" @change="setExamId">
-              <el-option
-                v-for="item in tableData"
-                :key="item.CourseId"
-                :label="item.CourseName"
-                :value="item.ExamId">
-              </el-option>
-            </el-select>
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="courseName"
+                  :disabled="true"
+                  style="width: 220px;">
+                </el-input>
             </el-form-item>
           <el-form-item label="开始时间" prop="starttime">
               <!-- <el-input v-model="changeExamForm.starttime" placeholder="请输入考试开始时间  格式:2022-08-08 10:00:00"></el-input> -->

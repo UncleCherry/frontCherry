@@ -132,8 +132,10 @@
 import { getStudentCourse, getCourseInfo } from "@/api/course";
 import { StudentCreateScoreApplication, cancelApplication } from "@/api/apply";
 import { getStudentScoreApplication } from "@/api/apply";
+import axios from 'axios';
 
 export default {
+  inject:['reload'],
   name: "ApplyExemption",
   data() {
     return {
@@ -301,13 +303,18 @@ export default {
                   type: applyType_,
                   courseid: this.courseID,
                 };
-                StudentCreateScoreApplication(param)
+                axios.all([
+                  StudentCreateScoreApplication(param)
                   .then((response) => {
                     this.$message({ message: "申请成功", type: "success" });
                   })
                   .catch((error) => {
                     this.$message({ message: "申请失败", type: "warning" });
-                  });
+                  })
+                ]).then(()=>{
+                  this.reload();
+                })
+                
               })
               .catch(() => {
                 this.$message({ type: "info", message: "已取消申请" });
