@@ -181,7 +181,6 @@ export default {
     GetApp(){
       getStudentScoreApplication()
       .then(async (response) => {
-        this.$message({ message: "获取申请信息成功", type: "success" });
         var list = response.data.ApplicaitionsList;
         this.tableData=[];
         for (var i = 0; i < list.length; ++i) {
