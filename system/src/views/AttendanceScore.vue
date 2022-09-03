@@ -93,48 +93,52 @@ export default {
       };
       getStudentAttendance(param).then(response=>{
         let list = response.data.AttendanceList
-        let last_id = 0
-        let tmp = ''
-        let absence = ''
+        let score = []
         var count = 0
-        var grade = 0;
         for(var i = 0; i < list.length; ++i){
-          if(list[i].StudentId != last_id){
-            if(i != 0){
-              grade = 100 - 10 * count
-              if(count == 0){
-                absence = '无'
-              }
-              tmp += grade + ' - '
-              tmp += absence
-              _this.message.push(tmp);
+          var valid = false
+          var j = 0
+          for(j = 0; j < score.length; ++j){
+            if(score[j]["courseid"] == list[i].CourseId && score[j]["studentid"] == list[i].StudentId){
+              valid = true
+              break
             }
-            tmp = ''
-            tmp += list[i].CourseId + ' - '
-            tmp += list[i].CourseName + ' - '
-            tmp += list[i].Name + ' - '
-            tmp += list[i].StudentId + ' - '
-            grade = 0
-            count = 0
-            absence = ''
-            last_id = list[i].StudentId
           }
-          if(list[i].IsEffective == false){
-            if(count > 0){
-              absence += ','
+          if(valid == false){
+            score[count] = { "courseid":list[i].CourseId,
+            "coursename":list[i].CourseName,
+            "name":list[i].Name,
+            "studentid":list[i].StudentId,
+            "absence":'无',
+            "count":0 }
+            if(list[i].IsEffective == false){
+              score[count]["absence"] = list[i].CourseNumber
+              score[count]["count"] = 1
+            }else{
+              score[count]["absence"] = '无'
+              score[count]["count"] = 0
             }
             count++
-            absence += list[i].CourseNumber
-          }
-          if(i == list.length - 1){
-            grade = 100 - 10 * count
-            if(count == 0){
-                absence = '无'
+          }else{
+            score[j]["count"]++
+            if(score[j]["absence"] == '无'){
+              score[j]["absence"] = list[i].CourseNumber
+            }else{
+              score[j]["absence"] += ','
+              score[j]["absence"] += list[i].CourseNumber
             }
-            tmp += grade + ' - '
-            tmp += absence
-            _this.message.push(tmp);
           }
+        }
+        for(var k = 0; k < score.length; ++k){
+          var mygrade = 100 - 10 * score[k]["count"]
+          let tmp = ''
+          tmp += score[k]["courseid"] + ' - '
+          tmp += score[k]["coursename"] + ' - '
+          tmp += score[k]["name"] + ' - '
+          tmp += score[k]["studentid"] + ' - '
+          tmp += mygrade + ' - '
+          tmp += score[k]["absence"]
+          _this.message.push(tmp);
         }
       }).catch((error)=>{
         console.log(error)

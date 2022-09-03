@@ -20,6 +20,7 @@
     <el-table-column
       prop="id"
       label="学号"
+      sortable
       min-width="15%">
     </el-table-column>
     <el-table-column
@@ -31,6 +32,13 @@
       prop="score"
       label="考勤成绩"
       min-width="10%">
+      <template slot="header">
+        <span>考勤成绩</span>
+        <el-tooltip effect="dark" placement="top">
+          <div slot="content">{{ "此成绩按缺勤一次扣十分的规则进行计算，仅供参考" }}</div>
+          <i class="el-icon-warning-outline"></i>
+        </el-tooltip>
+      </template>
     </el-table-column>
     <el-table-column
       prop="absence"
