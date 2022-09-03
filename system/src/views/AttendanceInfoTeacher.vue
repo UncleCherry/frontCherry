@@ -97,7 +97,7 @@ export default {
                   if(list[i].StartTime!=undefined){
                     list[i].StartTime=new Date(list[i].StartTime)
                     list[i].EndTime=new Date(list[i].EndTime)
-                    tmp+=list[i].StartTime.getMonth()+'.'+list[i].StartTime.getDate()+' - '
+                    tmp+=(list[i].StartTime.getMonth()+1)+'.'+list[i].StartTime.getDate()+' - '
                     tmp+=list[i].StartTime.getHours()+':'+list[i].StartTime.getMinutes()+':'+list[i].StartTime.getSeconds()+' - '
                     tmp+=list[i].EndTime.getHours()+':'+list[i].EndTime.getMinutes()+':'+list[i].EndTime.getSeconds()+' - '
                   }

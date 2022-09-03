@@ -169,7 +169,9 @@ export default {
         json["IsEffective"]=true
         json["CourseNumber"]=Number(_this.number);
         json["StartTime"]=new Date(outdata[i]['首次入会时间']);
+        json["StartTime"].setHours(json["StartTime"].getHours()+8);
         json["EndTime"]=new Date(outdata[i]['最后退会时间']);
+        json["EndTime"].setHours(json["EndTime"].getHours()+8);
         _this.jsonlist.push(json);
         }
       }
