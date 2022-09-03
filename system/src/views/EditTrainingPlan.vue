@@ -8,7 +8,8 @@
         <div style="clear: both;"></div>
       <el-table
       :data="tableData"
-      style="width: 100%">
+      style="width: 100%"
+      max-height="600px">
       <el-table-column
         label="年份"
         min-width="25%"
@@ -171,7 +172,8 @@ import axios from 'axios'
           major:this.major,
           info:JSON.stringify(infomation)
         }
-        altTrainingPlan(param).then(response=>{
+        axios.all([
+           altTrainingPlan(param).then(response=>{
           this.$message({
             message: '修改培养计划成功',
             type: 'success'
@@ -183,6 +185,10 @@ import axios from 'axios'
             type: 'warning'
           });
         })
+        ]).then(()=>{
+          this.reload();
+        })
+       
       },
       subtotal(){
         var subttl={

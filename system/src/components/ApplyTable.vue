@@ -219,8 +219,10 @@ export default {
           }
           if (list[i].State == 0) {
             tmp["state"] = "待审核";
-          } else if (list[i].State == 1 || list[i].State == 2) {
-            tmp["state"] = "已审核";
+          } else if (list[i].State == 1) {
+            tmp["state"] = "已通过";
+          } else if (list[i].State == 2) {
+            tmp["state"] = "已拒绝";
           }
           this.tableData.push(tmp);
           this.totalnum++;

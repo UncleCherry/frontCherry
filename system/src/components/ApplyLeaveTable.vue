@@ -88,9 +88,9 @@
                 if(leaveinfo[7]=='0')
                   tmp['state']='待审核'
                 else if(leaveinfo[7]=='1')
-                  tmp['state']='申请成功'
+                  tmp['state']='已通过'
                 else if(leaveinfo[7]=='2')
-                  tmp['state']='申请失败'
+                  tmp['state']='已拒绝'
                 this.tableData.push(tmp);
             }
         },
