@@ -104,24 +104,55 @@ export default {
     },
     createNewLeave(){
       let _this = this
-      var param = {
-        courseid:_this.courseid,
-        number:_this.number,
-        reason:_this.reason,
-      };
-      console.log(param)
-      createLeave(param).then(response=>{
+      if(_this.courseid == null || _this.courseid == ''){
         this.$message({
-          message:'提交申请成功',
-          type:'success',
-        })
-        this.reload()
-      }).catch((error)=>{
-        this.$message({
-          message:'提交申请失败',
+          message:'请假课程不得为空',
           type:'warning',
         })
-      })
+      }else if(_this.number == null || _this.number == ''){
+        this.$message({
+          message:'请假课次不得为空',
+          type:'warning',
+        })
+      }else if(_this.reason == null || _this.reason == ''){
+        this.$message({
+          message:'请假理由不得为空',
+          type:'warning',
+        })
+      }else{
+        var valid = false
+        for(var i = 0; i < _this.courselist.length; ++i){
+          if(_this.courseid.toString() == _this.courselist[i]["value"]){
+            valid = true
+            break
+          }
+        }
+        if(valid == false){
+          this.$message({
+            message:'请假课程不在所选课程范围内，请重新填写',
+            type:'warning',
+          })
+        }else{
+          var param = {
+            courseid:_this.courseid,
+            number:_this.number,
+            reason:_this.reason,
+          };
+          console.log(_this.courselist)
+          createLeave(param).then(response=>{
+            this.$message({
+              message:'提交申请成功',
+              type:'success',
+            })
+            this.reload()
+          }).catch((error)=>{
+            this.$message({
+              message:'提交申请失败',
+              type:'warning',
+            })
+          })
+        }
+      }
     },
     getLeave(){
       let _this = this
