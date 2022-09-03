@@ -44,6 +44,7 @@ import { getStudentInfo } from "@/api/studentInfo";
 import { getStudentCourse } from '@/api/course'
 import { createLeave,getStudentLeave } from '@/api/leave'
 export default {
+      inject: ['reload'],
   name: 'ApplyLeave',
   inject:['reload'],
   created(){
