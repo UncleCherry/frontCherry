@@ -230,7 +230,7 @@ export default {
               this.dialogTableVisible=false;
               if(this.loginState==0)
               {
-                this.$router.replace('/StudentScorePage');
+                this.$router.replace("/ApplyExemptionPage");
               }
               else if(this.loginState==1)
               {
@@ -238,7 +238,7 @@ export default {
               }
               else
               {
-                this.$router.replace('/CreateCourse');
+                this.$router.replace('/EditTrainingPlan');
               }
               this.$message({
                 message: '登录成功！',

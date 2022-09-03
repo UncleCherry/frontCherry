@@ -2,7 +2,7 @@
 <template>
   <el-card class="box-card">
     <div style="width: 100%; margin-top: 10px">
-      <div style="font-weight: bold; font-size: large">请假申请列表</div>
+      <div style="font-weight: bold; font-size: large">申请列表</div>
       <el-table
         :data="
           tableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -36,7 +36,7 @@
           :filter-method="filterHandler"
         >
         </el-table-column>
-        <el-table-column prop="reason" label="请假理由" min-width="10%">
+        <el-table-column prop="reason" label="申请理由" min-width="10%">
           <template slot-scope="scope">
             <el-button
               size="mini"

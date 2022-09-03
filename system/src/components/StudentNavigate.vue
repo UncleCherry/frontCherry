@@ -18,14 +18,14 @@
             <i class="el-icon-location"></i>
             <span>成绩管理</span>
           </template>
-          <el-menu-item index="1-1" @click="OpenScorePage"
-            >成绩查询</el-menu-item
-          >
-          <el-menu-item index="1-2" @click="OpenApplyExemptionPage"
+          <el-menu-item index="1-1" @click="OpenApplyExemptionPage"
             >免修/免听申请</el-menu-item
           >
-          <el-menu-item index="1-3" @click="OpenRetabulationPage"
+          <el-menu-item index="1-2" @click="OpenRetabulationPage"
             >申请成绩复核</el-menu-item
+          >
+          <el-menu-item index="1-3" @click="OpenScorePage"
+            >成绩查询</el-menu-item
           >
           <!-- <el-menu-item index="1-4" @click="OpenCreditRecognitionPage"
             >申请学分认定</el-menu-item

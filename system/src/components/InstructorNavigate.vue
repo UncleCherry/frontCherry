@@ -4,7 +4,7 @@
   >
     <el-aside width="201px" style="overflow-x: hidden; overflow-y: auto">
       <el-menu
-        default-active="2"
+        default-active="1"
         class="el-menu-vertical-demo side"
         background-color="#545c64"
         text-color="#fff"
