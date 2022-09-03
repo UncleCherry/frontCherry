@@ -4,7 +4,7 @@
   >
     <el-aside width="201px" style="overflow-x: hidden; overflow-y: auto">
       <el-menu
-        default-active="2"
+        default-active="1"
         class="el-menu-vertical-demo side"
         @open="handleOpen"
         @close="handleClose"
@@ -13,7 +13,7 @@
         active-text-color="#ffd04b"
         style="height: 100%"
       >
-        <el-submenu index="1" style="text-align: left">
+        <el-submenu index="1-1" style="text-align: left">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>成绩管理</span>
